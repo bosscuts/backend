@@ -42,6 +42,7 @@ spring:
     console:
       # disable spring boot built-in h2-console since we start it manually with correct configuration
       enabled: false
+      path: h2-console
   jpa:
     database-platform: tech.jhipster.domain.util.FixedH2Dialect
   liquibase:
