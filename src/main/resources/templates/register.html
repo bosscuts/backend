@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <link rel='shortcut icon' type='image/png' th:href='@{/img/favicon.ico}'>
+    <title>Login</title>
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/css/flags.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap-select.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/sweetalert.css}" rel="stylesheet"/>
+    <link th:href="@{/css/rzvy-register.css}" rel="stylesheet"/>
+    <link th:href="@{/css/intlTelInput.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+</head>
+<body class='rzvy' cz-shortcut-listen='true'>
+<!-- Brand and toggle get grouped for better mobile display -->
+<!-- Rzvy Header -->
+<header class='rzvy-header'>
+    <div class='container'>
+        <a th:href='@{/}' class='rzvy-brand'>
+            <img th:src='@{/img/logo.webp}'/>
+        </a>
+        <ul>
+            <li>
+                <a th:href='@{/login}'><i class='fa fa-sign-in' aria-hidden='true'></i>&nbsp;&nbsp;Đăng nhập</a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<section class='rzvy-register-main my-3 '>
+    <div class='container rzvy-register-container whitebox'>
+        <form id='rzvy_customer_register_form' name='rzvy_customer_register_form' method='post' novalidate='novalidate'>
+            <div class='row'>
+                <div class='col-md-12 pt-3 rzvy-register-right-block'>
+                    <h2 class='text-center'>Đăng kí khách hàng</h2>
+                    <div class='row'>
+                        <div class='form-group col-md-6'>
+                            <label for='rzvy_register_customer_firstname'>First Name</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_firstname'
+                                   name='rzvy_register_customer_firstname' placeholder='Enter first name'>
+                        </div>
+                        <div class='form-group col-md-6'>
+                            <label for='rzvy_register_customer_lastname'>Last Name</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_lastname'
+                                   name='rzvy_register_customer_lastname' placeholder='Enter last name'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='form-group col-md-4'>
+                            <label for='rzvy_register_customer_email'>Email</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_email'
+                                   name='rzvy_register_customer_email' placeholder='Enter email'>
+                        </div>
+                        <div class='form-group col-md-4'>
+                            <label for='rzvy_register_customer_password'>Password</label>
+                            <input type='password' class='form-control' id='rzvy_register_customer_password'
+                                   name='rzvy_register_customer_password' placeholder='Enter password'>
+                        </div>
+                        <div class='form-group col-md-4'>
+                            <label for='rzvy_register_customer_phone'>Phone</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_phone'
+                                   name='rzvy_register_customer_phone' placeholder='Enter phone' autocomplete='off'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='form-group col-md-12'>
+                            <label for='rzvy_register_customer_address'>Address</label>
+                            <textarea class='form-control' id='rzvy_register_customer_address'
+                                      name='rzvy_register_customer_address'
+                                      placeholder='Enter address' rows='1'></textarea>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='form-group col-md-3'>
+                            <label for='rzvy_register_customer_city'>City</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_city'
+                                   name='rzvy_register_customer_city' placeholder='Enter city'>
+                        </div>
+                        <div class='form-group col-md-3'>
+                            <label for='rzvy_register_customer_state'>State</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_state'
+                                   name='rzvy_register_customer_state' placeholder='Enter state'>
+                        </div>
+                        <div class='form-group col-md-3'>
+                            <label for='rzvy_register_customer_zip'>Zip</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_zip'
+                                   name='rzvy_register_customer_zip'
+                                   placeholder='Enter zip'>
+                        </div>
+                        <div class='form-group col-md-3'>
+                            <label for='rzvy_register_customer_country'>Country</label>
+                            <input type='text' class='form-control' id='rzvy_register_customer_country'
+                                   name='rzvy_register_customer_country' placeholder='Enter country'>
+                        </div>
+                    </div>
+                    <div class='row mt-2 mb-3'>
+                        <div class='col-md-12'>
+                            <button type='submit' id='rzvy_customer_register_btn'
+                                    class='rzvy_register_btn btn btn-success p-2 w-100'>
+                                Register Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.validate.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/rzvyconcent.js}"></script>
+<script th:src="@{/js/sweetalert.js}"></script>
+</body>
+</html>
