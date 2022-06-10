@@ -1,6 +1,6 @@
 package com.bosscut.repository;
 
-import com.bosscut.entity.Authority;
+import com.bosscut.domain.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
