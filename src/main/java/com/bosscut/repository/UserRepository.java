@@ -1,36 +1,40 @@
 package com.bosscut.repository;
 
 import com.bosscut.domain.User;
-import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Spring Data JPA repository for the {@link User} entity.
- */
+import javax.persistence.LockModeType;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
 @Repository
+@Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
-    String USERS_BY_LOGIN_CACHE = "usersByLogin";
 
-    String USERS_BY_EMAIL_CACHE = "usersByEmail";
-    Optional<User> findOneByActivationKey(String activationKey);
-    List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
-    Optional<User> findOneByResetKey(String resetKey);
-    Optional<User> findOneByEmailIgnoreCase(String email);
-    Optional<User> findOneByLogin(String login);
+	//	@EntityGraph(value = User.DEEP_GRAPH_NAME, type = EntityGraph.EntityGraphType.FETCH)
+	User findOneById(Long id);
 
-    @EntityGraph(attributePaths = "authorities")
-    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
-    Optional<User> findOneWithAuthoritiesByLogin(String login);
+	//	@EntityGraph(value = User.DEEP_GRAPH_NAME, type = EntityGraph.EntityGraphType.FETCH)
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	User findOneForUpdateById(Long id);
 
-    @EntityGraph(attributePaths = "authorities")
-    @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
-    Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
+	//	@EntityGraph(value = User.DEEP_GRAPH_NAME, type = EntityGraph.EntityGraphType.FETCH)
+	User findOneByLoginId(String loginId);
 
-    Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
+	//	@EntityGraph(value = User.DEEP_GRAPH_NAME, type = EntityGraph.EntityGraphType.FETCH)
+	User findOneByEmail(String email);
+
+	//	@EntityGraph(value = User.SHALLOW_GRAPH_NAME, type = EntityGraph.EntityGraphType.FETCH)
+	List<User> findAllByIdIn(Collection<Long> ids);
+
+	@Modifying
+	@Query("update User set lastLoginTime = :lastLoginTime where loginId = :loginId ")
+	int updateLastLoginTime(@Param("loginId") String loginId, @Param("lastLoginTime") Date lastLoginTime);
 }

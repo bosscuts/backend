@@ -1,46 +1,35 @@
 package com.bosscut.config;
 
-import com.bosscut.security.*;
-import com.bosscut.security.jwt.*;
+import com.bosscut.service.user.AuthorizedUserDetailsService;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
-import org.springframework.web.filter.CorsFilter;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
-import tech.jhipster.config.JHipsterProperties;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.sql.DataSource;
+
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Import(SecurityProblemSupport.class)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfiguration implements WebMvcConfigurer {
 
-    private final JHipsterProperties jHipsterProperties;
+    private final DataSource dataSource;
 
-    private final TokenProvider tokenProvider;
-
-    private final CorsFilter corsFilter;
-    private final SecurityProblemSupport problemSupport;
-
-    public SecurityConfiguration(
-        TokenProvider tokenProvider,
-        CorsFilter corsFilter,
-        JHipsterProperties jHipsterProperties,
-        SecurityProblemSupport problemSupport
-    ) {
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-        this.jHipsterProperties = jHipsterProperties;
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -48,64 +37,155 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web
-            .ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/h2-console/**")
-            .antMatchers("/swagger-ui/**")
-            .antMatchers("/test/**");
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//          .userDetailsService(authorizedUserDetailsService())
+//          .passwordEncoder(passwordEncoder());
+//    }
+
+    @Configuration
+    @Order(1)
+    public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
+
+        private final PersistentTokenRepository persistentTokenRepository;
+
+        public AdminSecurityConfig(PersistentTokenRepository persistentTokenRepository) {
+            this.persistentTokenRepository = persistentTokenRepository;
+        }
+
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.ignoring()
+                    .antMatchers("/admin/assets/**")
+                    .antMatchers("/admin/images/**")
+                    .antMatchers("/admin/sweetalert/**");
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.requiresChannel()
+                    .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                    .requiresSecure();
+            http.antMatcher("/admin_/**")
+                    .authorizeRequests()
+                    .antMatchers("/admin_/**").hasAnyRole("ADMIN", "EDITOR", "AUTHOR")
+                    .and()
+                    .formLogin()
+                    .loginPage("/admin_/login").permitAll()
+                    .loginProcessingUrl("/admin_/login")
+                    .defaultSuccessUrl("/admin_")
+                    .failureUrl("/admin_/login?fail")
+                    .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/admin_/logout", "GET"))
+                    .logoutSuccessUrl("/admin_/login")
+                    .and()
+                    .rememberMe()
+                    .tokenRepository(persistentTokenRepository)
+                    .and()
+                    .headers()
+                    .frameOptions().disable()
+                    .cacheControl().disable()
+                    .httpStrictTransportSecurity().disable()
+                    .and()
+                    .csrf()
+                    .disable()
+                    .exceptionHandling()
+                    .accessDeniedPage("/admin_/login");
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth)
+                throws Exception {
+            auth
+                    .userDetailsService(authorizedUserDetailsService())
+                    .passwordEncoder(passwordEncoder());
+        }
+    }
+
+    @Configuration
+    @Order(2)
+    public class GuestSecurityConfig extends WebSecurityConfigurerAdapter {
+
+        private final PersistentTokenRepository persistentTokenRepository;
+
+        public GuestSecurityConfig(PersistentTokenRepository persistentTokenRepository) {
+            this.persistentTokenRepository = persistentTokenRepository;
+        }
+
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.ignoring()
+                    .antMatchers("/blog/css/**")
+                    .antMatchers("/blog/js/**")
+                    .antMatchers("/blog/fonts/**")
+                    .antMatchers("/blog/img/**")
+                    .antMatchers("/blog/scss/**");
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.requiresChannel()
+                    .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                    .requiresSecure();
+            http.antMatcher("/**")
+                    .authorizeRequests()
+                    .antMatchers("/settings/**").hasRole("VIEWER")
+                    .antMatchers("/**/viet-bai").hasAnyRole("ADMIN", "EDITOR", "AUTHOR", "VIEWER")
+                    .antMatchers("/comments/**").hasRole("VIEWER")
+                    .and()
+                    .formLogin()
+                    .loginPage("/login").permitAll()
+                    .loginProcessingUrl("/login")
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/?fail")
+                    .permitAll()
+                    .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .logoutSuccessUrl("/?logout")
+                    .deleteCookies("my-remember-me-cookie")
+                    .permitAll()
+                    .and()
+                    .rememberMe()
+                    .tokenRepository(persistentTokenRepository)
+                    .and()
+                    .headers()
+                    .frameOptions().disable()
+                    .cacheControl().disable()
+                    .httpStrictTransportSecurity().disable()
+                    .and()
+                    .csrf()
+                    .disable()
+                    .exceptionHandling()
+                    .accessDeniedPage("/login");
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth)
+                throws Exception {
+            auth
+                    .userDetailsService(authorizedUserDetailsService())
+                    .passwordEncoder(passwordEncoder());
+        }
+    }
+
+    @Bean
+    public UserDetailsService authorizedUserDetailsService() {
+        return new AuthorizedUserDetailsService();
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl repository = new JdbcTokenRepositoryImpl();
+        repository.setDataSource(dataSource);
+        return repository;
     }
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http
-            .csrf()
-            .disable()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling()
-                .authenticationEntryPoint(problemSupport)
-                .accessDeniedHandler(problemSupport)
-        .and()
-            .headers()
-            .contentSecurityPolicy(jHipsterProperties.getSecurity().getContentSecurityPolicy())
-        .and()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
-        .and()
-            .permissionsPolicy().policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")
-        .and()
-            .frameOptions()
-            .deny()
-        .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/api/account/reset-password/init").permitAll()
-            .antMatchers("/api/account/reset-password/finish").permitAll()
-            .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/health/**").permitAll()
-            .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-        .and()
-            .httpBasic()
-        .and()
-            .apply(securityConfigurerAdapter());
-        // @formatter:on
-    }
-
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("guest/login");
     }
 }
+
