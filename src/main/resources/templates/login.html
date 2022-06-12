@@ -39,35 +39,67 @@
         <p th:if="${loginError}" class="error">Wrong user or password</p>
         <div class='col-md-4 rzvy-login-form-block p-4 whitebox'>
             <h2 class='text-center'>Login Now</h2>
-
-            <form th:action="@{/login1111}" method="post">
-                <div class='form-group'>
-                    <label for='login_email'>Email</label>
-                    <input type='text' class='form-control' id='login_email' name='email'
-                           placeholder='Enter email' value=''>
+            <form action="home" th:action="@{/login}" method="post">
+                <div class="modal-body">
+                    <div class="form-group has-feedback">
+                        <input class="form-control" name="username"
+                               placeholder="Email" /> <span
+                            class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" name="password"
+                               placeholder="Password" /> <span
+                            class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div th:if="${param.error}"
+                                 class="alert alert-danger alert-dismissable">
+                                <p>
+                                    <i class="icon fa fa-ban"></i> <span
+                                        th:text="#{error.login_failed}">Invalid Email and
+                                            Password.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class='form-group'>
-                    <label for='login_password'>Password</label>
-                    <input type='password' class='form-control' id='login_password' name='password'
-                           placeholder='Enter password' value=''>
-                    <label id='rzvy-login-error' class='error'>Sorry! Wrong email address or password</label>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
                 </div>
-                <div class='form-check'>
-                    <label class='form-check-label'>
-                        <input type='checkbox' class='form-check-input' id='rzvy_login_remember_me' name='rzvy_login_remember_me'
-                               checked=''>
-                        <small>Remember Me</small>
-                    </label>
-                </div>
-                <div class='row mt-2'>
-                    <button type="submit" id='rzvy_login_btn' class='btn btn-success float-right w-100'>Login</button>
-                </div>
-                <small class='d-flex justify-content-center mt-2'>
-                    <a href='#'>
-                        <i class='fa fa-user-plus' aria-hidden='true'></i> Lost your password?
-                    </a>
-                </small>
             </form>
+
+
+
+<!--            <form th:action="@{/login1111}" method="post">-->
+<!--                <div class='form-group'>-->
+<!--                    <label for='login_email'>Email</label>-->
+<!--                    <input type='text' class='form-control' id='login_email' name='email'-->
+<!--                           placeholder='Enter email' value=''>-->
+<!--                </div>-->
+<!--                <div class='form-group'>-->
+<!--                    <label for='login_password'>Password</label>-->
+<!--                    <input type='password' class='form-control' id='login_password' name='password'-->
+<!--                           placeholder='Enter password' value=''>-->
+<!--                    <label id='rzvy-login-error' class='error'>Sorry! Wrong email address or password</label>-->
+<!--                </div>-->
+<!--                <div class='form-check'>-->
+<!--                    <label class='form-check-label'>-->
+<!--                        <input type='checkbox' class='form-check-input' id='rzvy_login_remember_me' name='rzvy_login_remember_me'-->
+<!--                               checked=''>-->
+<!--                        <small>Remember Me</small>-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--                <div class='row mt-2'>-->
+<!--                    <button type="submit" id='rzvy_login_btn' class='btn btn-success float-right w-100'>Login</button>-->
+<!--                </div>-->
+<!--                <small class='d-flex justify-content-center mt-2'>-->
+<!--                    <a href='#'>-->
+<!--                        <i class='fa fa-user-plus' aria-hidden='true'></i> Lost your password?-->
+<!--                    </a>-->
+<!--                </small>-->
+<!--            </form>-->
         </div>
         <div class='col-md-4'></div>
     </div>
@@ -116,8 +148,5 @@
         'invalid_email_address': 'Invalid email address'
     };
 </script>
-<script src='./resource/rzvy-login.js'></script>
-<script src='./resource/rzvy-set-languages.js'></script>
-
 </body>
 </html>
