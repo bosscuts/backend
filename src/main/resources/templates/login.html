@@ -40,23 +40,15 @@
         <div class='col-md-4 rzvy-login-form-block p-4 whitebox'>
             <h2 class='text-center'>Login Now</h2>
 
-            <form th:action="@{/login.html}" id='rzvy_login_form' name='rzvy_login_form' novalidate='novalidate'>
+            <form th:action="@{/login1111}" method="post">
                 <div class='form-group'>
-                    <label for='rezervy_user_type'>Select User</label>
-                    <select class='form-control valid' id='rezervy_user_type' name='rezervy_user_type'>
-                        <option value='admin@example.com'>Admin Dashboard</option>
-                        <option value='client@example.com'> Client Dashboard</option>
-                        <option value='staff@example.com'>Staff Dashboard</option>
-                    </select>
-                </div>
-                <div class='form-group'>
-                    <label for='rzvy_login_email'>Email</label>
-                    <input type='text' class='form-control' id='rzvy_login_email' name='rzvy_login_email'
+                    <label for='login_email'>Email</label>
+                    <input type='text' class='form-control' id='login_email' name='email'
                            placeholder='Enter email' value=''>
                 </div>
                 <div class='form-group'>
-                    <label for='rzvy_login_password'>Password</label>
-                    <input type='password' class='form-control' id='rzvy_login_password' name='rzvy_login_password'
+                    <label for='login_password'>Password</label>
+                    <input type='password' class='form-control' id='login_password' name='password'
                            placeholder='Enter password' value=''>
                     <label id='rzvy-login-error' class='error'>Sorry! Wrong email address or password</label>
                 </div>
@@ -68,7 +60,7 @@
                     </label>
                 </div>
                 <div class='row mt-2'>
-                    <a id='rzvy_login_btn' class='btn btn-success float-right w-100'>Login</a>
+                    <button type="submit" id='rzvy_login_btn' class='btn btn-success float-right w-100'>Login</button>
                 </div>
                 <small class='d-flex justify-content-center mt-2'>
                     <a href='#'>
