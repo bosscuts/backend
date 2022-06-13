@@ -1,13 +1,10 @@
-package com.bosscut.controller;
+package com.bosscut.controller.frontend;
 
-import com.bosscut.dto.LoginDTO;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class LoginController {
@@ -18,16 +15,15 @@ public class LoginController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        return "redirect:/users";
+        return "redirect:/";
     }
 
-    @PostMapping("/login1111")
-    public String login(@RequestBody LoginDTO loginDTO) {
-
+    @GetMapping("/account-info")
+    public String accountInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        return "redirect:/users";
+        return "redirect:/backend/profile";
     }
 }

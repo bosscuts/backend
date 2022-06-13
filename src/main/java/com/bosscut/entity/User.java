@@ -4,6 +4,7 @@ import com.bosscut.config.Constants;
 import com.bosscut.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +26,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public enum Role {
+        ADMIN,
+        EDITOR,
+        AUTHOR,
+        VIEWER,
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

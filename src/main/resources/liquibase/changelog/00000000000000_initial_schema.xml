@@ -5,11 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <!--
-        hoaronal core tables.
-        The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
-    -->
-    <changeSet id="00000000000001" author="hoaronal">
+    <changeSet id="00000000000001" author="Quang Hoa">
         <createTable tableName="user">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -98,18 +94,14 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="hoaronal" id="00000000000002" context="test">
-        <createTable tableName="date_time_wrapper">
-            <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="date_time_wrapperPK"/>
+    <changeSet author="Quang Hoa" id="00000000000002" context="persistent_login">
+        <createTable tableName="persistent_logins">
+            <column name="series" type="varchar(64)">
+                <constraints primaryKey="true" primaryKeyName="persistent_logins_pk"/>
             </column>
-            <column name="instant" type="timestamp"/>
-            <column name="local_date_time" type="timestamp"/>
-            <column name="offset_date_time" type="timestamp"/>
-            <column name="zoned_date_time" type="timestamp"/>
-            <column name="local_time" type="time"/>
-            <column name="offset_time" type="time"/>
-            <column name="local_date" type="date"/>
+            <column name="token" type="varchar(64)"/>
+            <column name="username" type="varchar(100)"/>
+            <column name="last_used" type="timestamp"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

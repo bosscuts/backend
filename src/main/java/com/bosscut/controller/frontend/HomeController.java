@@ -1,4 +1,4 @@
-package com.bosscut.controller;
+package com.bosscut.controller.frontend;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
-
 
     @GetMapping({"/index"})
     public String dashboard(@RequestParam(defaultValue = "") String keyword,
