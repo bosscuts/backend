@@ -30,7 +30,10 @@
         <a th:href='@{/}' class='rzvy-brand'>
             <img th:src='@{/img/logo.png}'/>
         </a>
-        <ul class="d-none d-xl-block d-lg-block">
+
+        <a href="javascript:void(0);" class="hamburger active"
+           onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
+        <ul style="display: block;">
             <li sec:authorize="isAuthenticated()">
                 <a href="">
                     <i class="fa fa-user-plus" aria-hidden="true"></i>

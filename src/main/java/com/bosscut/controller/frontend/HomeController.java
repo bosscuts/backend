@@ -28,4 +28,15 @@ public class HomeController {
         System.out.println(authentication.getPrincipal());
         return "index";
     }
+
+    @GetMapping({"/res"})
+    public String res(@RequestParam(defaultValue = "") String keyword,
+                            @PageableDefault(50) Pageable pageable,
+                            Model model,
+                            HttpServletRequest servletRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object o = authentication.getPrincipal();
+        System.out.println(authentication.getPrincipal());
+        return "frontend/res";
+    }
 }
