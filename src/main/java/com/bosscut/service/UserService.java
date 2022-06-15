@@ -1,8 +1,10 @@
 package com.bosscut.service;
 
+import com.bosscut.entity.User;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
+import java.util.List;
 
+public interface UserService {
+    List<User> getUserByLevel(String level);
 }

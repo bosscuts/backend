@@ -29,11 +29,11 @@
             <column name="reset_key" type="varchar(20)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
             <column name="reset_date" type="timestamp">
                 <constraints nullable="true"/>
             </column>
-            <column name="last_modified_by" type="varchar(50)"/>
-            <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
         <createTable tableName="authority">
@@ -127,22 +127,35 @@
             <column name="key" type="varchar(100)"/>
             <column name="value" type="varchar(100)"/>
             <column name="detail" type="text"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="updated_at" type="timestamp"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
         <createTable tableName="product_service">
             <column name="product_service_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="product_service_pk"/>
             </column>
-            <column name="customer_name" type="varchar(100)"/>
-            <column name="address" type="varchar(500)"/>
-            <column name="phone" type="varchar(20)"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="updated_at" type="timestamp"/>
-            <column name="created_by" type="varchar(100)"/>
-            <column name="updated_by" type="varchar(100)"/>
+            <column name="product_service_name" type="varchar(100)"/>
+            <column name="price" type="bigint"/>
+            <column name="quantity" type="int"/>
+            <column name="type" type="varchar(20)"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
+
+
+        <loadData
+                file="liquibase/data/product_service.csv"
+                separator=";"
+                tableName="product_service"
+                usePreparedStatements="true">
+            <column name="product_service_id" type="numeric"/>
+        </loadData>
 
         <createTable tableName="invoice">
             <column name="invoice_id" type="bigint" autoIncrement="true">
@@ -156,10 +169,10 @@
             <column name="total_after_discount" type="number"/>
             <column name="payment_type" type="varchar(100)"/>
             <column name="user_id" type="bigint"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="updated_at" type="timestamp"/>
-            <column name="created_by" type="varchar(100)"/>
-            <column name="updated_by" type="varchar(100)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
         <createTable tableName="invoice_detail">
@@ -169,10 +182,10 @@
             <column name="invoice_id" type="bigint"/>
             <column name="product_service_id" type="bigint"/>
             <column name="quantity" type="varchar(20)"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="updated_at" type="timestamp"/>
-            <column name="created_by" type="varchar(100)"/>
-            <column name="updated_by" type="varchar(100)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,8 @@
+product_service_id;product_service_name;price;quantity;type;description
+1;Cat toc;60000;;SERVICE;Cat toc
+2;Cat toc tre em;50000;;SERVICE;Cat toc tre em
+3;Lay ray tai;60000;;SERVICE;Lay ray tai
+4;Xa truoc khi cat;60000;;SERVICE;Xa truoc khi cat
+5;Xa sau khi cat;60000;;SERVICE;Xa sau khi cat
+6;Rua mat;60000;;SERVICE;Rua mat
+7;Goi mat xa;60000;;SERVICE;Goi mat xa

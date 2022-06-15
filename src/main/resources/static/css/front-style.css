@@ -204,8 +204,14 @@ textarea.form-control {
   background: #50aba3;
   color: #ffffff;
 }
-.custom-controls [class*="col-"] {
-  padding-top: 24px;
+.assistant-item {
+    padding: 37px 30px;
+    margin-bottom: 0;
+    background: #ffffff;
+    position: relative;
+    border-radius: 20px;
+    transition: all ease .4s;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }
 .form-check {
   height: 100%;
@@ -214,7 +220,6 @@ textarea.form-control {
   padding: 37px 30px;
   margin-bottom: 0;
   background: #ffffff;
-  text-align: center;
   position: relative;
   border-radius: 20px;
   transition: all ease .4s;
@@ -1333,7 +1338,7 @@ figure,.form-check.custom{
   padding-bottom: 25px;
 }
 .whitebox {
-  padding: 50px;
+  padding: 20px;
   margin-top: 15px;
   background: #ffffff;
   border-radius: 20px;
@@ -2189,7 +2194,7 @@ figure,.form-check.custom{
 }
 .sa-button-container .btn-primary{
 	background-color:#50aba3;
-	color:#ffffff;	
+	color:#ffffff;
 }
 .rzvy-pt-figcaption{
 	padding-top:25px !important;
@@ -2208,7 +2213,7 @@ figure,.form-check.custom{
 }
 .owl-stage-outer{
 	padding:30px 0px 30px 0px;
-} 
+}
 .rzvy-brand .rzvy-companytitle{
 	font-size:24px;
 	font-weight:bold;

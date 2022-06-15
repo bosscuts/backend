@@ -63,9 +63,56 @@
 </header>
 <main class='form-style-two rzvy-booking-detail-body'>
     <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
-        <div class='row'>
+        <div class='row' sec:authorize="isAnonymous()">
+            Ban chua dang nhap
+        </div>
+        <div class='row' sec:authorize="isAuthenticated()">
             <div class='col-lg-8'>
-
+                <div class="step-item remove_payment_according_services_showhide rzvy_hide_show_payment_according_services">
+                    <div class="rzvy-container">
+                        <div class="rzvy-radio-group-block-content step-item">
+                            <div class="whitebox" th:each="service,itrStat : ${services}">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-3 justify-content-center">
+                                            <div class="item">
+                                                <h3 th:utext="${service.productServiceName}"></h3>
+                                                <div class="rating">
+                                                    <h3 th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +'D'}"></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-9" style="overflow-x: scroll;">
+                                            <div class="custom-controls">
+                                                <div class="rzvy-container">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-sm-4"
+                                                             th:each="assistant,assistantStat : ${assistants}">
+                                                            <div class="form-check custom">
+                                                                <input type="radio"
+                                                                       id="rzvy-frequently-discount-1"
+                                                                       name="rzvy-frequently-discount"
+                                                                       class="rzvy-frequently-discount-change form-check-input"
+                                                                       value="1">
+                                                                <label class="form-check-label"
+                                                                       for="rzvy-frequently-discount-1"
+                                                                       data-toggle="tooltip"
+                                                                       data-placement="bottom" title=""
+                                                                       data-bs-original-title="No Discount"
+                                                                       th:utext="${assistant.fullName}">ONE
+                                                                    TIME</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
                 <div class='rzvy_sticky_bottom_booking_summary whitebox rzvy-sticky vsa_hide_show_booking_summary'>
@@ -101,15 +148,6 @@
                                         style='vertical-align: inherit;'> &nbsp; 09-06-2022 09:00 đến
                                     10:00</font></font></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td><a class='rzvy_remove_addon_from_cart' href='javascript:void(0)' data-id='4'><img
-                                        src='./resource/delete.svg' alt='Xóa bỏ' width='15'
-                                        class='rzvy_remove_addon_icon'></a><font style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Làm lại tóc</font></font></td>
-                                <td><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>$
-                                    100</font></font>
-                                </td>
                             </tr>
                             <tr class='rzvy_subtotal_exit'>
                                 <th><i class='fa fa-money' aria-hidden='true'></i><font
@@ -197,10 +235,6 @@
         },
         services: []
     };
-
-    document.querySelector('#rzvy-bank-transfer').addEventListener('click', () => {
-        document.querySelector('#detail-bank').classList.add('display-block');
-    });
 
     function getCookie(name) {
         var dc = document.cookie;
