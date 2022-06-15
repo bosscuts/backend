@@ -9,7 +9,8 @@
 		$('#rzvy_package_reset').val('N');
 		$(".rzvy-package-credits-control-input").trigger('change');
 	});
-
+	
+	
 	$(document).ajaxComplete(function(event,xhr,options){
 		if(options.url!==undefined || options.url!==undefined!==null){
 			var rzvy_currajax_xhr = options.url;
