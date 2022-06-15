@@ -106,7 +106,7 @@
     <changeSet author="Quang Hoa" id="00000000000003" context="customer,employee">
         <createTable tableName="customer">
             <column name="customer_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" primaryKeyName="customer_pk"/>
             </column>
             <column name="customer_name" type="varchar(100)"/>
             <column name="address" type="varchar(500)"/>
@@ -119,7 +119,7 @@
 
         <createTable tableName="config">
             <column name="config_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" primaryKeyName="config_pk"/>
             </column>
             <column name="group" type="varchar(100)"/>
             <column name="code" type="varchar(100)"/>
@@ -132,7 +132,7 @@
 
         <createTable tableName="product_service">
             <column name="product_service_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" primaryKeyName="product_service_pk"/>
             </column>
             <column name="customer_name" type="varchar(100)"/>
             <column name="address" type="varchar(500)"/>
@@ -145,7 +145,7 @@
 
         <createTable tableName="invoice">
             <column name="invoice_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" primaryKeyName="invoice_pk"/>
             </column>
             <column name="invoice_number" type="varchar(100)"/>
             <column name="customer_id" type="varchar(500)"/>
@@ -155,7 +155,6 @@
             <column name="total_after_discount" type="number"/>
             <column name="payment_type" type="varchar(100)"/>
             <column name="user_id" type="bigint"/>
-            <column name="total_after_discount" type="number"/>
             <column name="created_at" type="timestamp"/>
             <column name="updated_at" type="timestamp"/>
             <column name="created_by" type="varchar(100)"/>
@@ -164,7 +163,7 @@
 
         <createTable tableName="invoice_detail">
             <column name="invoice_detail_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="invoice_detail_pk"/>
             </column>
             <column name="invoice_id" type="bigint"/>
             <column name="product_service_id" type="bigint"/>
