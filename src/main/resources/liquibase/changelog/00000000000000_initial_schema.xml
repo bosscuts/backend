@@ -26,9 +26,7 @@
             <column name="lang_key" type="varchar(10)"/>
             <column name="activation_key" type="varchar(20)"/>
             <column name="reset_key" type="varchar(20)"/>
-            <column name="created_by" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="reset_date" type="timestamp">
                 <constraints nullable="true"/>
@@ -102,6 +100,79 @@
             <column name="token" type="varchar(64)"/>
             <column name="username" type="varchar(100)"/>
             <column name="last_used" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Quang Hoa" id="00000000000003" context="customer,employee">
+        <createTable tableName="customer">
+            <column name="customer_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_name" type="varchar(100)"/>
+            <column name="address" type="varchar(500)"/>
+            <column name="phone" type="varchar(20)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="config">
+            <column name="config_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="group" type="varchar(100)"/>
+            <column name="code" type="varchar(100)"/>
+            <column name="key" type="varchar(100)"/>
+            <column name="value" type="varchar(100)"/>
+            <column name="detail" type="text"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="product_service">
+            <column name="product_service_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_name" type="varchar(100)"/>
+            <column name="address" type="varchar(500)"/>
+            <column name="phone" type="varchar(20)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="created_by" type="varchar(100)"/>
+            <column name="updated_by" type="varchar(100)"/>
+        </createTable>
+
+        <createTable tableName="invoice">
+            <column name="invoice_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="invoice_number" type="varchar(100)"/>
+            <column name="customer_id" type="varchar(500)"/>
+            <column name="total_amount_payment" type="number"/>
+            <column name="discounted_amount" type="number"/>
+            <column name="vat_percentage" type="int"/>
+            <column name="total_after_discount" type="number"/>
+            <column name="payment_type" type="varchar(100)"/>
+            <column name="user_id" type="bigint"/>
+            <column name="total_after_discount" type="number"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="created_by" type="varchar(100)"/>
+            <column name="updated_by" type="varchar(100)"/>
+        </createTable>
+
+        <createTable tableName="invoice_detail">
+            <column name="invoice_detail_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="invoice_id" type="bigint"/>
+            <column name="product_service_id" type="bigint"/>
+            <column name="quantity" type="varchar(20)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="created_by" type="varchar(100)"/>
+            <column name="updated_by" type="varchar(100)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
