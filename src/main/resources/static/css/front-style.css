@@ -887,7 +887,7 @@ main {
   padding: 73px 0;
 }
 .step-item + .step-item {
-  padding-top: 50px;
+  padding-top: 30px;
 }
 .step-title {
   padding-bottom: 20px;
@@ -2231,5 +2231,15 @@ figure,.form-check.custom{
 
 .staff-active{
   border-color: #50aba3;
+}
+.hidden_btn {
+  display: none;
+}
 
+.hidden_input {
+  display: none;
+}
+
+.hidden_alert {
+  display: none;
 }

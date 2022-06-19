@@ -1,19 +1,8 @@
 package com.bosscut.entity;
 
-import com.bosscut.config.Constants;
-import com.bosscut.util.StringUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.BatchSize;
-
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
 
 /**
  * A invoice.
@@ -27,221 +16,115 @@ public class Invoice extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long invoiceId;
 
-    @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
-    @Column(length = 50, unique = true, nullable = false)
-    private String login;
+    @Column(name = "invoice_number", length = 100)
+    private String invoiceNumber;
 
-    @JsonIgnore
-    @NotNull
-    @Size(min = 60, max = 60)
-    @Column(name = "password_hash", length = 60, nullable = false)
-    private String password;
+    @Column(name = "customer_id")
+    private Long customerId;
 
-    @Size(max = 50)
-    @Column(name = "first_name", length = 50)
-    private String firstName;
+    @Column(name = "total_amount_payment")
+    private BigDecimal totalAmountPayment;
 
-    @Size(max = 50)
-    @Column(name = "last_name", length = 50)
-    private String lastName;
+    @Column(name = "discounted_amount")
+    private BigDecimal discountedAmount;
 
-    @Email
-    @Size(min = 5, max = 254)
-    @Column(length = 254, unique = true)
-    private String email;
+    @Column(name = "total_after_discount")
+    private BigDecimal totalAfterDiscount;
 
-    @NotNull
-    @Column(nullable = false)
-    private boolean activated = false;
+    @Column(name = "vat_percentage")
+    private Integer vatPercentage;
 
-    @Size(min = 2, max = 10)
-    @Column(name = "lang_key", length = 10)
-    private String langKey;
+    @Column(name = "payment_type")
+    private String paymentType;
 
-    @Size(max = 256)
-    @Column(name = "image_url", length = 256)
-    private String imageUrl;
+    @Column(name = "userId")
+    private Long userId;
 
-    @Column(name = "level", length = 20)
-    private String level;
-
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
-    @JsonIgnore
-    private String activationKey;
-
-    @Size(max = 20)
-    @Column(name = "reset_key", length = 20)
-    @JsonIgnore
-    private String resetKey;
-
-    @Column(name = "reset_date")
-    private Instant resetDate = null;
-
-    @Transient
-    private String fullName;
-
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-        name = "user_authority",
-        joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-        inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
-    )
-    @BatchSize(size = 20)
-    private Set<Authority> authorities = new HashSet<>();
-
-    public Long getId() {
-        return id;
+    public Invoice() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Invoice(Long invoiceId, String invoiceNumber, Long customerId, BigDecimal totalAmountPayment,
+                   BigDecimal discountedAmount, BigDecimal totalAfterDiscount, Integer vatPercentage, String paymentType, Long userId) {
+        this.invoiceId = invoiceId;
+        this.invoiceNumber = invoiceNumber;
+        this.customerId = customerId;
+        this.totalAmountPayment = totalAmountPayment;
+        this.discountedAmount = discountedAmount;
+        this.totalAfterDiscount = totalAfterDiscount;
+        this.vatPercentage = vatPercentage;
+        this.paymentType = paymentType;
+        this.userId = userId;
     }
 
-    public String getLogin() {
-        return login;
+    public Long getInvoiceId() {
+        return invoiceId;
     }
 
-    // Lowercase the login before saving it in database
-    public void setLogin(String login) {
-        this.login = StringUtils.lowerCase(login);
+    public void setInvoiceId(Long invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getInvoiceNumber() {
+        return invoiceNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public String getLastName() {
-        return lastName;
+    public BigDecimal getTotalAmountPayment() {
+        return totalAmountPayment;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setTotalAmountPayment(BigDecimal totalAmountPayment) {
+        this.totalAmountPayment = totalAmountPayment;
     }
 
-    public String getEmail() {
-        return email;
+    public BigDecimal getDiscountedAmount() {
+        return discountedAmount;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDiscountedAmount(BigDecimal discountedAmount) {
+        this.discountedAmount = discountedAmount;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public BigDecimal getTotalAfterDiscount() {
+        return totalAfterDiscount;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setTotalAfterDiscount(BigDecimal totalAfterDiscount) {
+        this.totalAfterDiscount = totalAfterDiscount;
     }
 
-    public String getLevel() {
-        return level;
+    public Integer getVatPercentage() {
+        return vatPercentage;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setVatPercentage(Integer vatPercentage) {
+        this.vatPercentage = vatPercentage;
     }
 
-    public boolean isActivated() {
-        return activated;
+    public String getPaymentType() {
+        return paymentType;
     }
 
-    public void setActivated(boolean activated) {
-        this.activated = activated;
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
-    public String getActivationKey() {
-        return activationKey;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
-    public String getResetKey() {
-        return resetKey;
-    }
-
-    public void setResetKey(String resetKey) {
-        this.resetKey = resetKey;
-    }
-
-    public Instant getResetDate() {
-        return resetDate;
-    }
-
-    public void setResetDate(Instant resetDate) {
-        this.resetDate = resetDate;
-    }
-
-    public String getLangKey() {
-        return langKey;
-    }
-
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Invoice)) {
-            return false;
-        }
-        return id != null && id.equals(((Invoice) o).id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "User{" +
-            "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated='" + activated + '\'' +
-            ", langKey='" + langKey + '\'' +
-            ", activationKey='" + activationKey + '\'' +
-            "}";
-    }
-    public String getFullName() {
-        this.fullName = this.firstName + " " + this.lastName;
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

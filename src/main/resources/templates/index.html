@@ -7,6 +7,8 @@
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='Pragma' content='no-cache'>
     <meta http-equiv='Expires' content='-1'>
+    <!--    <meta th:name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel='shortcut icon' type='image/png' th:href="@{/img/favicon.ico}">
 
     <title>Barber Shop</title>
@@ -75,6 +77,12 @@
         </div>
         <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
             <div class="col-lg-8">
+                <div class="alert alert-success hidden_alert" role="alert">
+                    Tao hoa don thanh cong.
+                </div>
+                <div class="alert alert-danger hidden_alert" role="alert">
+                    Tao hoa don thanh cong.
+                </div>
                 <div class="rzvy-booking-detail-main">
                     <!-- STAFF SECTION START -->
                     <div id="rzvy-staff-main">
@@ -103,16 +111,12 @@
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                                                <span class="rzvy_ratinginfo">
-                                                                    <strong>
-                                                                    5.0
-                                                                </strong>(2 nhận xét)</span>
                                                             </div>
                                                             <div class="service-meta">
                                                                 <span>
-                                                                    <i class="fa fa-fw fa-envelope-o"
+                                                                    <i class="fa fa-mobile"
                                                                        aria-hidden="true"></i>
-                                                                    <a th:utext="${assistant.email}"></a>
+                                                                    <a th:utext="${assistant.phone}"></a>
                                                                 </span>
                                                             </div>
                                                             <input type="radio" name="rzvy-staff-radio"
@@ -140,69 +144,47 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <input type="text" id="customer_phone"
+                                   name="customer_phone"
+                                   placeholder="Customer phone"
+                                   class="form-control hidden_input">
+                        </div>
                     </div>
                     <div class="forms rzvy-radio-group-block">
-                        <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4" type="submit"><span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Book Now</button>
+                        <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
+                            <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xac nhan
+                        </button>
+                        <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
+                            <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tao hoa don
+                        </button>
                     </div>
                 </div>
             </div>
             <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
-                <div class='rzvy_sticky_bottom_booking_summary whitebox rzvy-sticky vsa_hide_show_booking_summary'>
-                    <h4 class='widget-title rzvy-sidebar-block-title '><font style='vertical-align: inherit;'><font
-                            style='vertical-align: inherit;'>Tóm tắt hóa đơn</font></font></h4>
+                <div class='rzvy_sticky_bottom_booking_summary whitebox'>
+                    <h4 class='widget-title rzvy-sidebar-block-title '>Tóm tắt hóa đơn</h4>
                     <div id='rzvy_refresh_cart' class='rzvy-sidebar-block-content rzvy-table'>
                         <table class='table'>
                             <tbody>
                             <tr>
                                 <td><i class='fa fa-refresh' aria-hidden='true'></i><font
                                         style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; MỘT LẦN</font></font></td>
+                                        style='vertical-align: inherit;'>&nbsp;MỘT LẦN</font></font></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><i class='fa fa-bookmark' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Làm tóc</font></font></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><i class='fa fa-paint-brush' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Duỗi tóc</font></font></td>
-                                <td><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>$
-                                    150</font></font>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><i class='fa fa-calendar' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; 09-06-2022 09:00 đến
-                                    10:00</font></font></td>
+                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Làm tóc</font></font></td>
                                 <td></td>
                             </tr>
                             <tr class='rzvy_subtotal_exit'>
-                                <th><i class='fa fa-money' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Tổng phụ:</font></font></th>
-                                <th><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>$
-                                    250,00</font></font>
+                                <th>
+                                    <i class='fa fa-tags' aria-hidden='true'></i>
+                                    &nbsp;Tổng số:
                                 </th>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th><i class='fa fa-ticket' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Giảm giá phiếu thưởng:</font></font>
+                                <th id='total_amount' data-amount='225.00'>
+                                    225,00
                                 </th>
-                                <th><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>- $
-                                    25,00</font></font></th>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th><i class='fa fa-tags' aria-hidden='true'></i><font style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Tổng số ròng:</font></font></th>
-                                <th id='rzvy_net_total_amount' data-amount='225.00'><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'>$ 225,00</font></font></th>
                             </tr>
                             </tbody>
                         </table>
@@ -232,30 +214,40 @@
             staffService.set(serviceId, staffId);
 
             console.log('staffService ===> :' + JSON.stringify(Object.fromEntries(staffService)));
-            console.log('staffService ===> :' + staffService.get(serviceId));
             staff.parent().parent().siblings().removeClass('staff-active');
             staff.toggleClass('staff-active');
         });
+
+        $(document).on('click', '#confirm', function () {
+            $(this).toggleClass('hidden_btn');
+            $('#create_invoice_btn').removeClass('hidden_btn');
+            $('#customer_phone').removeClass('hidden_input');
+        });
         $(document).on('click', '#create_invoice_btn', function () {
+            // const token = $("meta[name='_csrf']").attr("content");
+            // const header = $("meta[name='_csrf_header']").attr("content");
 
-            const str = JSON.stringify(Object.fromEntries(staffService));
-            console.log(str);
-
+            const totalAmount = $('#total_amount').attr('data-amount');
+            const customerPhone = $('#customer_phone').val();
+            let staffServiceStr = '';
+            staffService.forEach((value, key) => {
+                staffServiceStr += key + '-' + value + ',';
+            })
             $.ajax({
                 type: 'post',
                 data: JSON.stringify({
-                    'strServiceStaff': str
+                    'strServiceStaff': staffServiceStr,
+                    'customerPhone': customerPhone,
+                    'totalAmountPayment': totalAmount
                 }),
                 contentType: 'application/json; charset=utf-8',
                 url: "/admin/invoice",
-                success: function (res) {
+                success: function (data, textStatus, xhr) {
                     staffService.clear();
-                    if (res != "") {
-                        $("#rzvy_frequently_discount_content").html(res);
-                        $(".show_hide_frequently_discount").show();
+                    if (xhr.status === 200) {
+                        $('.alert-success').removeClass('hidden_alert');
                     } else {
-                        $("#rzvy_frequently_discount_content").html("");
-                        $(".show_hide_frequently_discount").hide();
+                        $('.alert-danger').removeClass('hidden_alert');
                     }
                 }
             });

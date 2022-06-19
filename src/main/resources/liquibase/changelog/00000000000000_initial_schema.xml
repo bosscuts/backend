@@ -19,6 +19,7 @@
             <column name="email" type="varchar(191)">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
             </column>
+            <column name="phone" type="varchar(200)"/>
             <column name="image_url" type="varchar(256)"/>
             <column name="level" type="varchar(20)"/>
             <column name="activated" type="boolean" valueBoolean="false">
@@ -162,7 +163,7 @@
                 <constraints primaryKey="true" nullable="false" primaryKeyName="invoice_pk"/>
             </column>
             <column name="invoice_number" type="varchar(100)"/>
-            <column name="customer_id" type="varchar(500)"/>
+            <column name="customer_id" type="int"/>
             <column name="total_amount_payment" type="number"/>
             <column name="discounted_amount" type="number"/>
             <column name="vat_percentage" type="int"/>
@@ -180,7 +181,8 @@
                 <constraints primaryKey="true" nullable="false"  primaryKeyName="invoice_detail_pk"/>
             </column>
             <column name="invoice_id" type="bigint"/>
-            <column name="product_service_id" type="bigint"/>
+            <column name="product_service_id" type="int"/>
+            <column name="staff_id" type="int"/>
             <column name="quantity" type="varchar(20)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
