@@ -31,9 +31,9 @@
             <img th:src='@{/img/logo.png}'/>
         </a>
 
-        <a href="javascript:void(0);" class="hamburger active"
+        <a href="javascript:void(0);" class="hamburger"
            onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
-        <ul style="display: block;">
+        <ul>
             <li sec:authorize="isAuthenticated()">
                 <a href="">
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -76,9 +76,9 @@
                                     <div class="row">
                                         <div class="col-sm-3 justify-content-center">
                                             <div class="item">
-                                                <h3 th:utext="${service.productServiceName}"></h3>
+                                                <h5 th:utext="${service.productServiceName}"></h5>
                                                 <div class="rating">
-                                                    <h3 th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +'D'}"></h3>
+                                                    <h5 th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,23 +86,23 @@
                                             <div class="custom-controls">
                                                 <div class="rzvy-container">
                                                     <div class="row justify-content-center">
-                                                        <div class="col-sm-4"
-                                                             th:each="assistant,assistantStat : ${assistants}">
-                                                            <div class="form-check custom">
-                                                                <input type="radio"
-                                                                       id="rzvy-frequently-discount-1"
-                                                                       name="rzvy-frequently-discount"
-                                                                       class="rzvy-frequently-discount-change form-check-input"
-                                                                       value="1">
-                                                                <label class="form-check-label"
-                                                                       for="rzvy-frequently-discount-1"
-                                                                       data-toggle="tooltip"
-                                                                       data-placement="bottom" title=""
-                                                                       data-bs-original-title="No Discount"
-                                                                       th:utext="${assistant.fullName}">ONE
-                                                                    TIME</label>
+                                                        <div class="col-sm-4" style="margin-bottom: 10px"
+                                                                 th:each="assistant,assistantStat : ${assistants}">
+                                                                <div class="form-check custom">
+                                                                    <input type="radio"
+                                                                           id="rzvy-frequently-discount-1"
+                                                                           name="rzvy-frequently-discount"
+                                                                           class="rzvy-frequently-discount-change form-check-input"
+                                                                           value="1">
+                                                                    <label class="form-check-label"
+                                                                           for="rzvy-frequently-discount-1"
+                                                                           data-toggle="tooltip"
+                                                                           data-placement="bottom" title=""
+                                                                           data-bs-original-title="No Discount"
+                                                                           th:utext="${assistant.fullName}">ONE
+                                                                        TIME</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

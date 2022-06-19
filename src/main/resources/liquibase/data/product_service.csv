@@ -1,8 +1,8 @@
 product_service_id;product_service_name;price;quantity;type;description
-1;Cat toc;60000;;SERVICE;Cat toc
-2;Cat toc tre em;50000;;SERVICE;Cat toc tre em
-3;Lay ray tai;60000;;SERVICE;Lay ray tai
-4;Xa truoc khi cat;60000;;SERVICE;Xa truoc khi cat
-5;Xa sau khi cat;60000;;SERVICE;Xa sau khi cat
-6;Rua mat;60000;;SERVICE;Rua mat
-7;Goi mat xa;60000;;SERVICE;Goi mat xa
+1;Cắt tóc;60000;;SERVICE;Cat toc
+2;Cắt tóc trẻ em;50000;;SERVICE;Cat toc tre em
+3;Lấy ráy tai;60000;;SERVICE;Lay ray tai
+4;Xả trước khi cắt;60000;;SERVICE;Xa truoc khi cat
+5;Xả sau khi cắt;60000;;SERVICE;Xa sau khi cat
+6;Rửa mặt;60000;;SERVICE;Rua mat
+7;Gội mát xa;60000;;SERVICE;Goi mat xa
