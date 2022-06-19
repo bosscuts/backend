@@ -256,9 +256,9 @@
 
             $.ajax({
                 type: 'post',
-                data: {
+                data: JSON.stringify({
                     'strServiceStaff': str
-                },
+                }),
                 contentType: 'application/json; charset=utf-8',
                 url: "/admin/invoice",
                 success: function (res) {

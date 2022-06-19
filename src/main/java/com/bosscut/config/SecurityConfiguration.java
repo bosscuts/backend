@@ -61,6 +61,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         public void configure(WebSecurity web) throws Exception {
             web.ignoring()
                     .antMatchers("/admin/assets/**")
+                    .antMatchers("/admin/invoice")
                     .antMatchers("/admin/images/**")
                     .antMatchers("/admin/sweetalert/**");
         }
@@ -73,6 +74,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
             http.antMatcher("/admin_/**")
                     .authorizeRequests()
                     .antMatchers("/admin_/**").hasAnyRole("ADMIN", "EDITOR", "AUTHOR")
+                    .antMatchers("/admin/invoice").permitAll()
                     .and()
                     .formLogin()
                     .loginPage("/admin_/login").permitAll()
