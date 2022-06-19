@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/invoice")
+@RequestMapping("/backend")
 public class InvoiceController {
 
     private final UserService userService;
@@ -27,7 +27,7 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @GetMapping
+    @GetMapping("/invoice")
     public String invoices(Model model) {
         List<User> users = userService.getUserByLevel(UserLevel.ASSISTANT.getName());
         model.addAttribute("assistants", users);

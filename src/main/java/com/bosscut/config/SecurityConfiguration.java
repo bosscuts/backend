@@ -74,7 +74,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
             http.antMatcher("/admin_/**")
                     .authorizeRequests()
                     .antMatchers("/admin_/**").hasAnyRole("ADMIN", "EDITOR", "AUTHOR")
-                    .antMatchers("/admin/invoice").permitAll()
                     .and()
                     .formLogin()
                     .loginPage("/admin_/login").permitAll()

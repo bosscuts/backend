@@ -3,23 +3,12 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-    <meta http-equiv='cache-control' content='no-cache'>
-    <meta http-equiv='Pragma' content='no-cache'>
-    <meta http-equiv='Expires' content='-1'>
     <link rel='shortcut icon' type='image/png' th:href="@{/img/favicon.ico}">
 
     <title>Barber Shop</title>
 
-    <link th:href="@{/css/flags.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/jquery.datetimepicker.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/bootstrap-select.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/pe-icon-7-stroke.css}" rel="stylesheet"/>
-    <link th:href="@{/css/sweetalert.css}" rel="stylesheet"/>
-    <link th:href="@{/css/intlTelInput.css}" rel="stylesheet"/>
-    <link th:href="@{/css/rzvy-front-calendar-style.css}" rel="stylesheet"/>
     <link th:href="@{/css/front-style.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
@@ -35,20 +24,32 @@
            onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
         <ul>
             <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-                <a th:href='@{/admin/invoice}'>
+                <a th:href='@{/backend/invoice}'>
                     <i class="fa fa-file-text" aria-hidden="true"></i>
                     &nbsp;Danh sách hoá đơn</a>
             </li>
             <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-                <a href="">
+                <a th:href='@{/statistic}'>
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                     &nbsp;Thống kê</a>
             </li>
-            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')">
-                <a href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href='@{/rules}'>
+                    <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Nội quy</a>
             </li>
             <li sec:authorize="isAuthenticated()">
-                <a class="user-avatar" th:href='@{/account-info}' sec:authentication="principal.username"></a>
+                <a th:href='@{/users/cash-advance}'>
+                    <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Ứng tiền</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href='@{/users/holiday}'>
+                    <i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;Nghỉ phép</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')" style="text-align: center">
+                <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a class="user-avatar" th:href='@{/users/account-info}' sec:authentication="principal.username"></a>
             </li>
             <li sec:authorize="isAuthenticated()" class="logout">
                 <a th:href='@{/logout}'>
@@ -61,21 +62,26 @@
         </ul>
     </div>
 </header>
-<main class="form-style-two rzvy-booking-detail-body">
-    <div class="container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before">
+<main class='form-style-two rzvy-booking-detail-body'>
+    <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
         <div class='row' sec:authorize="isAnonymous()">
             <a th:href='@{/login}'>
                 <img th:src='@{/img/please-login.png}'/>
             </a>
         </div>
-        <div class="row" sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-            <div class="col-lg-12">
+        <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
+            <div class="col-lg-8">
+                <div class="alert alert-success hidden_alert" role="alert">
+                    Tao hoa don thanh cong.
+                </div>
+                <div class="alert alert-danger hidden_alert" role="alert">
+                    Tao hoa don thanh cong.
+                </div>
                 <div class="rzvy-booking-detail-main">
                     <!-- STAFF SECTION START -->
                     <div id="rzvy-staff-main">
                         <div class="step-item">
-                            <h2 class="step-title "><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">Chọn nhân viên</font></font></h2>
+                            <h2 class="step-title">Chon nhan vien</h2>
                             <div class="services team">
                                 <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
                                      data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
@@ -83,11 +89,12 @@
                                     <div class="owl-stage-outer">
                                         <div class="owl-stage">
                                             <div class="owl-item"
-                                                 style="width:180px; margin-right: 10px; margin-bottom: 10px;"
+                                                 style="width:170px; margin-right: 10px; margin-bottom: 10px;"
                                                  th:each="assistant,assistantStat : ${assistants}">
                                                 <div class="item">
-                                                    <figure>
-                                                        <figcaption class="">
+                                                    <figure class="staff"
+                                                            th:staffId="${assistant.id}">
+                                                        <figcaption>
                                                             <h3 th:utext="${assistant.fullName}"></h3>
                                                             <div class="rating">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -95,22 +102,14 @@
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                                                <span class="rzvy_ratinginfo">
-                                                                    <strong>
-                                                                    5.0
-                                                                </strong>(2 nhận xét)</span>
                                                             </div>
                                                             <div class="service-meta">
                                                                 <span>
-                                                                    <i class="fa fa-fw fa-envelope-o"
+                                                                    <i class="fa fa-mobile"
                                                                        aria-hidden="true"></i>
-                                                                    <a th:utext="${assistant.email}"></a>
+                                                                    <a th:utext="${assistant.phone}"></a>
                                                                 </span>
                                                             </div>
-                                                            <input type="radio" name="rzvy-staff-radio"
-                                                                   class="rzvy-staff-change"
-                                                                   id="rzvy-staff-change-id-1"
-                                                                   data-id="1">
                                                         </figcaption>
                                                     </figure>
                                                 </div>
@@ -137,86 +136,11 @@
             </div>
         </div>
     </div>
-    </div>
 </main>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/bootstrap-select.min.js}"></script>
-<script th:src="@{/js/slick.min.js}"></script>
-<script th:src="@{/js/owl.carousel.min.js}"></script>
 <script th:src="@{/js/rzvy-common-front.js}"></script>
-<script th:src="@{/js/jquery.datetimepicker.full.min.js}"></script>
-<script th:src="@{/js/sweetalert.js}"></script>
-<script th:src="@{/js/jquery.validate.min.js}"></script>
 <script th:src="@{/js/rzvyconcent.js}"></script>
-
-<script>
-    $(document).ready(function () {
-        $('.datepicker').datetimepicker({
-            timepicker: false,
-            format: 'd/m',
-            maxViewMode: 1,
-            defaultViewDate: {year: 2022}
-        });
-        $.datetimepicker.setLocale('en');
-
-
-        $('.datepicker').datetimepicker({
-            timepicker: false,
-            format: 'd/m',
-            maxViewMode: 1,
-            defaultViewDate: {year: 2022}
-        });
-    });
-</script>
-<script>
-    var rzvyConsentConfig = {
-        version: 1,
-        elementID: 'rezervy-cookie-concent',
-        htmlTexts: false,
-        embedded: false,
-        storageMethod: 'cookie',
-        cookieName: 'rezervy',
-        cookieExpiresAfterDays: 30,
-        default: false,
-        mustConsent: true,
-        hideLearnMore: false,
-        noticeAsModal: true,
-        disablePoweredBy: true,
-        lang: 'en',
-        translations: {
-            en: {
-                privacyPolicyUrl: '',
-                consentModal: {
-                    title: 'Cookies & Privacy',
-                    description: 'This website uses cookies to ensure you get the best experience on our website.'
-                },
-                purposes: {
-                    analytics: 'Analytics'
-                }
-            }
-        },
-        services: []
-    };
-
-    function getCookie(name) {
-        var dc = document.cookie;
-        var prefix = name + '=';
-        var begin = dc.indexOf('; ' + prefix);
-        if (begin == -1) {
-            begin = dc.indexOf(prefix);
-            if (begin != 0) return null;
-        } else {
-            begin += 2;
-            var end = document.cookie.indexOf(';', begin);
-            if (end == -1) {
-                end = dc.length;
-            }
-        }
-        return decodeURI(dc.substring(begin + prefix.length, end));
-    }
-</script>
-
 </body>
 </html>
