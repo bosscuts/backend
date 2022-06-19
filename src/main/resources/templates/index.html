@@ -65,6 +65,7 @@
     <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
         <div class='row' sec:authorize="isAnonymous()">
             Ban chua dang nhap
+            <img th:src='@{/img/please-login.png}'/>
         </div>
         <div class='row' sec:authorize="isAuthenticated()">
             <div class='col-lg-8'>
