@@ -157,17 +157,17 @@ $(document).ready(function() {
   }); 
 
   /* //Rzvy Theia Sticky Sidebar Script*/
-  var formOfset = $('.form-style-two .rzvy-rightbar-heightcal');
-  var bottom = formOfset.position().top + formOfset.outerHeight()-10;
-  $(window).scroll(function(event) {
-    var scroll = $(this).scrollTop();
-    if (scroll >= bottom) {
-      $('.rzvy-sticky').addClass('sticky');
-    }
-    else {
-      $('.rzvy-sticky').removeClass('sticky');
-    }
-  }); 
+  // var formOfset = $('.form-style-two .rzvy-rightbar-heightcal');
+  // var bottom = formOfset.position().top + formOfset.outerHeight()-10;
+  // $(window).scroll(function(event) {
+  //   var scroll = $(this).scrollTop();
+  //   if (scroll >= bottom) {
+  //     $('.rzvy-sticky').addClass('sticky');
+  //   }
+  //   else {
+  //     $('.rzvy-sticky').removeClass('sticky');
+  //   }
+  // });
 });
 
 //Rzvy Get Inline CSS By Element Height Script

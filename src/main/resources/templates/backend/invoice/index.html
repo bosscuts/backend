@@ -61,21 +61,21 @@
         </ul>
     </div>
 </header>
-<main class='form-style-two rzvy-booking-detail-body'>
-    <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
+<main class="form-style-two rzvy-booking-detail-body">
+    <div class="container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before">
         <div class='row' sec:authorize="isAnonymous()">
             <a th:href='@{/login}'>
                 <img th:src='@{/img/please-login.png}'/>
             </a>
         </div>
-        <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-            <div class="col-lg-8">
+        <div class="row" sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
+            <div class="col-lg-12">
                 <div class="rzvy-booking-detail-main">
                     <!-- STAFF SECTION START -->
                     <div id="rzvy-staff-main">
-                        <div class="step-item" th:each="service,itrStat : ${services}">
-                            <h2 class="step-title " th:utext="${service.productServiceName}"></h2>
-                            <h4 class="price" style="color: #797877" th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
+                        <div class="step-item">
+                            <h2 class="step-title "><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Chọn nhân viên</font></font></h2>
                             <div class="services team">
                                 <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
                                      data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
@@ -85,11 +85,8 @@
                                             <div class="owl-item"
                                                  style="width:180px; margin-right: 10px; margin-bottom: 10px;"
                                                  th:each="assistant,assistantStat : ${assistants}">
-                                                <div class="item staff"
-                                                     th:data-id-staff="${assistant.id}"
-                                                     th:data-id-service="${service.productServiceId}"
-                                                     onclick="chooseStaff(this.getAttribute('data-id-staff'), this.getAttribute('data-id-service'))">
-                                                    <figure th:id="${'staff-' + assistant.id + 'service-' + service.productServiceId}">
+                                                <div class="item">
+                                                    <figure>
                                                         <figcaption class="">
                                                             <h3 th:utext="${assistant.fullName}"></h3>
                                                             <div class="rating">
@@ -138,75 +135,8 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
-                <div class='rzvy_sticky_bottom_booking_summary whitebox rzvy-sticky vsa_hide_show_booking_summary'>
-                    <h4 class='widget-title rzvy-sidebar-block-title '><font style='vertical-align: inherit;'><font
-                            style='vertical-align: inherit;'>Tóm tắt hóa đơn</font></font></h4>
-                    <div id='rzvy_refresh_cart' class='rzvy-sidebar-block-content rzvy-table'>
-                        <table class='table'>
-                            <tbody>
-                            <tr>
-                                <td><i class='fa fa-refresh' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; MỘT LẦN</font></font></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><i class='fa fa-bookmark' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Làm tóc</font></font></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><i class='fa fa-paint-brush' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Duỗi tóc</font></font></td>
-                                <td><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>$
-                                    150</font></font>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><i class='fa fa-calendar' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; 09-06-2022 09:00 đến
-                                    10:00</font></font></td>
-                                <td></td>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th><i class='fa fa-money' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Tổng phụ:</font></font></th>
-                                <th><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>$
-                                    250,00</font></font>
-                                </th>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th><i class='fa fa-ticket' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Giảm giá phiếu thưởng:</font></font>
-                                </th>
-                                <th><font style='vertical-align: inherit;'><font style='vertical-align: inherit;'>- $
-                                    25,00</font></font></th>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th><i class='fa fa-tags' aria-hidden='true'></i><font style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'> &nbsp; Tổng số ròng:</font></font></th>
-                                <th id='rzvy_net_total_amount' data-amount='225.00'><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'>$ 225,00</font></font></th>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <input type='hidden' class='rzvy_cart_pd_amount' value='0'>
-                        <input type='hidden' class='rzvy_cart_lp_amount' data-lpointleft='0' data-lpointused='0'
-                               data-lpointtotal='0' data-lpointcart='0' value='0'>
-                    </div>
-                </div>
-            </div>
         </div>
+    </div>
     </div>
 </main>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
@@ -222,38 +152,71 @@
 <script th:src="@{/js/rzvyconcent.js}"></script>
 
 <script>
-    let staffService = [];
     $(document).ready(function () {
+        $('.datepicker').datetimepicker({
+            timepicker: false,
+            format: 'd/m',
+            maxViewMode: 1,
+            defaultViewDate: {year: 2022}
+        });
+        $.datetimepicker.setLocale('en');
 
+
+        $('.datepicker').datetimepicker({
+            timepicker: false,
+            format: 'd/m',
+            maxViewMode: 1,
+            defaultViewDate: {year: 2022}
+        });
     });
-
-    function chooseStaff(oldIdStaff, idStaff, idService){
-        staffService.push(idStaff + '-' + idService);
-        document.querySelector('button').onclick = function() {
-            this.className = '';
-        }
-
-        document.getElementById('staff-' + oldIdStaff + 'service-' + idService).classList.remove('staff-active')
-        document.getElementById('staff-' + idStaff + 'service-' + idService).classList.add('staff-active');
-    }
+</script>
+<script>
+    var rzvyConsentConfig = {
+        version: 1,
+        elementID: 'rezervy-cookie-concent',
+        htmlTexts: false,
+        embedded: false,
+        storageMethod: 'cookie',
+        cookieName: 'rezervy',
+        cookieExpiresAfterDays: 30,
+        default: false,
+        mustConsent: true,
+        hideLearnMore: false,
+        noticeAsModal: true,
+        disablePoweredBy: true,
+        lang: 'en',
+        translations: {
+            en: {
+                privacyPolicyUrl: '',
+                consentModal: {
+                    title: 'Cookies & Privacy',
+                    description: 'This website uses cookies to ensure you get the best experience on our website.'
+                },
+                purposes: {
+                    analytics: 'Analytics'
+                }
+            }
+        },
+        services: []
+    };
 
     function getCookie(name) {
-        let dc = document.cookie;
-        let prefix = name + '=';
-        let begin = dc.indexOf('; ' + prefix);
-        if (begin === -1) {
+        var dc = document.cookie;
+        var prefix = name + '=';
+        var begin = dc.indexOf('; ' + prefix);
+        if (begin == -1) {
             begin = dc.indexOf(prefix);
-            if (begin !== 0) return null;
+            if (begin != 0) return null;
         } else {
             begin += 2;
-            let end = document.cookie.indexOf(';', begin);
-            if (end === -1) {
+            var end = document.cookie.indexOf(';', begin);
+            if (end == -1) {
                 end = dc.length;
             }
         }
         return decodeURI(dc.substring(begin + prefix.length, end));
     }
-
 </script>
+
 </body>
 </html>

@@ -887,7 +887,7 @@ main {
   padding: 73px 0;
 }
 .step-item + .step-item {
-  padding-top: 74px;
+  padding-top: 50px;
 }
 .step-title {
   padding-bottom: 20px;
@@ -972,10 +972,6 @@ figure,.form-check.custom{
 .services-item, .addi-services-item {
   display: none;
 }
-.services {
-  padding-top: 24px;
-}
-
 .services.rounded figure {
   background: none;
   box-shadow: none;
@@ -1041,7 +1037,7 @@ figure,.form-check.custom{
   font-size: 18px;
 }
 .services figcaption {
-  padding: 25px;
+  padding: 20px;
 }
 .services .rating {
   padding-bottom: 10px;
@@ -2212,7 +2208,7 @@ figure,.form-check.custom{
     vertical-align: baseline;
 }
 .owl-stage-outer{
-	padding:30px 0px 30px 0px;
+	padding:20px 0px 20px 0px;
 }
 .rzvy-brand .rzvy-companytitle{
 	font-size:24px;
@@ -2230,4 +2226,10 @@ figure,.form-check.custom{
 }
 .offcanvas {
     transition: transform 1s ease-in-out !important;
+}
+
+.staff-active{
+  border-radius: 20px 20px 0 0;
+  border-color: #50aba3;
+  border-width: 2px;
 }
