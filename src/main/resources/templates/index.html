@@ -44,8 +44,20 @@
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                     &nbsp;Thống kê</a>
             </li>
-            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')">
-                <a href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href='@{/rules}'>
+                    <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Nội quy</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href='@{/money}'>
+                    <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Ứng tiền</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href='@{/holiday}'>
+                    <i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;Nghỉ phép</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')" style="text-align: center">
+                <a th:href='@{/notify}'><i class="fa fa-bell-o" aria-hidden="true"></i></a>
             </li>
             <li sec:authorize="isAuthenticated()">
                 <a class="user-avatar" th:href='@{/account-info}' sec:authentication="principal.username"></a>
@@ -75,7 +87,8 @@
                     <div id="rzvy-staff-main">
                         <div class="step-item" th:each="service,itrStat : ${services}">
                             <h2 class="step-title " th:utext="${service.productServiceName}"></h2>
-                            <h4 class="price" style="color: #797877" th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
+                            <h4 class="price" style="color: #797877"
+                                th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
                             <div class="services team">
                                 <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
                                      data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
@@ -83,14 +96,13 @@
                                     <div class="owl-stage-outer">
                                         <div class="owl-stage">
                                             <div class="owl-item"
-                                                 style="width:180px; margin-right: 10px; margin-bottom: 10px;"
+                                                 style="width:160px; margin-right: 10px; margin-bottom: 10px;"
                                                  th:each="assistant,assistantStat : ${assistants}">
-                                                <div class="item staff"
-                                                     th:data-id-staff="${assistant.id}"
-                                                     th:data-id-service="${service.productServiceId}"
-                                                     onclick="chooseStaff(this.getAttribute('data-id-staff'), this.getAttribute('data-id-service'))">
-                                                    <figure th:id="${'staff-' + assistant.id + 'service-' + service.productServiceId}">
-                                                        <figcaption class="">
+                                                <div class="item">
+                                                    <figure class="staff"
+                                                            th:staffId="${assistant.id}"
+                                                            th:serviceId="${service.productServiceId}">
+                                                        <figcaption>
                                                             <h3 th:utext="${assistant.fullName}"></h3>
                                                             <div class="rating">
                                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -136,10 +148,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="forms rzvy-radio-group-block">
+                        <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4" type="submit"><span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Book Now</button>
+                    </div>
                 </div>
             </div>
-
-
             <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
                 <div class='rzvy_sticky_bottom_booking_summary whitebox rzvy-sticky vsa_hide_show_booking_summary'>
                     <h4 class='widget-title rzvy-sidebar-block-title '><font style='vertical-align: inherit;'><font
@@ -222,38 +235,45 @@
 <script th:src="@{/js/rzvyconcent.js}"></script>
 
 <script>
-    let staffService = [];
+    let staffService = new Map();
     $(document).ready(function () {
+        $(document).on('click', '.staff', function () {
+            let staff = $(this);
 
+            const staffId = staff.attr('staffId');
+            const serviceId = staff.attr('serviceId');
+            staffService.set(serviceId, staffId);
+
+            console.log('staffService ===> :' + JSON.stringify(Object.fromEntries(staffService)));
+            console.log('staffService ===> :' + staffService.get(serviceId));
+            staff.parent().parent().siblings().removeClass('staff-active');
+            staff.toggleClass('staff-active');
+        });
+        $(document).on('click', '#create_invoice_btn', function () {
+
+            const str = JSON.stringify(Object.fromEntries(staffService));
+            console.log(str);
+
+            $.ajax({
+                type: 'post',
+                data: {
+                    'strServiceStaff': str
+                },
+                contentType: 'application/json; charset=utf-8',
+                url: "/admin/invoice",
+                success: function (res) {
+                    staffService.clear();
+                    if (res != "") {
+                        $("#rzvy_frequently_discount_content").html(res);
+                        $(".show_hide_frequently_discount").show();
+                    } else {
+                        $("#rzvy_frequently_discount_content").html("");
+                        $(".show_hide_frequently_discount").hide();
+                    }
+                }
+            });
+        });
     });
-
-    function chooseStaff(oldIdStaff, idStaff, idService){
-        staffService.push(idStaff + '-' + idService);
-        document.querySelector('button').onclick = function() {
-            this.className = '';
-        }
-
-        document.getElementById('staff-' + oldIdStaff + 'service-' + idService).classList.remove('staff-active')
-        document.getElementById('staff-' + idStaff + 'service-' + idService).classList.add('staff-active');
-    }
-
-    function getCookie(name) {
-        let dc = document.cookie;
-        let prefix = name + '=';
-        let begin = dc.indexOf('; ' + prefix);
-        if (begin === -1) {
-            begin = dc.indexOf(prefix);
-            if (begin !== 0) return null;
-        } else {
-            begin += 2;
-            let end = document.cookie.indexOf(';', begin);
-            if (end === -1) {
-                end = dc.length;
-            }
-        }
-        return decodeURI(dc.substring(begin + prefix.length, end));
-    }
-
 </script>
 </body>
 </html>
