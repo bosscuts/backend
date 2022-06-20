@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template/layout}">
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-    <link rel='shortcut icon' type='image/png' th:href='@{/img/favicon.ico}'>
-    <title>Login</title>
-    <!-- Bootstrap core CSS-->
-    <link th:href="@{/css/flags.min.css}" rel="stylesheet"/>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='Pragma' content='no-cache'>
+    <meta http-equiv='Expires' content='-1'>
+    <link rel='shortcut icon' type='image/png' th:href="@{/img/favicon.ico}">
+    <title>Barber Shop</title>
+    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/bootstrap-select.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/sweetalert.css}" rel="stylesheet"/>
     <link th:href="@{/css/front-style.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' >
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
-<body class='rzvy' cz-shortcut-listen='true'>
-<!-- Brand and toggle get grouped for better mobile display -->
-<!-- Rzvy Header -->
-<header class='header'>
-    <div class='container'>
-        <a th:href='@{/}' class='rzvy-brand'>
-            <img th:src='@{/img/logo.png}'/>
-        </a>
-        <ul>
-            <li>
-                <a th:href='@{/register}'>
-                    <i class='fa fa-user-plus' aria-hidden='true'></i> &nbsp;Đăng kí</a>
-            </li>
-        </ul>
-    </div>
-</header>
-
-<section class='container rzvy-login-main p-3 mt-5'>
+<body class='rzvy'>
+<section layout:fragment="header">
+    <header class='header'>
+        <div class='container'>
+            <a th:href='@{/}' class='rzvy-brand'>
+                <img th:src='@{/img/logo.png}'/>
+            </a>
+            <ul>
+                <li>
+                    <a th:href='@{/register}'>
+                        <i class='fa fa-user-plus' aria-hidden='true'></i> &nbsp;Đăng kí
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+</section>
+<section layout:fragment="content" class='container rzvy-login-main p-3 mt-5'>
     <div class='row'>
         <div class='col-md-4'></div>
         <p th:if="${loginError}" class="error">Wrong user or password</p>
@@ -41,14 +41,17 @@
             <form th:action="@{/login}" method="post">
                 <div class='form-group'>
                     <label for='username'>Tên đăng nhập</label>
-                    <input type='text' class='form-control' id='username' name='username' placeholder='Nhập tên đăng nhập'>
+                    <input type='text' class='form-control' id='username' name='username'
+                           placeholder='Nhập tên đăng nhập'>
                 </div>
                 <div class='form-group'>
                     <label for='password'>Mật khẩu</label>
-                    <input type='password' class='form-control' id='password' name="password" placeholder='Nhập mật khẩu'>
+                    <input type='password' class='form-control' id='password' name="password"
+                           placeholder='Nhập mật khẩu'>
                 </div>
                 <div class='row mt-2'>
-                    <button type="submit" id='rzvy_login_btn' class='btn btn-success float-right w-100'>Đăng nhập</button>
+                    <button type="submit" id='rzvy_login_btn' class='btn btn-success float-right w-100'>Đăng nhập
+                    </button>
                 </div>
                 <small class='d-flex justify-content-center mt-2'>
                     <a href='#'>
@@ -59,13 +62,9 @@
         </div>
         <div class='col-md-4'></div>
     </div>
+</section>
+<section layout:fragment="footer">
 
 </section>
-<!-- Bootstrap core JavaScript-->
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/jquery.validate.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/bootstrap-select.min.js}"></script>
-<script th:src="@{/js/sweetalert.js}"></script>
 </body>
 </html>

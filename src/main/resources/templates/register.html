@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template/layout}">
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 
@@ -16,23 +18,22 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
-<body class='rzvy' cz-shortcut-listen='true'>
-<!-- Brand and toggle get grouped for better mobile display -->
-<!-- Rzvy Header -->
-<header class='header'>
-    <div class='container'>
-        <a th:href='@{/}' class='rzvy-brand'>
-            <img th:src='@{/img/logo.png}'/>
-        </a>
-        <ul>
-            <li>
-                <a th:href='@{/login}'><i class='fa fa-sign-in' aria-hidden='true'></i>&nbsp;&nbsp;Đăng nhập</a>
-            </li>
-        </ul>
-    </div>
-</header>
-
-<section class='rzvy-register-main my-3 '>
+<body class='rzvy'>
+<section layout:fragment="header">
+    <header class='header'>
+        <div class='container'>
+            <a th:href='@{/}' class='rzvy-brand'>
+                <img th:src='@{/img/logo.png}'/>
+            </a>
+            <ul>
+                <li>
+                    <a th:href='@{/login}'><i class='fa fa-sign-in' aria-hidden='true'></i>&nbsp;&nbsp;Đăng nhập</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+</section>
+<section layout:fragment="content" class='rzvy-register-main my-3'>
     <div class='container rzvy-register-container whitebox'>
         <form id='rzvy_customer_register_form' name='rzvy_customer_register_form' method='post' novalidate='novalidate'>
             <div class='row'>
@@ -111,12 +112,6 @@
         </form>
     </div>
 </section>
-<!-- Bootstrap core JavaScript-->
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/jquery.validate.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/bootstrap-select.min.js}"></script>
-<script th:src="@{/js/rzvyconcent.js}"></script>
-<script th:src="@{/js/sweetalert.js}"></script>
+<section layout:fragment="footer"></section>
 </body>
 </html>

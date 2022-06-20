@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template/layout}">
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
@@ -20,235 +22,134 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
 <body>
-<header class='header'>
-    <div class='container'>
-        <a th:href='@{/}' class='rzvy-brand'>
-            <img th:src='@{/img/logo.png}'/>
-        </a>
-
-        <a href="javascript:void(0);" class="hamburger"
-           onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
-        <ul>
-            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-                <a th:href='@{/backend/invoice}'>
-                    <i class="fa fa-file-text" aria-hidden="true"></i>
-                    &nbsp;Danh sách hoá đơn</a>
-            </li>
-            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-                <a th:href='@{/statistic}'>
-                    <i class="fa fa-user-plus" aria-hidden="true"></i>
-                    &nbsp;Thống kê</a>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-                <a th:href='@{/rules}'>
-                    <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Nội quy</a>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-                <a th:href='@{/users/cash-advance}'>
-                    <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Ứng tiền</a>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-                <a th:href='@{/users/holiday}'>
-                    <i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;Nghỉ phép</a>
-            </li>
-            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')" style="text-align: center">
-                <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-                <a class="user-avatar" th:href='@{/users/account-info}' sec:authentication="principal.username"></a>
-            </li>
-            <li sec:authorize="isAuthenticated()" class="logout">
-                <a th:href='@{/logout}'>
-                    <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Đăng xuất
+<section layout:fragment="content">
+    <main class='form-style-two rzvy-booking-detail-body'>
+        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
+            <div class='row' sec:authorize="isAnonymous()">
+                <a th:href='@{/login}'>
+                    <img th:src='@{/img/please-login.png}'/>
                 </a>
-            </li>
-            <li sec:authorize="isAnonymous()">
-                <a th:href='@{/login}'><i class='fa fa-sign-in' aria-hidden='true'></i>&nbsp;&nbsp;Đăng nhập</a>
-            </li>
-        </ul>
-    </div>
-</header>
-<main class='form-style-two rzvy-booking-detail-body'>
-    <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
-        <div class='row' sec:authorize="isAnonymous()">
-            <a th:href='@{/login}'>
-                <img th:src='@{/img/please-login.png}'/>
-            </a>
-        </div>
-        <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-            <div class="col-lg-8">
-                <div class="alert alert-success hidden_alert" role="alert">
-                    Tao hoa don thanh cong.
-                </div>
-                <div class="alert alert-danger hidden_alert" role="alert">
-                    Tao hoa don thanh cong.
-                </div>
-                <div class="rzvy-booking-detail-main">
-                    <!-- STAFF SECTION START -->
-                    <div id="rzvy-staff-main">
-                        <div class="step-item" th:each="service,itrStat : ${services}">
-                            <h2 class="step-title " th:utext="${service.productServiceName}"></h2>
-                            <h4 class="price" style="color: #797877"
-                                th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
-                            <div class="services team">
-                                <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
-                                     data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
-                                     data-nav="true" data-dots="true" autoplay="false" data-loop="false">
-                                    <div class="owl-stage-outer">
-                                        <div class="owl-stage">
-                                            <div class="owl-item"
-                                                 style="width:170px; margin-right: 10px; margin-bottom: 10px;"
-                                                 th:each="assistant,assistantStat : ${assistants}">
-                                                <div class="item">
-                                                    <figure class="staff"
-                                                            th:staffId="${assistant.id}"
-                                                            th:serviceId="${service.productServiceId}">
-                                                        <figcaption>
-                                                            <h3 th:utext="${assistant.fullName}"></h3>
-                                                            <div class="rating">
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                            </div>
-                                                            <div class="service-meta">
+            </div>
+            <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
+                <div class="col-lg-8">
+                    <div class="alert alert-success hidden_alert" role="alert">
+                        Tao hoa don thanh cong.
+                    </div>
+                    <div class="alert alert-danger hidden_alert" role="alert">
+                        Tao hoa don thanh cong.
+                    </div>
+                    <div class="rzvy-booking-detail-main">
+                        <!-- STAFF SECTION START -->
+                        <div id="rzvy-staff-main">
+                            <div class="step-item" th:each="service,itrStat : ${services}">
+                                <h2 class="step-title " th:utext="${service.productServiceName}"></h2>
+                                <h4 class="price" style="color: #797877"
+                                    th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
+                                <div class="services team">
+                                    <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
+                                         data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
+                                         data-nav="true" data-dots="true" autoplay="false" data-loop="false">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage">
+                                                <div class="owl-item"
+                                                     style="width:170px; margin-right: 10px; margin-bottom: 10px;"
+                                                     th:each="assistant,assistantStat : ${assistants}">
+                                                    <div class="item">
+                                                        <figure class="staff"
+                                                                th:staffId="${assistant.id}"
+                                                                th:serviceId="${service.productServiceId}">
+                                                            <figcaption>
+                                                                <h3 th:utext="${assistant.fullName}"></h3>
+                                                                <div class="rating">
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="service-meta">
                                                                 <span>
                                                                     <i class="fa fa-mobile"
                                                                        aria-hidden="true"></i>
                                                                     <a th:utext="${assistant.phone}"></a>
                                                                 </span>
-                                                            </div>
-                                                        </figcaption>
-                                                    </figure>
+                                                                </div>
+                                                            </figcaption>
+                                                        </figure>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="owl-nav disabled">
-                                        <button type="button" role="presentation" class="owl-prev disabled">
-                                            <div class="slider-no-current"><span class="current-no">1</span><span
-                                                    class="total-no">1</span></div>
-                                            <span class="current-monials"></span></button>
-                                        <button type="button" role="presentation" class="owl-next disabled">
-                                            <div class="slider-no-next"></div>
-                                            <span class="next-monials"></span></button>
-                                    </div>
-                                    <div class="owl-dots disabled">
-                                        <button role="button" class="owl-dot active"><span></span></button>
+                                        <div class="owl-nav disabled">
+                                            <button type="button" role="presentation" class="owl-prev disabled">
+                                                <div class="slider-no-current"><span class="current-no">1</span><span
+                                                        class="total-no">1</span></div>
+                                                <span class="current-monials"></span></button>
+                                            <button type="button" role="presentation" class="owl-next disabled">
+                                                <div class="slider-no-next"></div>
+                                                <span class="next-monials"></span></button>
+                                        </div>
+                                        <div class="owl-dots disabled">
+                                            <button role="button" class="owl-dot active"><span></span></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <input type="text" id="customer_phone"
+                                       name="customer_phone"
+                                       placeholder="Customer phone"
+                                       class="form-control hidden_input">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" id="customer_phone"
-                                   name="customer_phone"
-                                   placeholder="Customer phone"
-                                   class="form-control hidden_input">
+                        <div class="forms rzvy-radio-group-block">
+                            <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
+                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xac nhan
+                            </button>
+                            <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
+                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tao hoa don
+                            </button>
                         </div>
-                    </div>
-                    <div class="forms rzvy-radio-group-block">
-                        <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
-                            <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xac nhan
-                        </button>
-                        <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
-                            <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tao hoa don
-                        </button>
                     </div>
                 </div>
-            </div>
-            <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
-                <div class='rzvy_sticky_bottom_booking_summary whitebox'>
-                    <h4 class='widget-title rzvy-sidebar-block-title '>Tóm tắt hóa đơn</h4>
-                    <div id='rzvy_refresh_cart' class='rzvy-sidebar-block-content rzvy-table'>
-                        <table class='table'>
-                            <tbody>
-                            <tr>
-                                <td><i class='fa fa-refresh' aria-hidden='true'></i><font
-                                        style='vertical-align: inherit;'><font
-                                        style='vertical-align: inherit;'>&nbsp;MỘT LẦN</font></font></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Làm tóc</font></font></td>
-                                <td></td>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th>
-                                    <i class='fa fa-tags' aria-hidden='true'></i>
-                                    &nbsp;Tổng số:
-                                </th>
-                                <th id='total_amount' data-amount='225.00'>
-                                    225,00
-                                </th>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <input type='hidden' class='rzvy_cart_pd_amount' value='0'>
-                        <input type='hidden' class='rzvy_cart_lp_amount' data-lpointleft='0' data-lpointused='0'
-                               data-lpointtotal='0' data-lpointcart='0' value='0'>
+                <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
+                    <div class='rzvy_sticky_bottom_booking_summary whitebox'>
+                        <h4 class='widget-title rzvy-sidebar-block-title '>Tóm tắt hóa đơn</h4>
+                        <div id='rzvy_refresh_cart' class='rzvy-sidebar-block-content rzvy-table'>
+                            <table class='table'>
+                                <tbody>
+                                <tr>
+                                    <td><i class='fa fa-refresh' aria-hidden='true'></i><font
+                                            style='vertical-align: inherit;'><font
+                                            style='vertical-align: inherit;'>&nbsp;MỘT LẦN</font></font></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Làm tóc</font></font></td>
+                                    <td></td>
+                                </tr>
+                                <tr class='rzvy_subtotal_exit'>
+                                    <th>
+                                        <i class='fa fa-tags' aria-hidden='true'></i>
+                                        &nbsp;Tổng số:
+                                    </th>
+                                    <th id='total_amount' data-amount='225.00'>
+                                        225,00
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <input type='hidden' class='rzvy_cart_pd_amount' value='0'>
+                            <input type='hidden' class='rzvy_cart_lp_amount' data-lpointleft='0' data-lpointused='0'
+                                   data-lpointtotal='0' data-lpointcart='0' value='0'>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
-<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/rzvy-common-front.js}"></script>
-<script th:src="@{/js/rzvyconcent.js}"></script>
-
-<script>
-    let staffService = new Map();
-    $(document).ready(function () {
-        $(document).on('click', '.staff', function () {
-            let staff = $(this);
-
-            const staffId = staff.attr('staffId');
-            const serviceId = staff.attr('serviceId');
-            staffService.set(serviceId, staffId);
-
-            console.log('staffService ===> :' + JSON.stringify(Object.fromEntries(staffService)));
-            staff.parent().parent().siblings().removeClass('staff-active');
-            staff.toggleClass('staff-active');
-        });
-
-        $(document).on('click', '#confirm', function () {
-            $(this).toggleClass('hidden_btn');
-            $('#create_invoice_btn').removeClass('hidden_btn');
-            $('#customer_phone').removeClass('hidden_input');
-        });
-        $(document).on('click', '#create_invoice_btn', function () {
-            // const token = $("meta[name='_csrf']").attr("content");
-            // const header = $("meta[name='_csrf_header']").attr("content");
-
-            const totalAmount = $('#total_amount').attr('data-amount');
-            const customerPhone = $('#customer_phone').val();
-            let staffServiceStr = '';
-            staffService.forEach((value, key) => {
-                staffServiceStr += key + '-' + value + ',';
-            })
-            $.ajax({
-                type: 'post',
-                data: JSON.stringify({
-                    'strServiceStaff': staffServiceStr,
-                    'customerPhone': customerPhone,
-                    'totalAmountPayment': totalAmount
-                }),
-                contentType: 'application/json; charset=utf-8',
-                url: "/admin/invoice",
-                success: function (data, textStatus, xhr) {
-                    staffService.clear();
-                    if (xhr.status === 200) {
-                        $('.alert-success').removeClass('hidden_alert');
-                    } else {
-                        $('.alert-danger').removeClass('hidden_alert');
-                    }
-                }
-            });
-        });
-    });
-</script>
+    </main>
+</section>
+<section layout:fragment="js">
+</section>
 </body>
 </html>
