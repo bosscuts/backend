@@ -8,8 +8,129 @@
 <body>
 <section layout:fragment="content">
     <main class='form-style-two rzvy-booking-detail-body'>
-        <h1>Hoa don</h1>
+        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
+            <div class='row'>
+                <div class="col-lg-12">
+                    <div class="rzvy-booking-detail-main">
+                        <!-- STAFF SECTION START -->
+                        <div id="rzvy-staff-main">
+                            <h2 class="step-title">Chọn nhân viên</h2>
+                            <div class="services team">
+                                <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
+                                     data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
+                                     data-nav="true" data-dots="true" autoplay="false" data-loop="false">
+                                    <div class="owl-stage-outer">
+                                        <div class="owl-stage">
+                                            <div class="owl-item"
+                                                 style="width:170px; margin-right: 10px; margin-bottom: 10px;"
+                                                 th:each="assistant,assistantStat : ${assistants}">
+                                                <div class="item">
+                                                    <figure class="staff"
+                                                            th:staffId="${assistant.id}">
+                                                        <figcaption>
+                                                            <h3 th:utext="${assistant.fullName}"></h3>
+                                                            <div class="rating">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div class="service-meta">
+                                                                <span>
+                                                                    <i class="fa fa-mobile"
+                                                                       aria-hidden="true"></i>
+                                                                    <a th:utext="${assistant.phone}"></a>
+                                                                </span>
+                                                            </div>
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="result">
+
+                </div>
+            </div>
+        </div>
     </main>
+</section>
+
+<section layout:fragment="js">
+    <script>
+        let staffIds = [];
+        let htmlResult = '';
+        $(document).ready(function () {
+            $(document).on('click', '.staff', function () {
+                $('#result').html('');
+                htmlResult = '';
+                let staff = $(this);
+                const staffId = staff.attr('staffId');
+                const index = staffIds.indexOf(staffId);
+                if (index !== -1) {
+                    staffIds.splice(index, 1);
+                    staff.removeClass('staff-active');
+                } else {
+                    staffIds.push(staffId);
+                    staff.toggleClass('staff-active');
+                }
+                console.log(staffIds)
+                $.ajax({
+                    url: "/backend/invoice/" + staffId,
+                    type: "get",
+                    success: function (result) {
+                        result.forEach(concatHtmlResult);
+                        $('#result').html(htmlResult);
+                    }
+                });
+            });
+        });
+
+        function concatHtmlResult(data, index, array) {
+            const productServiceName = data.productServiceName
+            const totalAmountPayment = data.totalAmountPayment
+            const price = data.price
+            const quantity = data.quantity
+            htmlResult += `<div class='col-lg-4 rzvy-sidebar'>
+                    <div class='whitebox'>
+                        <h4 class='widget-title'>Tóm tắt hóa đơn</h4>
+                        <table class='table'>
+                            <tbody>
+                            <tr>
+                                <td><i class='fa fa-refresh' aria-hidden='true'></i>&nbsp;${productServiceName}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;${quantity}</font></font>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;${price}</font></font>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr class='rzvy_subtotal_exit'>
+                                <th>
+                                    <i class='fa fa-tags' aria-hidden='true'></i>
+                                    &nbsp;Tổng số:
+                                </th>
+                                <th class="total_amount">
+                                    ${totalAmountPayment}
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`;
+        }
+    </script>
 </section>
 </body>
 </html>

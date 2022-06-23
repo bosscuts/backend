@@ -61,7 +61,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         public void configure(WebSecurity web) throws Exception {
             web.ignoring()
                     .antMatchers("/admin/assets/**")
-                    .antMatchers("/admin/invoice")
+                    .antMatchers("/backend/invoice")
                     .antMatchers("/admin/images/**")
                     .antMatchers("/admin/sweetalert/**");
         }

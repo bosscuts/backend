@@ -4,6 +4,7 @@ import com.bosscut.dto.InvoiceRequestDTO;
 import com.bosscut.entity.Customer;
 import com.bosscut.entity.Invoice;
 import com.bosscut.entity.InvoiceDetail;
+import com.bosscut.model.UserInvoiceDetail;
 import com.bosscut.repository.InvoiceDetailRepository;
 import com.bosscut.repository.InvoiceRepository;
 import com.bosscut.service.CustomerService;
@@ -63,5 +64,10 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoiceDetails.add(invoiceDetail);
         });
         invoiceDetailRepository.saveAll(invoiceDetails);
+    }
+
+    @Override
+    public List<UserInvoiceDetail> getInvoiceByStaffId(String staffId) {
+        return invoiceDetailRepository.findByStaffIds(List.of(Long.valueOf(staffId)));
     }
 }

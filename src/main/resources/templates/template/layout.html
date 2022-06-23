@@ -90,58 +90,9 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/rzvy-common-front.js}"></script>
 <script th:src="@{/js/rzvyconcent.js}"></script>
-
-<script>
-    let staffService = new Map();
-    $(document).ready(function () {
-        $(document).on('click', '.staff', function () {
-            let staff = $(this);
-
-            const staffId = staff.attr('staffId');
-            const serviceId = staff.attr('serviceId');
-            staffService.set(serviceId, staffId);
-
-            console.log('staffService ===> :' + JSON.stringify(Object.fromEntries(staffService)));
-            staff.parent().parent().siblings().removeClass('staff-active');
-            staff.toggleClass('staff-active');
-        });
-
-        $(document).on('click', '#confirm', function () {
-            $(this).toggleClass('hidden_btn');
-            $('#create_invoice_btn').removeClass('hidden_btn');
-            $('#customer_phone').removeClass('hidden_input');
-        });
-        $(document).on('click', '#create_invoice_btn', function () {
-            // const token = $("meta[name='_csrf']").attr("content");
-            // const header = $("meta[name='_csrf_header']").attr("content");
-
-            const totalAmount = $('#total_amount').attr('data-amount');
-            const customerPhone = $('#customer_phone').val();
-            let staffServiceStr = '';
-            staffService.forEach((value, key) => {
-                staffServiceStr += key + '-' + value + ',';
-            })
-            $.ajax({
-                type: 'post',
-                data: JSON.stringify({
-                    'strServiceStaff': staffServiceStr,
-                    'customerPhone': customerPhone,
-                    'totalAmountPayment': totalAmount
-                }),
-                contentType: 'application/json; charset=utf-8',
-                url: "/admin/invoice",
-                success: function (data, textStatus, xhr) {
-                    staffService.clear();
-                    if (xhr.status === 200) {
-                        $('.alert-success').removeClass('hidden_alert');
-                    } else {
-                        $('.alert-danger').removeClass('hidden_alert');
-                    }
-                }
-            });
-        });
-    });
-</script>
+<script th:src="@{/js/jquery.toaster.js}"></script>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <section layout:fragment="js"></section>
 </body>
 </html>

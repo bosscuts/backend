@@ -32,12 +32,6 @@
             </div>
             <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
                 <div class="col-lg-8">
-                    <div class="alert alert-success hidden_alert" role="alert">
-                        Tao hoa don thanh cong.
-                    </div>
-                    <div class="alert alert-danger hidden_alert" role="alert">
-                        Tao hoa don thanh cong.
-                    </div>
                     <div class="rzvy-booking-detail-main">
                         <!-- STAFF SECTION START -->
                         <div id="rzvy-staff-main">
@@ -112,37 +106,31 @@
                         </div>
                     </div>
                 </div>
-                <div class='col-lg-4 rzvy-sidebar rzvy_right_side_container'>
-                    <div class='rzvy_sticky_bottom_booking_summary whitebox'>
-                        <h4 class='widget-title rzvy-sidebar-block-title '>Tóm tắt hóa đơn</h4>
-                        <div id='rzvy_refresh_cart' class='rzvy-sidebar-block-content rzvy-table'>
-                            <table class='table'>
-                                <tbody>
-                                <tr>
-                                    <td><i class='fa fa-refresh' aria-hidden='true'></i><font
-                                            style='vertical-align: inherit;'><font
-                                            style='vertical-align: inherit;'>&nbsp;MỘT LẦN</font></font></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Làm tóc</font></font></td>
-                                    <td></td>
-                                </tr>
-                                <tr class='rzvy_subtotal_exit'>
-                                    <th>
-                                        <i class='fa fa-tags' aria-hidden='true'></i>
-                                        &nbsp;Tổng số:
-                                    </th>
-                                    <th id='total_amount' data-amount='225.00'>
-                                        225,00
-                                    </th>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <input type='hidden' class='rzvy_cart_pd_amount' value='0'>
-                            <input type='hidden' class='rzvy_cart_lp_amount' data-lpointleft='0' data-lpointused='0'
-                                   data-lpointtotal='0' data-lpointcart='0' value='0'>
-                        </div>
+                <div class='col-lg-4 rzvy-sidebar'>
+                    <div class='whitebox'>
+                        <h4 class='widget-title'>Tóm tắt hóa đơn</h4>
+                        <table class='table'>
+                            <tbody>
+                            <tr>
+                                <td><i class='fa fa-refresh' aria-hidden='true'></i>&nbsp;MỘT LẦN</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Làm tóc</font></font>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr class='rzvy_subtotal_exit'>
+                                <th>
+                                    <i class='fa fa-tags' aria-hidden='true'></i>
+                                    &nbsp;Tổng số:
+                                </th>
+                                <th class="total_amount">
+                                    225,00
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -150,6 +138,63 @@
     </main>
 </section>
 <section layout:fragment="js">
+
+    <script>
+        let staffService = new Map();
+        $(document).ready(function () {
+            $(document).on('click', '.staff', function () {
+                let staff = $(this);
+
+                const staffId = staff.attr('staffId');
+                const serviceId = staff.attr('serviceId');
+                staffService.set(serviceId, staffId);
+
+                console.log('staffService ===> :' + JSON.stringify(Object.fromEntries(staffService)));
+                staff.parent().parent().siblings().removeClass('staff-active');
+                staff.toggleClass('staff-active');
+            });
+
+            $(document).on('click', '#confirm', function () {
+                $(this).toggleClass('hidden_btn');
+                $('#create_invoice_btn').removeClass('hidden_btn');
+                $('#customer_phone').removeClass('hidden_input');
+            });
+            $(document).on('click', '#create_invoice_btn', function () {
+                // const token = $("meta[name='_csrf']").attr("content");
+                // const header = $("meta[name='_csrf_header']").attr("content");
+
+                const totalAmount = $('#total_amount').attr('data-amount');
+                const customerPhone = $('#customer_phone').val();
+                let staffServiceStr = '';
+                staffService.forEach((value, key) => {
+                    staffServiceStr += key + '-' + value + ',';
+                })
+                if (staffServiceStr) {
+                    $.ajax({
+                        type: 'post',
+                        data: JSON.stringify({
+                            'strServiceStaff': staffServiceStr,
+                            'customerPhone': customerPhone,
+                            'totalAmountPayment': totalAmount
+                        }),
+                        contentType: 'application/json; charset=utf-8',
+                        url: "/backend/invoice",
+                        success: function (data, textStatus, xhr) {
+                            staffService.clear();
+                            if (xhr.status === 200) {
+                                $.toaster({ priority : 'success', message : 'Tạo hóa đơn thành công.' });
+                            } else {
+                                $.toaster({ priority : 'danger', message : 'Tạo hóa đơn thất bại!' });
+                            }
+                        }
+                    });
+                } else {
+                    $.toaster({ priority : 'danger', message : 'Bạn chưa chọn dịch vụ hoặc sản phẩm nào!' });
+                }
+
+            });
+        });
+    </script>
 </section>
 </body>
 </html>

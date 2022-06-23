@@ -6,6 +6,7 @@ import com.bosscut.enums.UserLevel;
 import com.bosscut.service.InvoiceService;
 import com.bosscut.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -34,9 +37,13 @@ public class InvoiceController {
         return "backend/invoice/index";
     }
 
-    @PostMapping
+    @GetMapping("/invoice/{staffId}")
+    public ResponseEntity<?> getInvoiceByStaffId(@PathVariable String staffId) {
+        return ResponseEntity.ok(invoiceService.getInvoiceByStaffId(staffId));
+    }
+
+    @PostMapping("/invoice")
     public ResponseEntity<?> createInvoice(@RequestBody @Valid InvoiceRequestDTO requestDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         invoiceService.createInvoice(requestDTO);
         return ResponseEntity.ok().build();
     }
