@@ -2240,6 +2240,10 @@ figure,.form-check.custom{
   display: none;
 }
 
+.hidden_div {
+  display: none;
+}
+
 .hidden_alert {
   display: none;
 }

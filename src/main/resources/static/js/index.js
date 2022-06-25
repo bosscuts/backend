@@ -14,7 +14,7 @@ $(document).ready(function () {
     $(document).on('click', '#confirm', function () {
         $(this).toggleClass('hidden_btn');
         $('#create_invoice_btn').removeClass('hidden_btn');
-        $('#customer_phone').removeClass('hidden_input');
+        $('#info_customer').removeClass('hidden_div');
     });
     $(document).on('click', '#create_invoice_btn', function () {
         // const token = $("meta[name='_csrf']").attr("content");
