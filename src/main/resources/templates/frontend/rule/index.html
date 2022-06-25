@@ -1,16 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{template/layout}">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{template/layout}">
 <head>
-    <title>Barber Shop</title>
+    <title>Danh sách nội quy</title>
 </head>
 <body>
 <section layout:fragment="content">
     <main class='form-style-two rzvy-booking-detail-body'>
         <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
             <div class='row'>
-                <h1>Noi quy</h1>
+                <div class="col-lg-8">
+                    <div class="rzvy-booking-detail-main">
+                        <h2 class="fs-5">Danh sách nội quy</h2>
+
+                        <div class="step-item remove_payment_according_services_showhide rzvy_hide_show_payment_according_services">
+                            <div class="rzvy-container">
+                                <div class="rzvy-radio-group-block-content step-item">
+                                    <div class="whitebox">
+                                        <div class="mb-3 row align-items-center rzvy-cart-lpoint-div" th:each="rule,itrStat : ${rules}">
+                                            <div class="col-md-6 rzvy-cart-lpoint-label-main">
+                                                <div class="form-check mb-0">
+                                                    <label class="form-check-label" th:utext="${'+ ' + rule.ruleName}">Do you want to use your loyalty points?</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

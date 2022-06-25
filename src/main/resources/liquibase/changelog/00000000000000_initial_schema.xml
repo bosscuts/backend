@@ -111,8 +111,9 @@
                 <constraints primaryKey="true" nullable="false" primaryKeyName="customer_pk"/>
             </column>
             <column name="customer_name" type="varchar(100)"/>
-            <column name="address" type="varchar(500)"/>
+            <column name="email" type="varchar(200)"/>
             <column name="phone" type="varchar(20)"/>
+            <column name="address" type="varchar(500)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>
@@ -189,5 +190,25 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+
+        <createTable tableName="rule">
+            <column name="rule_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="rule_pk"/>
+            </column>
+            <column name="rule_name" type="varchar(200)"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <loadData
+                file="liquibase/data/rule.csv"
+                separator=";"
+                tableName="rule"
+                usePreparedStatements="true">
+            <column name="rule_id" type="numeric"/>
+        </loadData>
     </changeSet>
 </databaseChangeLog>

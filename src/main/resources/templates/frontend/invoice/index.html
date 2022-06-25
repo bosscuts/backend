@@ -54,9 +54,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="result">
+            </div>
+            <div class='row' id="result">
 
-                </div>
             </div>
         </div>
     </main>
@@ -82,7 +82,7 @@
                 }
                 console.log(staffIds)
                 $.ajax({
-                    url: "/backend/invoice/" + staffId,
+                    url: "/invoice/" + staffId,
                     type: "get",
                     success: function (result) {
                         result.forEach(concatHtmlResult);

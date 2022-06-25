@@ -1,6 +1,6 @@
 package com.bosscut.dto;
 
-public class LoginDTO {
+public class LoginRequestDTO {
     private String email;
     private String password;
 

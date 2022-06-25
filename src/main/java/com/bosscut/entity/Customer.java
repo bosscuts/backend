@@ -17,20 +17,23 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
     @Column(name = "customer_name")
     private String customerName;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "address")
+    private String address;
     public Customer() {
     }
 
-    public Customer(Long customerId, String customerName, String address, String phone) {
+    public Customer(Long customerId, String customerName, String email, String phone, String address) {
         this.customerId = customerId;
         this.customerName = customerName;
-        this.address = address;
+        this.email = email;
         this.phone = phone;
+        this.address = address;
     }
 
     public Long getCustomerId() {
@@ -63,5 +66,13 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -9,18 +9,7 @@
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='Pragma' content='no-cache'>
     <meta http-equiv='Expires' content='-1'>
-    <!--    <meta th:name="_csrf" th:content="${_csrf.token}"/>-->
-    <!--    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>-->
-    <link rel='shortcut icon' type='image/png' th:href="@{/img/favicon.ico}">
-
     <title>Barber Shop</title>
-
-    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/front-style.css}" rel="stylesheet"/>
-    <link th:href="@{/css/sweetalert.css}" rel="stylesheet"/>
-    <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
 <body>
 <section layout:fragment="content">
@@ -91,18 +80,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <h2 class="step-title ">Thông tin khách hàng</  h2>
                                 <input type="text" id="customer_phone"
                                        name="customer_phone"
-                                       placeholder="Customer phone"
+                                       placeholder="Số điện thoại khách hàng"
                                        class="form-control hidden_input">
                             </div>
                         </div>
                         <div class="forms rzvy-radio-group-block">
                             <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
-                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xac nhan
+                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xác nhận
                             </button>
                             <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
-                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tao hoa don
+                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tạo hoá đơn
                             </button>
                         </div>
                     </div>
@@ -139,66 +129,7 @@
     </main>
 </section>
 <section layout:fragment="js">
-
-    <script>
-        let staffService = new Map();
-        $(document).ready(function () {
-            $(document).on('click', '.staff', function () {
-                let staff = $(this);
-
-                const staffId = staff.attr('staffId');
-                const serviceId = staff.attr('serviceId');
-                staffService.set(serviceId, staffId);
-
-                console.log('staffService ===> :' + JSON.stringify(Object.fromEntries(staffService)));
-                staff.parent().parent().siblings().removeClass('staff-active');
-                staff.toggleClass('staff-active');
-            });
-
-            $(document).on('click', '#confirm', function () {
-                $(this).toggleClass('hidden_btn');
-                $('#create_invoice_btn').removeClass('hidden_btn');
-                $('#customer_phone').removeClass('hidden_input');
-            });
-            $(document).on('click', '#create_invoice_btn', function () {
-                // const token = $("meta[name='_csrf']").attr("content");
-                // const header = $("meta[name='_csrf_header']").attr("content");
-
-                const totalAmount = $('#total_amount').attr('data-amount');
-                const customerPhone = $('#customer_phone').val();
-                let staffServiceStr = '';
-                staffService.forEach((value, key) => {
-                    staffServiceStr += key + '-' + value + ',';
-                })
-                if (staffServiceStr) {
-                    $.ajax({
-                        type: 'post',
-                        data: JSON.stringify({
-                            'strServiceStaff': staffServiceStr,
-                            'customerPhone': customerPhone,
-                            'totalAmountPayment': totalAmount
-                        }),
-                        contentType: 'application/json; charset=utf-8',
-                        url: "/invoice",
-                        success: function (data, textStatus, xhr) {
-                            staffService.clear();
-                            if (xhr.status === 200) {
-                                swal('Tạo hóa đơn thành công.', "", "success");
-                                // $.toaster({ priority : 'success', message : 'Tạo hóa đơn thành công.' });
-                            } else {
-                                swal('Tạo hóa đơn thất bại!', "", "error");
-                                // $.toaster({ priority : 'danger', message :  });
-                            }
-                        }
-                    });
-                } else {
-                    swal('Bạn chưa chọn dịch vụ hoặc sản phẩm nào!', "", "error");
-                    // $.toaster({ priority : 'danger', message : 'Bạn chưa chọn dịch vụ hoặc sản phẩm nào!' });
-                }
-
-            });
-        });
-    </script>
+    <script th:src="@{/js/index.js}"></script>
 </section>
 </body>
 </html>

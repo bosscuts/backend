@@ -47,6 +47,7 @@ public class HomeController {
         model.addAttribute("assistants", users);
         model.addAttribute("services", productServices);
         model.addAttribute("products", products);
+        model.addAttribute("services", services);
         return "index";
     }
 }

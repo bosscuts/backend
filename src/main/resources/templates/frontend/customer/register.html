@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template/layout}">
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <link rel='shortcut icon' type='image/png' th:href='@{/img/favicon.ico}'>
+    <title>Đăng kí khách hàng</title>
+</head>
+<body class='rzvy'>
+<section layout:fragment="content" class='rzvy-register-main my-3'>
+    <div class='container rzvy-register-container whitebox'>
+        <form id='rzvy_customer_register_form' name='rzvy_customer_register_form' method='post' novalidate='novalidate'>
+            <div class='row'>
+                <div class='col-md-12 pt-3 rzvy-register-right-block'>
+                    <h2 class='text-center'>Đăng kí khách hàng</h2>
+                    <div class='row'>
+                        <div class='form-group col-md-6'>
+                            <label for='customer_firstname'>Tên</label>
+                            <input type='text' class='form-control' id='customer_firstname'
+                                   name='customer_firstname' placeholder='Nhập tên'>
+                        </div>
+                        <div class='form-group col-md-6'>
+                            <label for='customer_lastname'>Họ</label>
+                            <input type='text' class='form-control' id='customer_lastname'
+                                   name='customer_lastname' placeholder='Nhập họ'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='form-group col-md-6'>
+                            <label for='customer_email'>Email</label>
+                            <input type='text' class='form-control' id='customer_email'
+                                   name='customer_email' placeholder='Nhập email'>
+                        </div>
+                        <div class='form-group col-md-6'>
+                            <label for='customer_phone'>Số điện thoại</label>
+                            <input type='text' class='form-control' id='customer_phone'
+                                   name='customer_phone' placeholder='Nhập số điện thoại' autocomplete='off'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='form-group col-md-12'>
+                            <label for='customer_address'>Địa chỉ</label>
+                            <textarea class='form-control' id='customer_address'
+                                      name='customer_address'
+                                      placeholder='Nhập địa chỉ' rows='1'></textarea>
+                        </div>
+                    </div>
+                    <div class='row mt-2 mb-3'>
+                        <div class='col-md-12'>
+                            <button type='button' id='customer_register_btn'
+                                    class='rzvy_register_btn btn btn-success p-2 w-100'>
+                                Đăng kí ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<section layout:fragment="js">
+    <script th:src="@{/js/customer.js}"></script>
+</section>
+</body>
+</html>
