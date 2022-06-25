@@ -11,13 +11,13 @@
     <meta http-equiv='Expires' content='-1'>
     <title>Barber Shop</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Mobile Specific Meta -->
     <!--    <meta th:name="_csrf" th:content="${_csrf.token}"/>-->
     <!--    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel='shortcut icon' type='image/png' th:href="@{/img/favicon.ico}">
     <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/front-style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/sweetalert.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
@@ -33,7 +33,7 @@
                onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
             <ul>
                 <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-                    <a th:href='@{/backend/invoice}'>
+                    <a th:href='@{/invoice}'>
                         <i class="fa fa-file-text" aria-hidden="true"></i>
                         &nbsp;Danh sách hoá đơn</a>
                 </li>
@@ -91,6 +91,7 @@
 <script th:src="@{/js/rzvy-common-front.js}"></script>
 <script th:src="@{/js/rzvyconcent.js}"></script>
 <script th:src="@{/js/jquery.toaster.js}"></script>
+<script th:src="@{/js/sweetalert.js}"></script>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <section layout:fragment="js"></section>

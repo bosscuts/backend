@@ -1,4 +1,4 @@
-package com.bosscut.controller.backend;
+package com.bosscut.controller;
 
 import com.bosscut.dto.InvoiceRequestDTO;
 import com.bosscut.entity.User;
@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping("/backend")
+@RequestMapping("/invoice")
 public class InvoiceController {
 
     private final UserService userService;
@@ -30,19 +30,19 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @GetMapping("/invoice")
+    @GetMapping
     public String invoices(Model model) {
         List<User> users = userService.getUserByLevel(UserLevel.ASSISTANT.getName());
         model.addAttribute("assistants", users);
-        return "backend/invoice/index";
+        return "frontend/invoice/index";
     }
 
-    @GetMapping("/invoice/{staffId}")
+    @GetMapping("/{staffId}")
     public ResponseEntity<?> getInvoiceByStaffId(@PathVariable String staffId) {
         return ResponseEntity.ok(invoiceService.getInvoiceByStaffId(staffId));
     }
 
-    @PostMapping("/invoice")
+    @PostMapping
     public ResponseEntity<?> createInvoice(@RequestBody @Valid InvoiceRequestDTO requestDTO) {
         invoiceService.createInvoice(requestDTO);
         return ResponseEntity.ok().build();

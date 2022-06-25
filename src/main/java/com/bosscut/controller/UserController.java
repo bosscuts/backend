@@ -1,4 +1,4 @@
-package com.bosscut.controller.frontend;
+package com.bosscut.controller;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

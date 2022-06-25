@@ -1,4 +1,4 @@
-package com.bosscut.controller.frontend;
+package com.bosscut.controller;
 
 import com.bosscut.entity.ProductService;
 import com.bosscut.entity.User;

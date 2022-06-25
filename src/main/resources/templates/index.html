@@ -18,6 +18,7 @@
     <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/front-style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/sweetalert.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
@@ -178,18 +179,21 @@
                             'totalAmountPayment': totalAmount
                         }),
                         contentType: 'application/json; charset=utf-8',
-                        url: "/backend/invoice",
+                        url: "/invoice",
                         success: function (data, textStatus, xhr) {
                             staffService.clear();
                             if (xhr.status === 200) {
-                                $.toaster({ priority : 'success', message : 'Tạo hóa đơn thành công.' });
+                                swal('Tạo hóa đơn thành công.', "", "success");
+                                // $.toaster({ priority : 'success', message : 'Tạo hóa đơn thành công.' });
                             } else {
-                                $.toaster({ priority : 'danger', message : 'Tạo hóa đơn thất bại!' });
+                                swal('Tạo hóa đơn thất bại!', "", "error");
+                                // $.toaster({ priority : 'danger', message :  });
                             }
                         }
                     });
                 } else {
-                    $.toaster({ priority : 'danger', message : 'Bạn chưa chọn dịch vụ hoặc sản phẩm nào!' });
+                    swal('Bạn chưa chọn dịch vụ hoặc sản phẩm nào!', "", "error");
+                    // $.toaster({ priority : 'danger', message : 'Bạn chưa chọn dịch vụ hoặc sản phẩm nào!' });
                 }
 
             });
