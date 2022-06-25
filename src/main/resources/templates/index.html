@@ -23,70 +23,152 @@
             <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
                 <div class="col-lg-8">
                     <div class="rzvy-booking-detail-main">
-                        <!-- STAFF SECTION START -->
-                        <div id="rzvy-staff-main">
-                            <div class="step-item" th:each="service,itrStat : ${services}">
-                                <h2 class="step-title " th:utext="${service.productServiceName}"></h2>
-                                <h4 class="price" style="color: #797877"
-                                    th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
-                                <div class="services team">
-                                    <div class="owl-carousel owl-loaded owl-drag" data-items="3" data-items-lg="2"
-                                         data-items-md="2" data-items-sm="2" data-items-ssm="1" data-margin="24"
-                                         data-nav="true" data-dots="true" autoplay="false" data-loop="false">
-                                        <div class="owl-stage-outer">
-                                            <div class="owl-stage">
-                                                <div class="owl-item"
-                                                     style="width:170px; margin-right: 10px; margin-bottom: 10px;"
-                                                     th:each="assistant,assistantStat : ${assistants}">
-                                                    <div class="item">
-                                                        <figure class="staff"
-                                                                th:staffId="${assistant.id}"
-                                                                th:serviceId="${service.productServiceId}">
-                                                            <figcaption>
-                                                                <h3 th:utext="${assistant.fullName}"></h3>
-                                                                <div class="rating">
-                                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="rzvy-tabbable-panel">
+                                    <div class="rzvy-tabbable-line">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item custom-nav-item" id="rzvy_staff_schedule_tab_selection"
+                                                data-id="1">
+                                                <a class="nav-link custom-nav-link"
+                                                   data-tabno="1" data-toggle="tab"
+                                                   href="#tab_service"
+                                                   aria-expanded="false">
+                                                    <i class="fa fa-calendar"></i> Dịch vụ
+                                                </a>
+                                            </li>
+                                            <li class="nav-item custom-nav-item" id="rzvy_staff_blockoff_tab_selection"
+                                                data-id="1">
+                                                <a class="nav-link custom-nav-link"
+                                                   data-tabno="2" data-toggle="tab"
+                                                   href="#tab_product"
+                                                   aria-expanded="false">
+                                                    <i class="fa fa-calendar-o"></i>Sản phẩm
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div id="rzvy-staff-tab-content" class="tab-content py-4">
+                                            <div class="tab-pane container active" aria-expanded="true"
+                                                 id="tab_service">
+                                                <div class="step-item" th:each="service,itrStat : ${services}">
+                                                    <h2 class="step-title "
+                                                        th:utext="${service.productServiceName}"></h2>
+                                                    <h4 class="price" style="color: #797877"
+                                                        th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
+                                                    <div class="services team">
+                                                        <div class="owl-carousel owl-loaded owl-drag" data-items="3"
+                                                             data-items-lg="2"
+                                                             data-items-md="2" data-items-sm="2" data-items-ssm="1"
+                                                             data-margin="24"
+                                                             data-nav="true" data-dots="true" autoplay="false"
+                                                             data-loop="false">
+                                                            <div class="owl-stage-outer">
+                                                                <div class="owl-stage">
+                                                                    <div class="owl-item"
+                                                                         style="width:165px; margin-right: 10px; margin-bottom: 10px;"
+                                                                         th:each="assistant,assistantStat : ${assistants}">
+                                                                        <div class="item">
+                                                                            <figure class="staff"
+                                                                                    th:staffId="${assistant.id}"
+                                                                                    th:serviceId="${service.productServiceId}">
+                                                                                <figcaption>
+                                                                                    <h3 th:utext="${assistant.fullName}"></h3>
+                                                                                    <div class="rating">
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                    </div>
+                                                                                    <div class="service-meta">
+                                                                                        <span>
+                                                                                            <i class="fa fa-mobile"
+                                                                                               aria-hidden="true"></i>
+                                                                                            <a th:utext="${assistant.phone}"></a>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </figcaption>
+                                                                            </figure>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="service-meta">
-                                                                <span>
-                                                                    <i class="fa fa-mobile"
-                                                                       aria-hidden="true"></i>
-                                                                    <a th:utext="${assistant.phone}"></a>
-                                                                </span>
-                                                                </div>
-                                                            </figcaption>
-                                                        </figure>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="owl-nav disabled">
-                                            <button type="button" role="presentation" class="owl-prev disabled">
-                                                <div class="slider-no-current"><span class="current-no">1</span><span
-                                                        class="total-no">1</span></div>
-                                                <span class="current-monials"></span></button>
-                                            <button type="button" role="presentation" class="owl-next disabled">
-                                                <div class="slider-no-next"></div>
-                                                <span class="next-monials"></span></button>
-                                        </div>
-                                        <div class="owl-dots disabled">
-                                            <button role="button" class="owl-dot active"><span></span></button>
+                                            <div class="tab-pane container" id="tab_product">
+                                                <div class="step-item" th:each="product,itrStat : ${products}">
+                                                    <h2 class="step-title "
+                                                        th:utext="${product.productServiceName}"></h2>
+                                                    <h4 class="price" style="color: #797877"
+                                                        th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h4>
+                                                    <div class="services team">
+                                                        <div class="owl-carousel owl-loaded owl-drag" data-items="3"
+                                                             data-items-lg="2"
+                                                             data-items-md="2" data-items-sm="2" data-items-ssm="1"
+                                                             data-margin="24"
+                                                             data-nav="true" data-dots="true" autoplay="false"
+                                                             data-loop="false">
+                                                            <div class="owl-stage-outer">
+                                                                <div class="owl-stage">
+                                                                    <div class="owl-item"
+                                                                         style="width:165px; margin-right: 10px; margin-bottom: 10px;"
+                                                                         th:each="assistant,assistantStat : ${assistants}">
+                                                                        <div class="item">
+                                                                            <figure class="staff"
+                                                                                    th:staffId="${assistant.id}"
+                                                                                    th:serviceId="${product.productServiceId}">
+                                                                                <figcaption>
+                                                                                    <h3 th:utext="${assistant.fullName}"></h3>
+                                                                                    <div class="rating">
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                        <i class="fa fa-star"
+                                                                                           aria-hidden="true"></i>
+                                                                                    </div>
+                                                                                    <div class="service-meta">
+                                                                                        <span>
+                                                                                            <i class="fa fa-mobile"
+                                                                                               aria-hidden="true"></i>
+                                                                                            <a th:utext="${assistant.phone}"></a>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </figcaption>
+                                                                            </figure>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidden_div" id="info_customer">
+                                                <h2 class="step-title ">Thông tin khách hàng</h2>
+                                                <input type="text" id="customer_phone"
+                                                       name="customer_phone"
+                                                       placeholder="Số điện thoại khách hàng"
+                                                       class="form-control">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group hidden_div" id="info_customer">
-                                <h2 class="step-title ">Thông tin khách hàng</h2>
-                                <input type="text" id="customer_phone"
-                                       name="customer_phone"
-                                       placeholder="Số điện thoại khách hàng"
-                                       class="form-control">
-                            </div>
                         </div>
+
+                        <!-- STAFF SECTION START -->
                         <div class="forms rzvy-radio-group-block">
                             <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
                                 <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xác nhận

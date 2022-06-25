@@ -45,7 +45,6 @@ public class HomeController {
                 .collect(Collectors.toList());
 
         model.addAttribute("assistants", users);
-        model.addAttribute("services", productServices);
         model.addAttribute("products", products);
         model.addAttribute("services", services);
         return "index";
