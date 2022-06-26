@@ -32,6 +32,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM \"user\" where level = :level", nativeQuery = true)
     Optional<List<User>> findOneByLevel(String level);
 
+    @Query(value = "SELECT * FROM \"user\"", nativeQuery = true)
+    Optional<List<User>> findAllUser();
+
     @EntityGraph(attributePaths = "authorities")
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     Optional<User> findOneWithAuthoritiesByLogin(String login);

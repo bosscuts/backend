@@ -20,4 +20,8 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserByLevel(String level) {
         return userRepository.findOneByLevel(level).orElse(Collections.emptyList());
     }
+
+    public List<User> getAll() {
+        return userRepository.findAllUser().orElse(Collections.emptyList());
+    }
 }

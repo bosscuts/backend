@@ -7,17 +7,69 @@
 </head>
 <body>
 <section layout:fragment="content">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
+          rel="stylesheet"/>
     <main class='form-style-two rzvy-booking-detail-body'>
-        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
-            <div class='row'>
-                <h1>User Cash money</h1>
+        <div class='container'>
+            <div class='row form_cash' id="form_cash" style="margin-bottom: 50px">
+                <div class="col-lg-12">
+                    <h2 class="step-title">Chọn nhân viên</h2>
+                    <select class="form-control staff_select2" id="staff_select2" style="width: 100%">
+                        <option th:each="staff,assistantStat : ${staffs}" th:value="${staff.id}"
+                                th:utext="${staff.fullName}"></option>
+                    </select>
+                </div>
+                <div class='col-lg-12'>
+                    <div class='col-md-12 pt-3 rzvy-register-right-block'>
+                        <h2 class='text-center'>Đăng kí ứng lương</h2>
+                        <div class='row'>
+                            <div class='form-group col-md-12'>
+                                <label for='cash_amount'>Số tiền</label>
+                                <input type='text' class='form-control' id='cash_amount'
+                                       name='cash_amount' placeholder='Nhập số tiền'>
+                            </div>
+                            <div class='form-group col-md-12'>
+                                <label for='cash_description'>Nội dung</label>
+                                <textarea class='form-control' id='cash_description'
+                                          name='cash_description'
+                                          placeholder='Nhập nội dung'></textarea>
+                            </div>
+                        </div>
+                        <div class='row mt-2 mb-3'>
+                            <div class='col-md-12'>
+                                <button type='button' id='customer_register_btn'
+                                        class='rzvy_register_btn btn btn-success p-2 w-100'>
+                                    Xuất hóa đơn
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='row' id="result">
+
             </div>
         </div>
     </main>
 </section>
 
 <section layout:fragment="js">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.staff_select2').select2();
 
+            $("#staff_select2").change(function () {
+
+                const staffId = $("#staff_select2").val();
+                $('#form_cash').removeClass('hidden_div');
+
+
+
+            });
+        });
+    </script>
 </section>
 </body>
 </html>

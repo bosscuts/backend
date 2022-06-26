@@ -2645,3 +2645,10 @@ figure, .form-check.custom {
 .btn-invoice {
     padding: 20px;
 }
+.form_cash {
+    padding: 40px;
+    margin-top: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+}
