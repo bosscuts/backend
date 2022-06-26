@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class UserInvoiceDetail {
@@ -114,7 +115,7 @@ public class UserInvoiceDetail {
     }
 
     public Integer getQuantity() {
-        return quantity;
+        return Objects.nonNull(quantity) ? quantity : 0;
     }
 
     public void setQuantity(Integer quantity) {
@@ -122,7 +123,7 @@ public class UserInvoiceDetail {
     }
 
     public BigDecimal getTotalAmountPayment() {
-        return totalAmountPayment;
+        return Objects.nonNull(totalAmountPayment) ? totalAmountPayment : BigDecimal.ZERO;
     }
 
     public void setTotalAmountPayment(BigDecimal totalAmountPayment) {
@@ -130,7 +131,7 @@ public class UserInvoiceDetail {
     }
 
     public String getProductServiceName() {
-        return productServiceName;
+        return Objects.nonNull(productServiceName) ? productServiceName : "";
     }
 
     public void setProductServiceName(String productServiceName) {
@@ -138,7 +139,7 @@ public class UserInvoiceDetail {
     }
 
     public Integer getPrice() {
-        return price;
+        return Objects.nonNull(price) ? price : 0;
     }
 
     public void setPrice(Integer price) {
@@ -154,7 +155,7 @@ public class UserInvoiceDetail {
     }
 
     public String getCustomerName() {
-        return customerName;
+        return Objects.nonNull(customerName) ? customerName : "";
     }
 
     public void setCustomerName(String customerName) {
@@ -162,7 +163,7 @@ public class UserInvoiceDetail {
     }
 
     public String getAddress() {
-        return address;
+        return Objects.nonNull(address) ? address : "";
     }
 
     public void setAddress(String address) {
@@ -170,7 +171,7 @@ public class UserInvoiceDetail {
     }
 
     public String getPhone() {
-        return phone;
+        return Objects.nonNull(phone) ? phone : "";
     }
 
     public void setPhone(String phone) {
@@ -186,7 +187,7 @@ public class UserInvoiceDetail {
     }
 
     public String getDescription() {
-        return description;
+        return Objects.nonNull(description) ? description : "";
     }
 
     public void setDescription(String description) {

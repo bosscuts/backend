@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class='row' sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="rzvy-booking-detail-main">
                         <div class="card">
                             <div class="card-body p-0">
@@ -30,7 +30,7 @@
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item custom-nav-item" id="rzvy_staff_schedule_tab_selection"
                                                 data-id="1">
-                                                <a class="nav-link custom-nav-link"
+                                                <a class="nav-link custom-nav-link" id="tab_link_service"
                                                    data-tabno="1" data-toggle="tab"
                                                    href="#tab_service"
                                                    aria-expanded="false">
@@ -65,10 +65,11 @@
                                                             <div class="owl-stage-outer">
                                                                 <div class="owl-stage">
                                                                     <div class="owl-item"
-                                                                         style="width:165px; margin-right: 10px; margin-bottom: 10px;"
+                                                                         style="width:155px; margin-right: 10px; margin-bottom: 10px;"
                                                                          th:each="assistant,assistantStat : ${assistants}">
                                                                         <div class="item">
                                                                             <figure class="staff"
+                                                                                    th:priceServiceProduct="${service.price}"
                                                                                     th:staffId="${assistant.id}"
                                                                                     th:serviceId="${service.productServiceId}">
                                                                                 <figcaption>
@@ -118,7 +119,7 @@
                                                             <div class="owl-stage-outer">
                                                                 <div class="owl-stage">
                                                                     <div class="owl-item"
-                                                                         style="width:165px; margin-right: 10px; margin-bottom: 10px;"
+                                                                         style="width:150px; margin-right: 10px; margin-bottom: 10px;"
                                                                          th:each="assistant,assistantStat : ${assistants}">
                                                                         <div class="item">
                                                                             <figure class="staff"
@@ -155,54 +156,69 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group hidden_div" id="info_customer">
+                                            <div class="row user-info hidden_div" id="info_customer">
                                                 <h2 class="step-title ">Thông tin khách hàng</h2>
-                                                <input type="text" id="customer_phone"
-                                                       name="customer_phone"
-                                                       placeholder="Số điện thoại khách hàng"
-                                                       class="form-control">
+                                                <div class='form-group col-md-6'>
+                                                    <label for='customer_firstname'>Tên</label>
+                                                    <input type='text' class='form-control' id='customer_firstname'
+                                                           name='customer_firstname' placeholder='Nhập tên'>
+                                                </div>
+                                                <div class='form-group col-md-6'>
+                                                    <label for='customer_lastname'>Họ</label>
+                                                    <input type='text' class='form-control' id='customer_lastname'
+                                                           name='customer_lastname' placeholder='Nhập họ'>
+                                                </div>
+                                                <div class='form-group col-md-6'>
+                                                    <label for='customer_phone'>Số điện thoại</label>
+                                                    <input type="text" id="customer_phone"
+                                                           name="customer_phone"
+                                                           placeholder="Số điện thoại khách hàng"
+                                                           class="form-control">
+                                                </div>
+                                                <div class='form-group col-md-6'>
+                                                    <label for='customer_address'>Địa chỉ</label>
+                                                    <input type="text" id="customer_address"
+                                                           name="customer_address"
+                                                           placeholder="Địa chỉ khách hàng"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row btn-invoice">
+                                                <div class="col-md-4 forms rzvy-radio-group-block">
+                                                    <button id="reset" class="btn w-100 btn-success mt-md-5 mt-4">
+                                                        <span class="fa fa-refresh"></span>&nbsp;&nbsp;Đặt lại
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-4 forms rzvy-radio-group-block">
+                                                    <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
+                                                        <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xác nhận
+                                                    </button>
+                                                    <button id="preview_invoice"
+                                                            class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
+                                                        <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xem lại
+                                                        chi tiết
+                                                    </button>
+                                                    <button id="create_invoice_btn"
+                                                            class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
+                                                        <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tạo hoá
+                                                        đơn
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- STAFF SECTION START -->
-                        <div class="forms rzvy-radio-group-block">
-                            <button id="confirm" class="btn w-100 btn-success mt-md-5 mt-4">
-                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Xác nhận
-                            </button>
-                            <button id="create_invoice_btn" class="btn w-100 btn-success mt-md-5 mt-4 hidden_btn">
-                                <span class="fa fa-calendar-check-o"></span>&nbsp;&nbsp;Tạo hoá đơn
-                            </button>
-                        </div>
                     </div>
                 </div>
-                <div class='col-lg-4 rzvy-sidebar'>
+                <div class='col-lg-12 hidden_div' id="invoice_detail">
+
                     <div class='whitebox'>
                         <h4 class='widget-title'>Tóm tắt hóa đơn</h4>
-                        <table class='table'>
-                            <tbody>
-                            <tr>
-                                <td><i class='fa fa-refresh' aria-hidden='true'></i>&nbsp;MỘT LẦN</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Làm tóc</font></font>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr class='rzvy_subtotal_exit'>
-                                <th>
-                                    <i class='fa fa-tags' aria-hidden='true'></i>
-                                    &nbsp;Tổng số:
-                                </th>
-                                <th class="total_amount">
-                                    225,00
-                                </th>
-                            </tr>
-                            </tbody>
+                        <table class='table' id="user-service">
+
                         </table>
                     </div>
                 </div>

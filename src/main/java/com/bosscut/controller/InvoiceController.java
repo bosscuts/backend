@@ -47,4 +47,9 @@ public class InvoiceController {
         invoiceService.createInvoice(requestDTO);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/preview")
+    public ResponseEntity<?> previewCreateInvoice(@RequestBody @Valid InvoiceRequestDTO requestDTO) {
+        return ResponseEntity.ok(invoiceService.previewInvoice(requestDTO));
+    }
 }

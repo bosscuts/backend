@@ -21,7 +21,7 @@
                                         <div class="mb-3 row align-items-center rzvy-cart-lpoint-div" th:each="rule,itrStat : ${rules}">
                                             <div class="col-md-6 rzvy-cart-lpoint-label-main">
                                                 <div class="form-check mb-0">
-                                                    <label class="form-check-label" th:utext="${'+ ' + rule.ruleName}">Do you want to use your loyalty points?</label>
+                                                    <label class="form-check-label" th:utext="${'+ ' + rule.ruleName + ' (Vi phạm phạt: 100.000 Đ)'}"></label>
                                                 </div>
                                             </div>
                                         </div>

@@ -20,4 +20,7 @@ import java.util.Optional;
 @Repository
 public interface ProductServiceRepository extends JpaRepository<ProductService, Long> {
     Optional<List<ProductService>> findByType(String type);
+
+    @Query("SELECT ps FROM ProductService ps WHERE ps.productServiceId IN (:ids)")
+    Optional<List<ProductService>> findAllByIds(List<Long> ids);
 }
