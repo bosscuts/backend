@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM \"user\" where level = :level", nativeQuery = true)
     Optional<List<User>> findOneByLevel(String level);
 
-    @Query(value = "SELECT * FROM \"user\"", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"user\"  where login != 'admin'", nativeQuery = true)
     Optional<List<User>> findAllUser();
 
     @EntityGraph(attributePaths = "authorities")

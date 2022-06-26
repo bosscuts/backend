@@ -12,16 +12,16 @@
             <div class='row'>
                 <div class="col-lg-8">
                     <div class="rzvy-booking-detail-main">
-                        <h2 class="fs-5">Danh sách nội quy</h2>
+                        <h2>Danh sách nội quy</h2>
 
                         <div class="step-item remove_payment_according_services_showhide rzvy_hide_show_payment_according_services">
                             <div class="rzvy-container">
                                 <div class="rzvy-radio-group-block-content step-item">
                                     <div class="whitebox">
                                         <div class="mb-3 row align-items-center rzvy-cart-lpoint-div" th:each="rule,itrStat : ${rules}">
-                                            <div class="col-md-6 rzvy-cart-lpoint-label-main">
+                                            <div class="col-md-12 rzvy-cart-lpoint-label-main">
                                                 <div class="form-check mb-0">
-                                                    <label class="form-check-label" th:utext="${'+ ' + rule.ruleName + ' (Vi phạm phạt: 100.000 Đ)'}"></label>
+                                                    <h6 class="form-check-label" th:utext="${'+ ' + rule.ruleName + ' (Vi phạm phạt: 100.000 Đ)'}"></h6>
                                                 </div>
                                             </div>
                                         </div>

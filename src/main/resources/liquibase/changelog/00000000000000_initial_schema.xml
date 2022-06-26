@@ -227,7 +227,7 @@
 
         <createTable tableName="salary_cash">
             <column name="salary_cash_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"  primaryKeyName="salary_pk"/>
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="salary_cash_pk"/>
             </column>
             <column name="staff_id" type="int"/>
             <column name="amount" type="varchar(200)"/>
