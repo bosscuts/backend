@@ -225,6 +225,14 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
+        <loadData
+                file="liquibase/data/salary.csv"
+                separator=";"
+                tableName="salary"
+                usePreparedStatements="true">
+            <column name="salary_id" type="numeric"/>
+        </loadData>
+
         <createTable tableName="salary_cash">
             <column name="salary_cash_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"  primaryKeyName="salary_cash_pk"/>
@@ -232,6 +240,19 @@
             <column name="staff_id" type="int"/>
             <column name="amount" type="varchar(200)"/>
             <column name="cash_description" type="varchar(500)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="time_attendance">
+            <column name="time_attendance_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="time_attendance_pk"/>
+            </column>
+            <column name="staff_id" type="int"/>
+            <column name="check_in" type="timestamp"/>
+            <column name="check_out" type="timestamp"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>

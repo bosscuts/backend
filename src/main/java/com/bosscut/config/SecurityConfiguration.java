@@ -5,6 +5,7 @@ import com.bosscut.service.DomainUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,11 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     public SecurityConfiguration(DataSource dataSource, UserRepository userRepository) {
         this.dataSource = dataSource;
         this.userRepository = userRepository;
+    }
+
+    @Bean
+    public AuditorAware<String> auditorAware() {
+        return new CustomAuditAware();
     }
 
     @Bean
