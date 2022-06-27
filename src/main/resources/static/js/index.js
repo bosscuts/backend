@@ -2,11 +2,6 @@ let staffService = new Map();
 let staffServiceStr = '';
 $(document).ready(function () {
     $('#tab_link_service').click();
-    $(document).on('click', '.card', function () {
-        let staff = $(this);
-        staff.toggleClass('border');
-        staff.toggleClass('border-primary');
-    });
 
     $(document).on('click', '.staff', function () {
         let staff = $(this);
@@ -15,6 +10,9 @@ $(document).ready(function () {
         staffService.set(serviceId, staffId);
         staff.parent().parent().siblings().removeClass('staff-active');
         staff.toggleClass('staff-active');
+
+        staff.children('.card').toggleClass('border');
+        staff.children('.card').toggleClass('border-primary');
     });
 
     $(document).on('click', '#confirm', function () {
@@ -72,7 +70,7 @@ $(document).ready(function () {
                                 <tr class='rzvy_subtotal_exit'>
                                     <th>
                                         <i class='fa fa-tags' aria-hidden='true'></i>
-                                        &nbsp;Tổng số tiền:
+                                        &nbsp;Tổng tiền thanh toán:
                                     </th>
                                     <th class="total_amount">${data.totalAmount}</th>
                                 </tr>
