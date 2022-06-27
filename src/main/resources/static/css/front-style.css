@@ -23,7 +23,7 @@ a {
 }
 
 a:hover, a:focus {
-    color: #50aba3;
+    color: #0C56D0;
 }
 
 a:focus, button:focus {
@@ -52,7 +52,7 @@ p {
 }
 
 p a {
-    color: #50aba3;
+    color: #0C56D0;
     text-decoration: underline;
 }
 
@@ -61,27 +61,27 @@ p a:hover {
 }
 
 ::selection {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
 ::-webkit-selection {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
 ::-moz-selection {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
 ::-o-selection {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
 ::-ms-selection {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
@@ -163,7 +163,7 @@ b, strong {
 }
 
 .btn-success {
-    background: #50aba3;
+    background: #0C56D0;
     border-color: transparent;
 }
 
@@ -230,7 +230,7 @@ textarea.form-control {
 }
 
 .form-check a {
-    color: #50aba3;
+    color: #0C56D0;
     text-decoration: underline;
 }
 
@@ -243,7 +243,7 @@ textarea.form-control {
 }
 
 .selected .form-check.custom:not(.inline) {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
@@ -329,8 +329,8 @@ textarea.form-control {
 }
 
 .form-check-input:checked {
-    background-color: #50aba3;
-    border-color: #50aba3;
+    background-color: #0C56D0;
+    border-color: #0C56D0;
 }
 
 .form-check-input.is-invalid:checked, .was-validated .form-check-input:invalid:checked {
@@ -393,7 +393,7 @@ textarea.form-control {
 .owl-carousel button.owl-dot.active {
     width: 12px;
     height: 12px;
-    background: #50aba3;
+    background: #0C56D0;
 }
 
 .owl-carousel .owl-nav button {
@@ -415,7 +415,7 @@ textarea.form-control {
 }
 
 .owl-carousel .owl-nav button:hover {
-    background-color: #50aba3;
+    background-color: #0C56D0;
 }
 
 .owl-carousel .owl-nav button.owl-next {
@@ -624,17 +624,17 @@ textarea.form-control {
 }
 
 .nice-select .option.selected {
-    background: #50aba3;
+    background: #0C56D0;
     font-weight: normal;
 }
 
 .nice-select ul:not(:hover) .option.focus, .nice-select ul:not(:hover) .option.selected.focus, .nice-select .option:hover {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 }
 
 .nice-select .option.focus:hover, .nice-select .option.selected.focus:hover {
-    background: #50aba3;
+    background: #0C56D0;
 }
 
 .nice-select .disabled {
@@ -745,7 +745,7 @@ textarea.form-control {
 }
 
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option.xdsoft_current {
-    background: #50aba3;
+    background: #0C56D0;
     font-weight: 500;
     box-shadow: none;
 }
@@ -800,7 +800,7 @@ textarea.form-control {
 }
 
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current > div, .xdsoft_datetimepicker .xdsoft_calendar td:hover:not(.xdsoft_other_month) > div:hover {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
     border-color: transparent;
 }
@@ -839,7 +839,7 @@ textarea.form-control {
 }
 
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_current, .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div:hover {
-    background: #50aba3 !important;
+    background: #0C56D0 !important;
     color: #ffffff;
     border-color: transparent;
 }
@@ -877,7 +877,7 @@ textarea.form-control {
 }
 
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_today {
-    color: #50aba3;
+    color: #0C56D0;
 }
 
 /* Rezervy Table CSS */
@@ -985,7 +985,7 @@ textarea.form-control {
 }
 
 .header .container > ul > li:not(.logout) a:hover {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
     border-color: transparent;
 }
@@ -997,7 +997,7 @@ textarea.form-control {
 .user-avatar {
     display: inline-flex;
     height: 40px;
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
     text-transform: uppercase;
     align-items: center;
@@ -1088,7 +1088,7 @@ figure, .form-check.custom {
 }
 
 .service-types .selected figure, .rzvy-staff-change-tt.selected {
-    border-color: #50aba3;
+    border-color: #0C56D0;
     border-width: 2px;
 }
 
@@ -1102,7 +1102,7 @@ figure, .form-check.custom {
 }
 
 /* .services.rounded .selected figure > img {
-  box-shadow: 0 -25px 0 5px #f3f3f3, 0 0 0 2px #50aba3;
+  box-shadow: 0 -25px 0 5px #f3f3f3, 0 0 0 2px #0C56D0;
 } */
 .service-types figure {
     display: flex;
@@ -1211,7 +1211,7 @@ figure, .form-check.custom {
     left: 0;
     width: 100%;
     height: 100%;
-    border: 2px solid #50aba3;
+    border: 2px solid #0C56D0;
     opacity: 0;
     visibility: hidden;
     content: "";
@@ -1333,7 +1333,7 @@ figure, .form-check.custom {
     display: block;
     padding: 15px 25px;
     margin: 25px -25px -25px;
-    color: #50aba3;
+    color: #0C56D0;
     font-size: 14px;
     border-top: 1px solid #e2e2e2;
     position: relative;
@@ -1341,7 +1341,7 @@ figure, .form-check.custom {
 }
 
 .read-more:hover {
-    background: #50aba3;
+    background: #0C56D0;
     color: #ffffff;
 
 }
@@ -1446,7 +1446,7 @@ figure, .form-check.custom {
     display: inline-flex;
     width: 60px;
     height: 60px;
-    background: #50aba3;
+    background: #0C56D0;
     align-items: center;
     border-radius: 100%;
     justify-content: center;
@@ -1947,7 +1947,7 @@ figure, .form-check.custom {
     }
 
     /* .services.rounded .selected figure > img {
-      box-shadow: 0 -42px 0 5px #f3f3f3, 0 0 0 2px #50aba3;
+      box-shadow: 0 -42px 0 5px #f3f3f3, 0 0 0 2px #0C56D0;
     } */
     .services.rounded figure > img {
         width: 172px;
@@ -2201,7 +2201,7 @@ figure, .form-check.custom {
 
 #rzvy-partial-deposit-info i, #rzvy-loyalty-points-info i {
     font-size: 18px !important;
-    color: #50aba3;
+    color: #0C56D0;
 }
 
 .rzvy_applied_referral_coupon_div_text,
@@ -2230,7 +2230,7 @@ figure, .form-check.custom {
 }
 
 .services .item .fa, .offcanvas .fa {
-    color: #50aba3;
+    color: #0C56D0;
     font-size: 14px;
 }
 
@@ -2277,7 +2277,7 @@ figure, .form-check.custom {
 }
 
 .service-types figure:after, .services figure:after, .services.rounded figcaption:after {
-    background-color: #50aba3;
+    background-color: #0C56D0;
     background-size: 20px auto;
     border-radius: 100%;
 }
@@ -2428,7 +2428,7 @@ figure, .form-check.custom {
 }
 
 .rzvy-inline-calendar-container-main-rowcel.full_day_available.active_selected_date {
-    background: #50aba3 !important;
+    background: #0C56D0 !important;
     border-color: transparent !important;
 }
 
@@ -2466,7 +2466,7 @@ figure, .form-check.custom {
 
 .slot_refresh_div .rzvy-styled-radio:hover {
     border: transparent;
-    background: #50aba3 !important;
+    background: #0C56D0 !important;
     color: #ffffff !important;
 }
 
@@ -2569,7 +2569,7 @@ figure, .form-check.custom {
 }
 
 .sa-button-container .btn-primary {
-    background-color: #50aba3;
+    background-color: #0C56D0;
     color: #ffffff;
 }
 
@@ -2619,7 +2619,7 @@ figure, .form-check.custom {
 }
 
 .staff-active {
-    border-color: #50aba3;
+    border-color: #0C56D0;
 }
 
 .hidden_btn {

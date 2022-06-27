@@ -39,7 +39,7 @@
                         <div class='row mt-2 mb-3'>
                             <div class='col-md-12'>
                                 <button type='button' id='invoice_cash_btn'
-                                        class='rzvy_register_btn btn btn-success p-2 w-100'>
+                                        class='rzvy_register_btn btn btn-primary p-2 w-100'>
                                     Xuất hóa đơn
                                 </button>
                             </div>
@@ -53,28 +53,7 @@
 
 <section layout:fragment="js">
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#staff_select2').select2();
-
-            // $("#staff_select2").change(function () {
-            //
-            // });
-
-            $(document).on('click', '#invoice_cash_btn', function () {
-                const cash_amount = $('#cash_amount').val();
-                const staffId = $("#staff_select2").val();
-                const cash_description = $('#cash_amount').val();
-
-                if (cash_amount) {
-                    swal('Tạo hóa đơn thành công.', "", "success");
-                } else {
-                    swal('Bạn chưa nhập số tiền!', "", "error");
-                }
-
-            });
-        });
-    </script>
+    <script th:src="@{/js/cash.js}"></script>
 </section>
 </body>
 </html>
