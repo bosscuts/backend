@@ -25,6 +25,9 @@ public class UserInvoiceDetail {
     private Long staffId;
 
     @Column
+    private String staffName;
+
+    @Column
     private Integer quantity;
 
     @Column
@@ -52,17 +55,22 @@ public class UserInvoiceDetail {
     private String description;
 
     @Column
-    private LocalDateTime createdDate;
+    private String createdDate;
 
     public UserInvoiceDetail() {
     }
 
-    public UserInvoiceDetail(Long invoiceDetailId, Long invoiceId, String invoiceNumber, Long customerId, Long staffId, Integer quantity, BigDecimal totalAmountPayment, String productServiceName, Integer price, Long userId, String customerName, String address, String phone, LocalDateTime createdDate) {
+    public UserInvoiceDetail(Long invoiceDetailId, Long invoiceId, String invoiceNumber,
+                             Long customerId, Long staffId, String staffName,
+                             Integer quantity, BigDecimal totalAmountPayment, String productServiceName,
+                             Integer price, Long userId, String customerName, String address, String phone,
+                             String description, String createdDate) {
         this.invoiceDetailId = invoiceDetailId;
         this.invoiceId = invoiceId;
         this.invoiceNumber = invoiceNumber;
         this.customerId = customerId;
         this.staffId = staffId;
+        this.staffName = staffName;
         this.quantity = quantity;
         this.totalAmountPayment = totalAmountPayment;
         this.productServiceName = productServiceName;
@@ -71,6 +79,7 @@ public class UserInvoiceDetail {
         this.customerName = customerName;
         this.address = address;
         this.phone = phone;
+        this.description = description;
         this.createdDate = createdDate;
     }
 
@@ -178,11 +187,11 @@ public class UserInvoiceDetail {
         this.phone = phone;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -192,5 +201,13 @@ public class UserInvoiceDetail {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStaffName() {
+        return Objects.nonNull(staffName) ? staffName : "";
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 }

@@ -16,7 +16,10 @@ import com.bosscut.service.ProductServiceService;
 import liquibase.repackaged.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
@@ -109,7 +112,25 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<UserInvoiceDetail> getInvoiceByStaffId(String staffId) {
-        return invoiceDetailRepository.findByStaffIds(List.of(Long.valueOf(staffId)));
+    public List<UserInvoiceDetail> getInvoiceByStaffId(String staffIds) {
+        LocalDate startOfDay = LocalDate.now();
+        LocalDate endOfDay = startOfDay.plusDays(1);
+
+        String[] staffIdArr = staffIds.split(",");
+        List<Long> idStaffs = Stream.of(staffIdArr).map(Long::valueOf).collect(Collectors.toList());
+
+        return invoiceDetailRepository.findByStaffIds(idStaffs, startOfDay, endOfDay);
+    }
+
+    @Override
+    public List<UserInvoiceDetail> getInvoiceByStaffIdInMonth(String staffIds) {
+        LocalDate initial = LocalDate.now();
+        LocalDate startOfMonth = initial.withDayOfMonth(1);
+        LocalDate endOfMonth = initial.withDayOfMonth(initial.getMonth().length(initial.isLeapYear()));
+
+        String[] staffIdArr = staffIds.split(",");
+        List<Long> idStaffs = Stream.of(staffIdArr).map(Long::valueOf).collect(Collectors.toList());
+
+        return invoiceDetailRepository.findByStaffIds(idStaffs, startOfMonth, endOfMonth);
     }
 }

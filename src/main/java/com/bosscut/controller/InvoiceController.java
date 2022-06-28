@@ -3,6 +3,7 @@ package com.bosscut.controller;
 import com.bosscut.dto.InvoiceRequestDTO;
 import com.bosscut.entity.User;
 import com.bosscut.enums.UserLevel;
+import com.bosscut.model.UserInvoiceDetail;
 import com.bosscut.service.InvoiceService;
 import com.bosscut.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,9 +39,14 @@ public class InvoiceController {
         return "frontend/invoice/index";
     }
 
-    @GetMapping("/{staffId}")
-    public ResponseEntity<?> getInvoiceByStaffId(@PathVariable String staffId) {
-        return ResponseEntity.ok(invoiceService.getInvoiceByStaffId(staffId));
+    @GetMapping("/{staffIds}")
+    public ResponseEntity<?> getInvoiceByStaffId(@PathVariable String staffIds, @RequestParam(required = false, defaultValue = "false") boolean isMonth) {
+        List<UserInvoiceDetail> invoiceDetails;
+        if (isMonth)
+            invoiceDetails = invoiceService.getInvoiceByStaffIdInMonth(staffIds);
+        else
+            invoiceDetails = invoiceService.getInvoiceByStaffId(staffIds);
+        return ResponseEntity.ok(invoiceDetails);
     }
 
     @PostMapping

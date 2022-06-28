@@ -11,5 +11,8 @@ public interface InvoiceService {
     void createInvoice(InvoiceRequestDTO requestDTO);
     InvoicePreviewDTO previewInvoice(InvoiceRequestDTO requestDTO);
     List<UserInvoiceDetail> getInvoiceByStaffId(String staffId);
+    List<UserInvoiceDetail> getInvoiceByStaffIdInMonth(String staffId);
+
+
 
 }
