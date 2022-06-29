@@ -36,10 +36,10 @@
             <a href="javascript:void(0);" class="hamburger"
                onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
             <ul>
-                <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
+                <li sec:authorize="isAuthenticated()">
                     <a th:href='@{/invoice}'>
                         <i class="fa fa-file-text" aria-hidden="true"></i>
-                        &nbsp;Danh sách hoá đơn</a>
+                        &nbsp;Hoá đơn</a>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
                     <a th:href='@{/statistic}'>

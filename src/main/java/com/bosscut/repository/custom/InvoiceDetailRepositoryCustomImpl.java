@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
@@ -18,7 +19,7 @@ public class InvoiceDetailRepositoryCustomImpl implements InvoiceDetailRepositor
     private EntityManager entityManager;
 
     @Override
-    public List<UserInvoiceDetail> findByStaffIds(List<Long> userIds, LocalDate startOfDay, LocalDate endOfDay) {
+    public List<UserInvoiceDetail> findByStaffIds(List<Long> userIds, LocalDateTime startOfDay, LocalDateTime endOfDay) {
         String sql = "SELECT INVOICE.INVOICE_NUMBER, INVOICE.TOTAL_AMOUNT_PAYMENT, INVOICE.USER_ID , PRODUCT_SERVICE.PRODUCT_SERVICE_NAME, " +
                 "PRODUCT_SERVICE.PRICE, INVOICE_DETAIL.QUANTITY, PRODUCT_SERVICE.DESCRIPTION, INVOICE_DETAIL.INVOICE_DETAIL_ID, INVOICE_DETAIL.STAFF_ID, " +
                 "INVOICE_DETAIL.CREATED_DATE,  CUSTOMER.CUSTOMER_NAME, CUSTOMER.PHONE, CUSTOMER.ADDRESS, \"user\".FIRST_NAME, \"user\".LAST_NAME FROM INVOICE_DETAIL " +

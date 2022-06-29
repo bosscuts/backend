@@ -1,11 +1,16 @@
 let staffIds = [];
 let htmlResult = '';
 $(document).ready(function () {
-    $(document).on('click', '.card', function () {
+    $(document).on('click', '.staff', function () {
         let staff = $(this);
-        staff.toggleClass('border');
-        staff.toggleClass('border-primary');
+        staff.children('.card').toggleClass('border');
+        staff.children('.card').toggleClass('border-primary');
     });
+    // $(document).on('click', '.card', function () {
+    //     let staff = $(this);
+    //     staff.toggleClass('border');
+    //     staff.toggleClass('border-primary');
+    // });
 
     $(document).on('click', '#in-day', function () {
         $('#result').html('');
