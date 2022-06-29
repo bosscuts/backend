@@ -51,10 +51,6 @@
                         <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Nội quy</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href='@{/users/cash-advance}'>
-                        <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Ứng tiền</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
                     <a th:href='@{/users/holiday}'>
                         <i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;Nghỉ phép</a>
                 </li>

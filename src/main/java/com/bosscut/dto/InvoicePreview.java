@@ -2,19 +2,19 @@ package com.bosscut.dto;
 
 import java.util.List;
 
-public class InvoicePreviewDTO {
+public class InvoicePreview {
 
-    private List<ServicePreviewDTO> servicePreviews;
+    private List<ServicePreview> servicePreviews;
     private Integer totalAmount;
 
-    public InvoicePreviewDTO() {
+    public InvoicePreview() {
     }
 
-    public List<ServicePreviewDTO> getServicePreviews() {
+    public List<ServicePreview> getServicePreviews() {
         return servicePreviews;
     }
 
-    public void setServicePreviews(List<ServicePreviewDTO> servicePreviews) {
+    public void setServicePreviews(List<ServicePreview> servicePreviews) {
         this.servicePreviews = servicePreviews;
     }
 

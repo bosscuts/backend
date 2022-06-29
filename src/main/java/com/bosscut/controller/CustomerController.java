@@ -1,6 +1,6 @@
 package com.bosscut.controller;
 
-import com.bosscut.dto.CustomerRequestDTO;
+import com.bosscut.dto.CustomerRequest;
 import com.bosscut.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createCustomer(@RequestBody @Valid CustomerRequestDTO requestDTO) {
+    public ResponseEntity<?> createCustomer(@RequestBody @Valid CustomerRequest requestDTO) {
         customerService.create(requestDTO);
         return ResponseEntity.ok().build();
     }

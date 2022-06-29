@@ -37,6 +37,9 @@ public class Invoice extends AbstractAuditingEntity implements Serializable {
     @Column(name = "payment_type")
     private String paymentType;
 
+    @Column(name = "invoice_type")
+    private String invoiceType;
+
     @Column(name = "userId")
     private Long userId;
 
@@ -44,7 +47,7 @@ public class Invoice extends AbstractAuditingEntity implements Serializable {
     }
 
     public Invoice(Long invoiceId, String invoiceNumber, Long customerId, BigDecimal totalAmountPayment,
-                   BigDecimal discountedAmount, BigDecimal totalAfterDiscount, Integer vatPercentage, String paymentType, Long userId) {
+                   BigDecimal discountedAmount, BigDecimal totalAfterDiscount, Integer vatPercentage, String paymentType, String invoiceType, Long userId) {
         this.invoiceId = invoiceId;
         this.invoiceNumber = invoiceNumber;
         this.customerId = customerId;
@@ -53,6 +56,7 @@ public class Invoice extends AbstractAuditingEntity implements Serializable {
         this.totalAfterDiscount = totalAfterDiscount;
         this.vatPercentage = vatPercentage;
         this.paymentType = paymentType;
+        this.invoiceType = invoiceType;
         this.userId = userId;
     }
 
@@ -110,6 +114,14 @@ public class Invoice extends AbstractAuditingEntity implements Serializable {
 
     public void setVatPercentage(Integer vatPercentage) {
         this.vatPercentage = vatPercentage;
+    }
+
+    public String getInvoiceType() {
+        return invoiceType;
+    }
+
+    public void setInvoiceType(String invoiceType) {
+        this.invoiceType = invoiceType;
     }
 
     public String getPaymentType() {

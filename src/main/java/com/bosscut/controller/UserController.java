@@ -1,6 +1,6 @@
 package com.bosscut.controller;
 
-import com.bosscut.dto.CashRequestDTO;
+import com.bosscut.dto.CashRequest;
 import com.bosscut.entity.User;
 import com.bosscut.service.SalaryCashService;
 import com.bosscut.service.UserService;
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/cash-advance")
-    public ResponseEntity<?> cashAdvanceProceed(@RequestBody @Valid CashRequestDTO requestDTO) {
+    public ResponseEntity<?> cashAdvanceProceed(@RequestBody @Valid CashRequest requestDTO) {
         return ResponseEntity.ok(salaryCashService.create(requestDTO));
     }
 

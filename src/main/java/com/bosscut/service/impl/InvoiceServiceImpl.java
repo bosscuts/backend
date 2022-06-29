@@ -1,12 +1,14 @@
 package com.bosscut.service.impl;
 
-import com.bosscut.dto.InvoicePreviewDTO;
-import com.bosscut.dto.InvoiceRequestDTO;
-import com.bosscut.dto.ServicePreviewDTO;
+import com.bosscut.dto.InvoiceInternalRequest;
+import com.bosscut.dto.InvoicePreview;
+import com.bosscut.dto.InvoiceExternalRequest;
+import com.bosscut.dto.ServicePreview;
 import com.bosscut.entity.Customer;
 import com.bosscut.entity.Invoice;
 import com.bosscut.entity.InvoiceDetail;
 import com.bosscut.entity.ProductService;
+import com.bosscut.enums.InvoiceType;
 import com.bosscut.model.UserInvoiceDetail;
 import com.bosscut.repository.InvoiceDetailRepository;
 import com.bosscut.repository.InvoiceRepository;
@@ -37,9 +39,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         this.productServiceService = productServiceService;
     }
 
-
     @Override
-    public void createInvoice(InvoiceRequestDTO invoiceRequestDTO) {
+    public void createInvoice(InvoiceExternalRequest invoiceRequestDTO) {
         Optional<Customer> customerOptional = customerService.getCustomerByPhone(invoiceRequestDTO.getCustomerPhone());
         Customer customer = null;
         if (customerOptional.isPresent()) {
@@ -50,6 +51,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             customerService.create(customer);
         }
         Invoice invoice = new Invoice();
+        invoice.setInvoiceType(InvoiceType.EXTERNAL.getName());
         invoice.setInvoiceNumber(String.valueOf(UUID.randomUUID()));
         invoice.setCustomerId(Objects.nonNull(customer) ? customer.getCustomerId() : null);
         invoice.setTotalAmountPayment(invoiceRequestDTO.getTotalAmountPayment());
@@ -79,7 +81,24 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoicePreviewDTO previewInvoice(InvoiceRequestDTO requestDTO) {
+    public void createInvoiceInternal(InvoiceInternalRequest requestDTO) {
+        Invoice invoice = new Invoice();
+        invoice.setInvoiceType(InvoiceType.EXTERNAL.getName());
+        invoice.setInvoiceNumber(String.valueOf(UUID.randomUUID()));
+        invoice.setUserId(requestDTO.getUserId());
+        Invoice invoiceResult = invoiceRepository.save(invoice);
+
+        InvoiceDetail invoiceDetail = new InvoiceDetail();
+        invoiceDetail.setInvoiceId(invoiceResult.getInvoiceId());
+        invoiceDetail.setStaffId(requestDTO.getUserId());
+        invoiceDetail.setAmount(requestDTO.getAmount());
+        invoiceDetail.setDescription(requestDTO.getDescription());
+
+        invoiceDetailRepository.save(invoiceDetail);
+    }
+
+    @Override
+    public InvoicePreview previewInvoice(InvoiceExternalRequest requestDTO) {
         String strServiceStaff = requestDTO.getStrServiceStaff();
         String[] serviceStaffIdArr = strServiceStaff.split(",");
         List<String> serviceStaffIds = Arrays.asList(serviceStaffIdArr);
@@ -96,11 +115,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         int totalAmount = productServices.stream().mapToInt(ProductService::getPrice).sum();
 
-        InvoicePreviewDTO invoicePreview = new InvoicePreviewDTO();
-        List<ServicePreviewDTO> servicePreviews = new ArrayList<>();
+        InvoicePreview invoicePreview = new InvoicePreview();
+        List<ServicePreview> servicePreviews = new ArrayList<>();
 
         productServices.forEach(item -> {
-            ServicePreviewDTO servicePreviewDTO = new ServicePreviewDTO();
+            ServicePreview servicePreviewDTO = new ServicePreview();
             servicePreviewDTO.setServiceProductName(item.getProductServiceName());
             servicePreviewDTO.setQuantity(1);
             servicePreviewDTO.setTotalPrice(item.getPrice() * servicePreviewDTO.getQuantity());

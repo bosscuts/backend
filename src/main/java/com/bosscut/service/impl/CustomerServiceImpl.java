@@ -1,6 +1,6 @@
 package com.bosscut.service.impl;
 
-import com.bosscut.dto.CustomerRequestDTO;
+import com.bosscut.dto.CustomerRequest;
 import com.bosscut.entity.Customer;
 import com.bosscut.repository.CustomerRepository;
 import com.bosscut.service.CustomerService;
@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer create(CustomerRequestDTO requestDTO) {
+    public Customer create(CustomerRequest requestDTO) {
         Customer customer = new Customer();
         customer.setPhone(requestDTO.getPhone());
         customer.setEmail(requestDTO.getEmail());

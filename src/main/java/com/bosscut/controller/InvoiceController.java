@@ -1,23 +1,18 @@
 package com.bosscut.controller;
 
-import com.bosscut.dto.InvoiceRequestDTO;
+import com.bosscut.dto.InvoiceExternalRequest;
+import com.bosscut.dto.InvoiceInternalRequest;
 import com.bosscut.entity.User;
 import com.bosscut.enums.UserLevel;
 import com.bosscut.model.UserInvoiceDetail;
 import com.bosscut.service.InvoiceService;
 import com.bosscut.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -50,13 +45,19 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createInvoice(@RequestBody @Valid InvoiceRequestDTO requestDTO) {
+    public ResponseEntity<?> createInvoice(@RequestBody @Valid InvoiceExternalRequest requestDTO) {
         invoiceService.createInvoice(requestDTO);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/internal")
+    public ResponseEntity<?> createInvoiceInternal(@RequestBody @Valid InvoiceInternalRequest requestDTO) {
+        invoiceService.createInvoiceInternal(requestDTO);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/preview")
-    public ResponseEntity<?> previewCreateInvoice(@RequestBody @Valid InvoiceRequestDTO requestDTO) {
+    public ResponseEntity<?> previewCreateInvoice(@RequestBody @Valid InvoiceExternalRequest requestDTO) {
         return ResponseEntity.ok(invoiceService.previewInvoice(requestDTO));
     }
 }

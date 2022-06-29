@@ -21,20 +21,30 @@ public class InvoiceDetail extends AbstractAuditingEntity implements Serializabl
     @Column(name = "product_service_id")
     private Long productServiceId;
 
+    @Column(name = "request_type")
+    private String requestType;
+
     @Column(name = "staff_id")
     private Long staffId;
 
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Column(name = "amount")
+    private Integer amount;
+
+    @Column(name = "description")
+    private String description;
+
     public InvoiceDetail() {
     }
 
-    public InvoiceDetail(Long invoiceDetailId, Long invoiceId, Long productServiceId, Integer quantity) {
+    public InvoiceDetail(Long invoiceDetailId, Long invoiceId, Long productServiceId, Integer quantity, Integer amount) {
         this.invoiceDetailId = invoiceDetailId;
         this.invoiceId = invoiceId;
         this.productServiceId = productServiceId;
         this.quantity = quantity;
+        this.amount = amount;
     }
 
     public Long getInvoiceDetailId() {
@@ -61,6 +71,14 @@ public class InvoiceDetail extends AbstractAuditingEntity implements Serializabl
         this.productServiceId = productServiceId;
     }
 
+    public String getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
+    }
+
     public Long getStaffId() {
         return staffId;
     }
@@ -75,5 +93,21 @@ public class InvoiceDetail extends AbstractAuditingEntity implements Serializabl
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -169,6 +169,7 @@
             <column name="discounted_amount" type="number"/>
             <column name="vat_percentage" type="int"/>
             <column name="total_after_discount" type="number"/>
+            <column name="invoice_type" type="varchar(20)"/>
             <column name="payment_type" type="varchar(100)"/>
             <column name="user_id" type="bigint"/>
             <column name="created_by" type="varchar(50)"/>
@@ -183,8 +184,11 @@
             </column>
             <column name="invoice_id" type="bigint"/>
             <column name="product_service_id" type="int"/>
+            <column name="request_type" type="varchar(50)"/>
             <column name="staff_id" type="int"/>
-            <column name="quantity" type="varchar(20)"/>
+            <column name="quantity" type="int"/>
+            <column name="amount" type="int"/>
+            <column name="description" type="varchar(500)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>

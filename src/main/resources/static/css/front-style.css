@@ -2645,3 +2645,11 @@ figure, .form-check.custom {
     border-radius: 20px;
     box-shadow: 0 0 20px rgb(0 0 0 / 5%);
 }
+
+.service {
+    padding-top: 10px;
+}
+
+.invoice-internal {
+    padding-top: 10px;
+}

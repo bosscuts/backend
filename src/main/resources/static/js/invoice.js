@@ -1,16 +1,48 @@
 let staffIds = [];
 let htmlResult = '';
 $(document).ready(function () {
+    $(document).on('change', '#request_type', function () {
+        const requestType = $('#request_type').val();
+        if (requestType === 'PAY_FINES') {
+            $('#from_date_sec').addClass('hidden_input');
+            $('#to_date_sec').addClass('hidden_input');
+            $('#cash_amount_sec').removeClass('hidden_input');
+        } else if (requestType === 'CASH') {
+            $('#from_date_sec').addClass('hidden_input');
+            $('#to_date_sec').addClass('hidden_input');
+            $('#cash_amount_sec').removeClass('hidden_input');
+        } else if (requestType === 'HOLIDAY') {
+            $('#cash_amount_sec').addClass('hidden_input');
+            $('#from_date_sec').removeClass('hidden_input');
+            $('#to_date_sec').removeClass('hidden_input');
+        }
+    });
+
+    $(document).on('click', '#invoice_export_btn', function () {
+        let userId = $('#staff_input').val();
+        let invoiceAmount = $('#invoice_amount').val();
+        let invoiceDescription = $('#invoice_description').val();
+
+        $.ajax({
+            url: "/invoice/internal",
+            type: 'post',
+            data: JSON.stringify({
+                'userId': userId,
+                'amount': invoiceAmount,
+                'description': invoiceDescription,
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                swal('Tạo hóa đơn thành công.', "", "success");
+            }
+        });
+    });
+
     $(document).on('click', '.staff', function () {
         let staff = $(this);
         staff.children('.card').toggleClass('border');
         staff.children('.card').toggleClass('border-primary');
     });
-    // $(document).on('click', '.card', function () {
-    //     let staff = $(this);
-    //     staff.toggleClass('border');
-    //     staff.toggleClass('border-primary');
-    // });
 
     $(document).on('click', '#in-day', function () {
         $('#result').html('');

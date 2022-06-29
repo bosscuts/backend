@@ -1,15 +1,15 @@
 package com.bosscut.dto;
 
-public class ServicePreviewDTO {
+public class ServicePreview {
 
     private String serviceProductName;
     private Integer quantity;
     private Integer totalPrice;
 
-    public ServicePreviewDTO() {
+    public ServicePreview() {
     }
 
-    public ServicePreviewDTO(String serviceProductName, Integer quantity, Integer totalPrice) {
+    public ServicePreview(String serviceProductName, Integer quantity, Integer totalPrice) {
         this.serviceProductName = serviceProductName;
         this.quantity = quantity;
         this.totalPrice = totalPrice;

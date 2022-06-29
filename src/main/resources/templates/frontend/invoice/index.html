@@ -21,10 +21,6 @@
                         <a class="nav-link" id="ex-with-icons-tab-2" data-mdb-toggle="tab" href="#ex-with-icons-tabs-2" role="tab"
                            aria-controls="ex-with-icons-tabs-2" aria-selected="false"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Hóa đơn nội bộ</a>
                     </li>
-                    <li class="nav-item" role="presentation" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" id="ex-with-icons-tab-3" data-mdb-toggle="tab" href="#ex-with-icons-tabs-3" role="tab"
-                           aria-controls="ex-with-icons-tabs-3" aria-selected="false"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Thu nhập</a>
-                    </li>
                 </ul>
                 <!-- Tabs navs -->
 
@@ -34,7 +30,7 @@
                          id="ex-with-icons-tabs-1" role="tabpanel" aria-labelledby="ex-with-icons-tab-1">
                         <div class="content">
                             <div class="service">
-                                <h2 class="step-title">Chọn nhân viên</h2>
+                                <h2 class="text-center">Chọn nhân viên</h2>
                                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
                                     <div class="col staff" th:each="assistant,assistantStat : ${assistants}"
                                          th:staffId="${assistant.id}">
@@ -66,11 +62,68 @@
                     </div>
                     <div class="tab-pane fade" sec:authorize="hasRole('ROLE_ADMINISTRATOR')"
                          id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
-                        Tab 2 content
-                    </div>
-                    <div class="tab-pane fade"
-                         id="ex-with-icons-tabs-3" role="tabpanel" aria-labelledby="ex-with-icons-tab-3">
-                        Tab 3 content
+                        <div class='col-lg-12' id="invoice_request">
+                            <div class='invoice-internal'>
+                                <h2 class='text-center'>Tạo phiếu yêu cầu</h2>
+                                <div class='row'>
+                                    <div class='form-group col-md-6 select2-container--bootstrap'>
+                                        <label for='staff_input'>Nhân viên</label>
+                                        <select class="form-control input-lg" id="staff_input">
+                                            <option>---Chọn nhân viên---</option>
+                                            <option th:each="assistant,assistantStat : ${assistants}" th:value="${assistant.id}"
+                                                    th:utext="${assistant.fullName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for='request_type'>Loại yêu cầu</label>
+                                        <select class="form-control input-lg" id="request_type">
+                                            <option>---Chọn loại yêu cầu---</option>
+                                            <option value="CASH">Ứng tiền</option>
+                                            <option value="HOLIDAY">Nghỉ phép</option>
+                                            <option value="PAY_FINES">Nộp phạt</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-12 cash_amount hidden_input' id="cash_amount_sec">
+                                        <label for='invoice_amount'>Số tiền</label>
+                                        <select class="form-control input-lg" id="invoice_amount">
+                                            <option>---Chọn số tiền---</option>
+                                            <option value="1000000">1 triệu</option>
+                                            <option value="2000000">2 triệu</option>
+                                            <option value="3000000">3 triệu</option>
+                                            <option value="5000000">5 triệu</option>
+                                            <option value="10000000">10 triệu</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6 hidden_input' id="from_date_sec">
+                                        <label for='from_date'>Ngày nghỉ</label>
+                                        <input type='text' class='form-control' id='from_date'
+                                               name='from_date' placeholder='Chọn ngày nghỉ'>
+                                    </div>
+                                    <div class='form-group col-md-6 hidden_input' id="to_date_sec">
+                                        <label for='to_date'>Ngày nghỉ</label>
+                                        <input type='text' class='form-control' id='to_date'
+                                               name='to_date' placeholder='Chọn ngày nghỉ'>
+                                    </div>
+                                    <div class='form-group col-md-12'>
+                                        <label for='invoice_description'>Nội dung</label>
+                                        <textarea class='form-control' id='invoice_description'
+                                                  name='invoice_description'
+                                                  placeholder='Nhập nội dung'></textarea>
+                                    </div>
+                                </div>
+                                <div class='row mt-2 mb-3'>
+                                    <div class='col-md-12'>
+                                        <button type='button' id='invoice_export_btn'
+                                                class='rzvy_register_btn btn btn-primary p-2 w-100'>
+                                            Xuất hóa đơn
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-lg-12' id="invoice_request_list">
+
+                        </div>
                     </div>
                 </div>
                 <!-- Tabs content -->

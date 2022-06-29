@@ -2,12 +2,12 @@ package com.bosscut.dto;
 
 import java.math.BigDecimal;
 
-public class CashRequestDTO {
+public class CashRequest {
     private String staffId;
     private BigDecimal cashAmount;
     private String cashDescription;
 
-    public CashRequestDTO() {
+    public CashRequest() {
     }
 
     public String getStaffId() {

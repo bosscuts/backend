@@ -1,6 +1,6 @@
 package com.bosscut.service.impl;
 
-import com.bosscut.dto.CashRequestDTO;
+import com.bosscut.dto.CashRequest;
 import com.bosscut.entity.SalaryCash;
 import com.bosscut.repository.SalaryCashRepository;
 import com.bosscut.service.SalaryCashService;
@@ -16,7 +16,7 @@ public class SalaryCashServiceImpl implements SalaryCashService {
     }
 
     @Override
-    public SalaryCash create(CashRequestDTO dto) {
+    public SalaryCash create(CashRequest dto) {
 
         SalaryCash salaryCash = new SalaryCash();
         salaryCash.setStaffId(dto.getStaffId());

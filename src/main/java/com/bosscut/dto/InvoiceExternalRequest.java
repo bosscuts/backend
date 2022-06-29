@@ -2,7 +2,7 @@ package com.bosscut.dto;
 
 import java.math.BigDecimal;
 
-public class InvoiceRequestDTO {
+public class InvoiceExternalRequest {
 
     private String strServiceStaff;
     private String customerPhone;

@@ -1,16 +1,16 @@
 package com.bosscut.dto;
 
-public class CustomerRequestDTO {
+public class CustomerRequest {
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
 
-    public CustomerRequestDTO() {
+    public CustomerRequest() {
     }
 
-    public CustomerRequestDTO(String firstName, String lastName, String email, String phone, String address) {
+    public CustomerRequest(String firstName, String lastName, String email, String phone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

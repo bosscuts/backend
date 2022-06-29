@@ -39,7 +39,7 @@
                 <div class="tab-content" id="ex-with-icons-content">
                     <div class="tab-pane fade show active" id="ex-with-icons-tabs-1" role="tabpanel" aria-labelledby="ex-with-icons-tab-1">
                         <div class="service">
-                            <div class="service-row" th:each="service,itrStat : ${services}" style="margin-bottom: 30px">
+                            <div class="service-row" th:each="service,itrStat : ${services}" style="margin-bottom: 20px">
                                 <h4 th:utext="${service.productServiceName}"></h4>
                                 <h6 th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h6>
                                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
@@ -63,7 +63,7 @@
                     </div>
                     <div class="tab-pane fade" id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
                         <div class="product">
-                            <div class="product-row" th:each="product,itrStat : ${products}" style="margin-bottom: 30px">
+                            <div class="product-row" th:each="product,itrStat : ${products}" style="margin-bottom: 20px">
                                 <h4 th:utext="${product.productServiceName}"></h4>
                                 <h6 th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h6>
                                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
