@@ -86,12 +86,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setInvoiceType(InvoiceType.EXTERNAL.getName());
         invoice.setInvoiceNumber(String.valueOf(UUID.randomUUID()));
         invoice.setUserId(requestDTO.getUserId());
+
         Invoice invoiceResult = invoiceRepository.save(invoice);
 
         InvoiceDetail invoiceDetail = new InvoiceDetail();
         invoiceDetail.setInvoiceId(invoiceResult.getInvoiceId());
         invoiceDetail.setStaffId(requestDTO.getUserId());
         invoiceDetail.setAmount(requestDTO.getAmount());
+        invoiceDetail.setRequestType(requestDTO.getRequestType());
         invoiceDetail.setDescription(requestDTO.getDescription());
 
         invoiceDetailRepository.save(invoiceDetail);

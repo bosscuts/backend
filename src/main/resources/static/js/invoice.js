@@ -19,21 +19,28 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#invoice_export_btn', function () {
-        let userId = $('#staff_input').val();
-        let invoiceAmount = $('#invoice_amount').val();
-        let invoiceDescription = $('#invoice_description').val();
-
+        const userId = $('#staff_input').val();
+        const invoiceAmount = $('#invoice_amount').val();
+        const invoiceDescription = $('#invoice_description').val();
+        const requestType = $('#request_type').val();
         $.ajax({
             url: "/invoice/internal",
             type: 'post',
             data: JSON.stringify({
                 'userId': userId,
                 'amount': invoiceAmount,
+                'requestType': requestType,
                 'description': invoiceDescription,
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
-                swal('Tạo hóa đơn thành công.', "", "success");
+                if (requestType === 'PAY_FINES') {
+                    swal('Tạo hóa đơn nộp phạt thành công.', "", "success");
+                } else if (requestType === 'CASH') {
+                    swal('Ứng tiền thành công.', "", "success");
+                } else if (requestType === 'HOLIDAY') {
+                    swal('Tạo đơn xin nghỉ phép thành công.', "", "success");
+                }
             }
         });
     });

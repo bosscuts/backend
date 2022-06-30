@@ -8,172 +8,70 @@
 <body>
 <section layout:fragment="content">
     <main class='form-style-two rzvy-booking-detail-body'>
-        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
-            <div class="row">
-                <div id="rzvy-staff-detail-card" class="col-md-12 mb-3">
-                    <div class="card">
-                        <div class="card-body p-0">
-                            <div class="rzvy-tabbable-panel">
-                                <div class="rzvy-tabbable-line">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item active custom-nav-item" id="rzvy_staff_detail_tab_selection"
-                                            data-id="1">
-                                            <a class="nav-link custom-nav-link rzvy_tab_view_nav_link" data-tabno="0"
-                                               data-toggle="tab" href="#rzvy_staff_detail"><i
-                                                    class="fa fa-info-circle"></i> Détail</a>
-                                        </li>
-                                        <li class="nav-item custom-nav-item" id="rzvy_staff_schedule_tab_selection"
-                                            data-id="1">
-                                            <a class="nav-link custom-nav-link rzvy_tab_view_nav_link" data-tabno="1"
-                                               data-toggle="tab" href="#rzvy_staff_schedule"><i
-                                                    class="fa fa-calendar"></i> Calendrier</a>
-                                        </li>
-                                        <li class="nav-item custom-nav-item" id="rzvy_staff_blockoff_tab_selection"
-                                            data-id="1">
-                                            <a class="nav-link custom-nav-link rzvy_tab_view_nav_link" data-tabno="2"
-                                               data-toggle="tab" href="#rzvy_staff_blockoff"><i
-                                                    class="fa fa-calendar-o"></i> Jours de congé</a>
-                                        </li>
-                                    </ul>
-                                    <div id="rzvy-staff-tab-content" class="tab-content py-4">
-                                        <div class="tab-pane container active" id="rzvy_staff_detail">
-                                            <form name="rzvy_staff_detail_form" id="rzvy_staff_detail_form"
-                                                  method="post">
-                                                <div class="form-group row">
-                                                    <div class="col-md-12">
-                                                        <label class="control-label">Adresse</label>
-                                                        <textarea class="form-control" id="rzvy_staff_address"
-                                                                  name="rzvy_staff_address" rows="1"
-                                                                  placeholder="Entrer l\\\'adresse">#abc street, Rezervy Park, USA</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-6">
-                                                        <label class="control-label">Ville</label>
-                                                        <input class="form-control" id="rzvy_staff_city"
-                                                               name="rzvy_staff_city" type="text" value="USA"
-                                                               placeholder="Entrer la ville">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="control-label">État</label>
-                                                        <input class="form-control" id="rzvy_staff_state"
-                                                               name="rzvy_staff_state" type="text" value="USA"
-                                                               placeholder="Entrer l\\\'état">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-6">
-                                                        <label class="control-label">Zip</label>
-                                                        <input class="form-control" id="rzvy_staff_zip"
-                                                               name="rzvy_staff_zip" type="text" value="12345"
-                                                               placeholder="Entrez zip">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="control-label">Pays</label>
-                                                        <input class="form-control" id="rzvy_staff_country"
-                                                               name="rzvy_staff_country" type="text" value="USA"
-                                                               placeholder="Entrer le pays">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-12">
-                                                        <label class="control-label">Show ratings in booking
-                                                            form</label>
-                                                        <select name="show_ratings_on_booking_form"
-                                                                id="show_ratings_on_booking_form" class="form-control">
-                                                            <option value="Y" selected="">Activer</option>
-                                                            <option value="N">Désactiver</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-12 mt-2">
-                                                        <label class="control-label">Show completed jobs in booking
-                                                            form</label>
-                                                        <select name="show_completed_jobs_on_booking_form"
-                                                                id="show_completed_jobs_on_booking_form"
-                                                                class="form-control">
-                                                            <option value="Y" selected="">Activer</option>
-                                                            <option value="N">Désactiver</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-12 mt-2">
-                                                        <label class="control-label">Show email in booking form</label>
-                                                        <select name="show_email_on_booking_form"
-                                                                id="show_email_on_booking_form" class="form-control">
-                                                            <option value="Y" selected="">Activer</option>
-                                                            <option value="N">Désactiver</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-12 mt-2">
-                                                        <label class="control-label">Show phone in booking form</label>
-                                                        <select name="show_phone_on_booking_form"
-                                                                id="show_phone_on_booking_form" class="form-control">
-                                                            <option value="Y">Activer</option>
-                                                            <option value="N" selected="">Désactiver</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-12 mt-2">
-                                                        <label class="control-label">Show staff on calendar</label>
-                                                        <select name="show_staff_on_calendar"
-                                                                id="show_staff_on_calendar" class="form-control">
-                                                            <option value="Y">Activer</option>
-                                                            <option value="N" selected="">Désactiver</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-12">
-                                                        <a class="btn btn-primary rzvy_save_staff_btn pull-right"
-                                                           href="javascript:void(0);">Save Staff</a>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="tab-pane container" id="rzvy_staff_services"></div>
-                                        <div class="tab-pane container" id="rzvy_staff_schedule"></div>
-                                        <div class="tab-pane container" id="rzvy_staff_blockoff"></div>
-
-                                        <!-- Change email modal -->
-                                        <div class="modal fade" id="rzvy_change_staffemail_modal">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-
-                                                    <!-- Modal Header -->
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">Changer d\\\'email</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">×
-                                                        </button>
-                                                    </div>
-
-                                                    <!-- Modal body -->
-                                                    <div class="modal-body">
-                                                        <form name="rzvy_change_staff_email_form"
-                                                              id="rzvy_change_staff_email_form" method="post">
-                                                            <div class="row m-2">
-                                                                <div class="col-md-9 p-1">
-                                                                    <input type="text" class="form-control"
-                                                                           placeholder="Entrer un nouveau courriel"
-                                                                           name="rzvy_change_staff_email"
-                                                                           id="rzvy_change_staff_email">
-                                                                </div>
-                                                                <div class="col-md-3 p-1">
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-primary w-100"
-                                                                       id="rzvy_change_staff_email_btn">Changer</a>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-
-                                                    <!-- Modal footer -->
-                                                    <div class="modal-footer"></div>
+        <div class="container rzvy__main__sub__container pt-3 bg-white">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-lock"></i>&nbsp;Thông tin cá nhân
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form name="rzvy_profile_form" id="rzvy_profile_form" method="post">
+                                <input type="hidden" id="rzvy-profile-admin-id-hidden" name="rzvy-profile-admin-id-hidden" value="1">
+                                <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <div class="rzvy-image-upload">
+                                            <div class="rzvy-image-preview">
+                                                <div id="rzvy-image-upload-file-preview">
+                                                    <img width="100" height="100" src="http://rezervy.perfecky.com/includes/images/default-avatar.jpg">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">Tên</label>
+                                        <input class="form-control" id="rzvy_profile_firstname" name="rzvy_profile_firstname" type="text" value="John" placeholder="Ingrese el nombre">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">Họ</label>
+                                        <input class="form-control" id="rzvy_profile_lastname" name="rzvy_profile_lastname" type="text" value="Doe" placeholder="Ingrese el apellido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">Điện thoại</label>
+                                        <input class="form-control" id="rzvy_phone_lastname" name="rzvy_phone_lastname" type="text" value="Doe" placeholder="Ingrese el apellido">
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Địa chỉ nhà</label>
+                                        <input class="form-control" id="rzvy_profile_address" name="rzvy_profile_address" type="text" placeholder="Ingresar dirección">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Thành phố</label>
+                                        <input class="form-control" id="rzvy_profile_city" name="rzvy_profile_city" type="text" value="New York" placeholder="Ingresar ciudad">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Tiểu bang</label>
+                                        <input class="form-control" id="rzvy_profile_state" name="rzvy_profile_state" type="text" value="New York" placeholder="Ingresar estado">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label class="control-label">Mã bưu điện</label>
+                                        <input class="form-control" id="rzvy_profile_zip" name="rzvy_profile_zip" type="text" value="90001" placeholder="Ingrese el código postal">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Quốc gia</label>
+                                        <input class="form-control" id="rzvy_profile_country" name="rzvy_profile_country" type="text" value="United State" placeholder="Ingresar país">
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary btn-block rzvy_update_profile_btn" href="javascript:void(0);">Cập nhật thông tin cá nhân</a>
+                            </form>
                         </div>
                     </div>
+                    <div class="card-footer small text-muted"></div>
                 </div>
             </div>
         </div>

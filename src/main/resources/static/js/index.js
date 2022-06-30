@@ -2,6 +2,9 @@ let staffService = new Map();
 let staffServiceStr = '';
 $(document).ready(function () {
     $('#tab_link_service').click();
+    $(document).on('click', '#reset_btn', function () {
+        location.reload();
+    });
 
     $(document).on('click', '.staff', function () {
         let staff = $(this);
@@ -11,8 +14,8 @@ $(document).ready(function () {
         staff.parent().parent().siblings().removeClass('staff-active');
         staff.toggleClass('staff-active');
 
-        staff.children('.card').toggleClass('border');
-        staff.children('.card').toggleClass('border-primary');
+        staff.children('.card').toggleClass('border-div');
+
     });
 
     $(document).on('click', '#confirm', function () {

@@ -47,15 +47,11 @@
                         &nbsp;Thống kê</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href='@{/rules}'>
-                        <i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Nội quy</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a th:href='@{/users/holiday}'>
-                        <i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;Nghỉ phép</a>
+                    <a th:href='@{/settings}'>
+                        <i class="fa fa-setting" aria-hidden="true"></i>&nbsp;Cài đặt</a>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')" style="text-align: center">
-                    <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i>&nbsp;Thông báo</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a class="user-avatar" th:href='@{/users/account-info}' sec:authentication="principal.username"></a>

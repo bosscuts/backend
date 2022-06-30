@@ -2653,3 +2653,7 @@ figure, .form-check.custom {
 .invoice-internal {
     padding-top: 10px;
 }
+
+.border-div {
+    outline: 1px solid #0d6efd;
+}
