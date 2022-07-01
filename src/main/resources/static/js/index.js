@@ -125,7 +125,6 @@ $(document).ready(function () {
                             staffServiceStr = '';
                         } else {
                             swal('Tạo hóa đơn thất bại!', "", "error");
-                            // $.toaster({ priority : 'danger', message : 'Tạo hóa đơn thất bại!' });
                         }
                     }
                 });

@@ -26,12 +26,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public enum Role {
-        ADMIN,
-        EDITOR,
-        AUTHOR,
-        VIEWER,
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
