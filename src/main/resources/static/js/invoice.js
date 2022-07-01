@@ -45,10 +45,10 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('click', '.staff', function () {
+
+    $(document).on('click', '.staff-revenue', function () {
         let staff = $(this);
-        staff.children('.card').toggleClass('border');
-        staff.children('.card').toggleClass('border-primary');
+        staff.children('.card').toggleClass('border-div');
     });
 
     $(document).on('click', '#in-day', function () {
@@ -92,6 +92,8 @@ $(document).ready(function () {
         $('#result').html('');
         htmlResult = '';
         let staff = $(this);
+        staff.children('.card').toggleClass('border-div');
+
         const staffId = staff.attr('staffId');
         const index = staffIds.indexOf(staffId);
         if (index !== -1) {

@@ -30,7 +30,7 @@
                          id="ex-with-icons-tabs-1" role="tabpanel" aria-labelledby="ex-with-icons-tab-1">
                         <div class='col-lg-12' id="invoice">
                             <div class="content">
-                                <div class="service">
+                                <div class="invoice">
                                     <h2 class="text-center">Chọn nhân viên</h2>
                                     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
                                         <div class="col staff" th:each="assistant,assistantStat : ${assistants}"
@@ -65,7 +65,28 @@
                     <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
                          id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
                         <div class='col-lg-12' id="revenue">
-                            Thu nhập
+                            <div class="content">
+                                <div class="revenue">
+                                    <h2 class="text-center">Chọn nhân viên</h2>
+                                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
+                                        <div class="col staff-revenue" th:each="assistant,assistantStat : ${assistants}"
+                                             th:staffId="${assistant.id}">
+                                            <div class="card text-center">
+                                                <div class="card-body">
+                                                    <h6 th:utext="${assistant.fullName}"></h6>
+                                                    <span>
+                                                    <i class="fa fa-mobile"></i>
+                                                    <span th:utext="${assistant.phone}"></span>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row' id="result-staff-revenue">
+
+                            </div>
                         </div>
                     </div>
                 </div>
