@@ -35,21 +35,26 @@
             <a href="javascript:void(0);" class="hamburger"
                onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
             <ul>
-                <li sec:authorize="isAuthenticated()">
+                <li sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
                     <a th:href='@{/invoice}'>
                         <i class="fa fa-file-text" aria-hidden="true"></i>
-                        &nbsp;Hoá đơn</a>
+                        &nbsp;Hoá đơn dịch vụ</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href='@{/invoice/internal}'>
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                        &nbsp;Hoá đơn nội bộ</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_MASTER')">
                     <a th:href='@{/statistic}'>
                         <i class="fa fa-user-plus" aria-hidden="true"></i>
                         &nbsp;Thống kê</a>
                 </li>
-                <li sec:authorize="isAuthenticated()">
+                <li sec:authorize="hasRole('ROLE_MASTER')">
                     <a th:href='@{/settings}'>
                         <i class="fa fa-setting" aria-hidden="true"></i>&nbsp;Cài đặt</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')" style="text-align: center">
+                <li sec:authorize="hasRole('ROLE_MASTER')" style="text-align: center">
                     <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i>&nbsp;Thông báo</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
@@ -68,14 +73,7 @@
     </header>
 </section>
 <section layout:fragment="content"></section>
-<footer layout:fragment="footer">
-<!--    <div class="container">-->
-<!--        <div class="footer-bottom row align-items-center">-->
-<!--            <p class="footer-text m-0 col-lg-8 col-md-12">-->
-<!--                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>-->
-<!--        </div>-->
-<!--    </div>-->
-</footer>
+<footer layout:fragment="footer"></footer>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>

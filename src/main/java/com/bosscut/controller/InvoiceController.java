@@ -50,6 +50,13 @@ public class InvoiceController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/internal")
+    public String invoiceInternal(Model model) {
+        List<User> users = userService.getUserByLevel(UserLevel.ASSISTANT.getName());
+        model.addAttribute("assistants", users);
+        return "frontend/invoice/internal";
+    }
+
     @PostMapping("/internal")
     public ResponseEntity<?> createInvoiceInternal(@RequestBody @Valid InvoiceInternalRequest requestDTO) {
         invoiceService.createInvoiceInternal(requestDTO);

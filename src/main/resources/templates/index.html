@@ -21,7 +21,7 @@
                 </a>
             </div>
 
-            <div class="row content card" sec:authorize="hasRole('ROLE_ADMINISTRATOR') || hasRole('ROLE_MANAGER')">
+            <div class="row content card" sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_MANAGER')">
                 <!-- Tabs navs -->
                 <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
                     <li class="nav-item" role="presentation">
