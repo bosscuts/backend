@@ -1,10 +1,12 @@
 package com.bosscut.entity;
 
 import com.bosscut.config.Constants;
+import com.bosscut.enums.UserLevel;
 import com.bosscut.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -88,6 +90,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Transient
     private String fullName;
+
+    @Transient
+    private String authorityName;
 
     @JsonIgnore
     @ManyToMany
@@ -257,5 +262,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getAuthorityName() {
+        return authorityName;
+    }
+
+    public void setAuthorityName(String authorityName) {
+        this.authorityName = authorityName;
     }
 }

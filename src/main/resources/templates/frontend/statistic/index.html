@@ -8,115 +8,120 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <main class='form-style-two rzvy-booking-detail-body'>
-        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
+    <main class="container content-top">
+        <div class="row card" style="padding-bottom: 20px">
+            <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
+                <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
+                    <a class="nav-link active" id="ex-with-icons-tab-1" data-mdb-toggle="tab"
+                       href="#ex-with-icons-tabs-1" role="tab"
+                       aria-controls="ex-with-icons-tabs-1" aria-selected="true"><i class="fa fa-file-text"
+                                                                                    aria-hidden="true"></i>&nbsp;Hóa đơn</a>
+                </li>
+                <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
+                    <a class="nav-link" id="ex-with-icons-tab-2" data-mdb-toggle="tab" href="#ex-with-icons-tabs-2"
+                       role="tab"
+                       aria-controls="ex-with-icons-tabs-2" aria-selected="false"><i class="fa fa-money"
+                                                                                     aria-hidden="true"></i>&nbsp;Thu
+                        nhập</a>
+                </li>
+                <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
+                    <a class="nav-link" id="icons-tab-revenue" data-mdb-toggle="tab" href="#tab-revenue" role="tab"
+                       aria-controls="tab-revenue" aria-selected="false"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Doanh
+                        số</a>
+                </li>
+            </ul>
             <!-- Tabs navs -->
-            <div class="row card" style="padding-bottom: 20px">
-                <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
-                    <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
-                        <a class="nav-link active" id="ex-with-icons-tab-1" data-mdb-toggle="tab" href="#ex-with-icons-tabs-1" role="tab"
-                           aria-controls="ex-with-icons-tabs-1" aria-selected="true"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Hóa đơn</a>
-                    </li>
-                    <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
-                        <a class="nav-link" id="ex-with-icons-tab-2" data-mdb-toggle="tab" href="#ex-with-icons-tabs-2" role="tab"
-                           aria-controls="ex-with-icons-tabs-2" aria-selected="false"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Thu nhập</a>
-                    </li>
-                    <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
-                        <a class="nav-link" id="icons-tab-revenue" data-mdb-toggle="tab" href="#tab-revenue" role="tab"
-                           aria-controls="tab-revenue" aria-selected="false"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Doanh số</a>
-                    </li>
-                </ul>
-                <!-- Tabs navs -->
 
-                <!-- Tabs content -->
-                <div class="tab-content" id="ex-with-icons-content">
-                    <div sec:authorize="hasRole('ROLE_MASTER')" class="tab-pane fade show active"
-                         id="ex-with-icons-tabs-1" role="tabpanel" aria-labelledby="ex-with-icons-tab-1">
-                        <div class='col-lg-12' id="invoice">
-                            <div class="content">
-                                <div class="invoice">
-                                    <h2 class="text-center">Chọn nhân viên</h2>
-                                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
-                                        <div class="col staff" th:each="assistant,assistantStat : ${assistants}"
-                                             th:staffId="${assistant.id}">
-                                            <div class="card text-center">
-                                                <div class="card-body">
-                                                    <h6 th:utext="${assistant.fullName}"></h6>
-                                                    <span>
+            <!-- Tabs content -->
+            <div class="tab-content" id="ex-with-icons-content">
+                <div sec:authorize="hasRole('ROLE_MASTER')" class="tab-pane fade show active"
+                     id="ex-with-icons-tabs-1" role="tabpanel" aria-labelledby="ex-with-icons-tab-1">
+                    <div class='col-lg-12' id="invoice">
+                        <div class="content">
+                            <div class="invoice">
+                                <h2 class="text-center">Chọn nhân viên</h2>
+                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
+                                    <div class="col staff" th:each="assistant,assistantStat : ${assistants}"
+                                         th:staffId="${assistant.id}">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <h6 th:utext="${assistant.fullName}"></h6>
+                                                <span>
                                                     <i class="fa fa-mobile"></i>
                                                     <span th:utext="${assistant.phone}"></span>
                                                 </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class='row' id="search_filter" style="margin-top: 50px">
-                                <div class='col-lg-12'>
-                                    <div class="btn-group shadow-0" role="group">
-                                        <button type="button" class="btn btn-outline-primary" id="in-day">Trong ngày</button>
-                                        <button type="button" class="btn btn-outline-primary" id="in-month">Trong tháng</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='row' id="result">
-
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
-                         id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
-                        <div class='col-lg-12' id="income">
-                            <div class="content">
-                                <div class="income">
-                                    <h2 class="text-center">Chọn nhân viên</h2>
-                                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
-                                        <div class="col staff-income" th:each="assistant,assistantStat : ${assistants}"
-                                             th:staffId="${assistant.id}">
-                                            <div class="card text-center">
-                                                <div class="card-body">
-                                                    <h6 th:utext="${assistant.fullName}"></h6>
-                                                    <span>
-                                                    <i class="fa fa-mobile"></i>
-                                                    <span th:utext="${assistant.phone}"></span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='row' id="result-staff-income">
 
+                        <div class='row' id="search_filter" style="margin-top: 50px">
+                            <div class='col-lg-12'>
+                                <div class="btn-group shadow-0" role="group">
+                                    <button type="button" class="btn btn-outline-primary" id="in-day">Trong ngày
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary" id="in-month">Trong tháng
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class='row' id="result">
 
-                    <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
-                         id="tab-revenue" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
-                        <div class='col-lg-12' id="revenue">
-                            <div class="content">
-                                <div class="income">
-                                    <h2 class="text-center">Doanh số</h2>
-                                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
-                                        <div class="col staff-income">
-                                            <div class="card text-center">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='row' id="result-staff-revenue">
-
-                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Tabs content -->
+                <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
+                     id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
+                    <div class='col-lg-12' id="income">
+                        <div class="content">
+                            <div class="income">
+                                <h2 class="text-center">Chọn nhân viên</h2>
+                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
+                                    <div class="col staff-income" th:each="assistant,assistantStat : ${assistants}"
+                                         th:staffId="${assistant.id}">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <h6 th:utext="${assistant.fullName}"></h6>
+                                                <span>
+                                                    <i class="fa fa-mobile"></i>
+                                                    <span th:utext="${assistant.phone}"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row' id="result-staff-income">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
+                     id="tab-revenue" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
+                    <div class='col-lg-12' id="revenue">
+                        <div class="content">
+                            <div class="income">
+                                <h2 class="text-center">Doanh số</h2>
+                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
+                                    <div class="col staff-income">
+                                        <div class="card text-center">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row' id="result-staff-revenue">
+
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- Tabs content -->
         </div>
     </main>
 </section>

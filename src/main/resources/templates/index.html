@@ -13,17 +13,15 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <main class='form-style-two rzvy-booking-detail-body'>
-        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
-            <div class='row' sec:authorize="isAnonymous()">
-                <a th:href='@{/login}'>
-                    <img th:src='@{/img/please-login.png}'/>
-                </a>
-            </div>
+    <main class="container content-top">
+        <div class='row' sec:authorize="isAnonymous()">
+            <a th:href='@{/login}'>
+                <img th:src='@{/img/please-login.png}'/>
+            </a>
+        </div>
 
-            <div class="row content card" sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_MANAGER')">
-                <img th:src='@{/img/home.jpg}'/>
-            </div>
+        <div class="row content card" sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_MANAGER')">
+            <img th:src='@{/img/home.jpg}'/>
         </div>
     </main>
 </section>

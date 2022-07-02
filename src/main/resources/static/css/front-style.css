@@ -2661,3 +2661,7 @@ figure, .form-check.custom {
 .price {
     color: #FB9432;
 }
+
+.content-top {
+    padding-top: 100px;
+}

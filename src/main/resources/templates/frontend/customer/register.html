@@ -12,39 +12,39 @@
 </head>
 <body class='rzvy'>
 <section layout:fragment="content" class='rzvy-register-main my-3'>
-    <div class='container rzvy-register-container whitebox'>
-        <form id='rzvy_customer_register_form' name='rzvy_customer_register_form' method='post' novalidate='novalidate'>
-            <div class='row'>
-                <div class='col-md-12 pt-3 rzvy-register-right-block'>
-                    <h2 class='text-center'>Đăng kí khách hàng</h2>
-                    <div class='row'>
-                        <div class='form-group col-md-6'>
+    <div class="container content-top">
+        <div class="row whitebox">
+            <form method="post">
+                <div class="col-md-12 pt-3">
+                    <h2 class="text-center">Đăng kí khách hàng</h2>
+                    <div class="row">
+                        <div class="form-group col-md-6">
                             <label for='customer_firstname'>Tên</label>
-                            <input type='text' class='form-control' id='customer_firstname'
+                            <input type='text' class="form-control" id='customer_firstname'
                                    name='customer_firstname' placeholder='Nhập tên'>
                         </div>
-                        <div class='form-group col-md-6'>
-                            <label for='customer_lastname'>Họ</label>
-                            <input type='text' class='form-control' id='customer_lastname'
+                        <div class="form-group col-md-6">
+                            <label for="customer_lastname">Họ</label>
+                            <input type='text' class="form-control" id="customer_lastname"
                                    name='customer_lastname' placeholder='Nhập họ'>
                         </div>
                     </div>
-                    <div class='row'>
-                        <div class='form-group col-md-6'>
+                    <div class="row">
+                        <div class="form-group col-md-6">
                             <label for='customer_email'>Email</label>
-                            <input type='text' class='form-control' id='customer_email'
+                            <input type='text' class="form-control" id='customer_email'
                                    name='customer_email' placeholder='Nhập email'>
                         </div>
-                        <div class='form-group col-md-6'>
+                        <div class="form-group col-md-6">
                             <label for='customer_phone'>Số điện thoại</label>
-                            <input type='text' class='form-control' id='customer_phone'
+                            <input type='text' class="form-control" id='customer_phone'
                                    name='customer_phone' placeholder='Nhập số điện thoại' autocomplete='off'>
                         </div>
                     </div>
-                    <div class='row'>
+                    <div class="row">
                         <div class='form-group col-md-12'>
                             <label for='customer_address'>Địa chỉ</label>
-                            <textarea class='form-control' id='customer_address'
+                            <textarea class="form-control" id='customer_address'
                                       name='customer_address'
                                       placeholder='Nhập địa chỉ' rows='1'></textarea>
                         </div>
@@ -58,8 +58,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+    </div>
     </div>
 </section>
 <section layout:fragment="js">

@@ -29,7 +29,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM \"user\" where login = :login", nativeQuery = true)
     Optional<User> findOneByLogin(String login);
 
-    @Query(value = "SELECT * FROM \"user\" where level = :level", nativeQuery = true)
+    @Query(value = "SELECT u.*, ua.AUTHORITY_NAME FROM \"user\" u\n" +
+            "INNER JOIN USER_AUTHORITY ua ON ua.USER_ID = u.ID\n" +
+            "where level = :level", nativeQuery = true)
     Optional<List<User>> findOneByLevel(String level);
 
     @Query(value = "SELECT * FROM \"user\"  where login != 'admin'", nativeQuery = true)

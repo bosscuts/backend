@@ -7,22 +7,20 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <main class='form-style-two rzvy-booking-detail-body'>
-        <div class='container rzvy-booking-detail-block rzvy-center-block rzvy-main-block-before'>
-            <div class='row'>
-                <div class="col-lg-8">
-                    <div class="rzvy-booking-detail-main">
-                        <h2>Danh sách nội quy</h2>
+    <main class="container content-top">
+        <div class='row'>
+            <div class="col-lg-8">
+                <div class="rzvy-booking-detail-main">
+                    <h2>Danh sách nội quy</h2>
 
-                        <div class="step-item remove_payment_according_services_showhide rzvy_hide_show_payment_according_services">
-                            <div class="rzvy-container">
-                                <div class="rzvy-radio-group-block-content step-item">
-                                    <div class="whitebox">
-                                        <div class="mb-3 row align-items-center rzvy-cart-lpoint-div" th:each="rule,itrStat : ${rules}">
-                                            <div class="col-md-12 rzvy-cart-lpoint-label-main">
-                                                <div class="form-check mb-0">
-                                                    <h6 class="form-check-label" th:utext="${'+ ' + rule.ruleName + ' (Vi phạm phạt: 100.000 Đ)'}"></h6>
-                                                </div>
+                    <div class="step-item remove_payment_according_services_showhide rzvy_hide_show_payment_according_services">
+                        <div class="rzvy-container">
+                            <div class="rzvy-radio-group-block-content step-item">
+                                <div class="whitebox">
+                                    <div class="mb-3 row align-items-center rzvy-cart-lpoint-div" th:each="rule,itrStat : ${rules}">
+                                        <div class="col-md-12 rzvy-cart-lpoint-label-main">
+                                            <div class="form-check mb-0">
+                                                <h6 class="form-check-label" th:utext="${'+ ' + rule.ruleName + ' (Vi phạm phạt: 100.000 Đ)'}"></h6>
                                             </div>
                                         </div>
                                     </div>

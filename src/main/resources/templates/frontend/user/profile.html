@@ -7,72 +7,82 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <main class='form-style-two rzvy-booking-detail-body'>
-        <div class="container rzvy__main__sub__container pt-3 bg-white">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-lock"></i>&nbsp;Thông tin cá nhân
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form name="rzvy_profile_form" id="rzvy_profile_form" method="post">
-                                <input type="hidden" id="rzvy-profile-admin-id-hidden" name="rzvy-profile-admin-id-hidden" value="1">
-                                <div class="form-group row">
-                                    <div class="col-md-3">
-                                        <div class="rzvy-image-upload">
-                                            <div class="rzvy-image-preview">
-                                                <div id="rzvy-image-upload-file-preview">
-                                                    <img width="100" height="100" src="http://rezervy.perfecky.com/includes/images/default-avatar.jpg">
-                                                </div>
+    <main class="container content-top">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-lock"></i>&nbsp;Thông tin cá nhân
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form name="rzvy_profile_form" id="rzvy_profile_form" method="post">
+                            <input type="hidden" id="rzvy-profile-admin-id-hidden" name="rzvy-profile-admin-id-hidden"
+                                   value="1">
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="rzvy-image-upload">
+                                        <div class="rzvy-image-preview">
+                                            <div id="rzvy-image-upload-file-preview">
+                                                <img width="100" height="100"
+                                                     src="http://rezervy.perfecky.com/includes/images/default-avatar.jpg">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label class="control-label">Tên</label>
-                                        <input class="form-control" id="rzvy_profile_firstname" name="rzvy_profile_firstname" type="text" value="John" placeholder="Ingrese el nombre">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="control-label">Họ</label>
-                                        <input class="form-control" id="rzvy_profile_lastname" name="rzvy_profile_lastname" type="text" value="Doe" placeholder="Ingrese el apellido">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="control-label">Điện thoại</label>
-                                        <input class="form-control" id="rzvy_phone_lastname" name="rzvy_phone_lastname" type="text" value="Doe" placeholder="Ingrese el apellido">
-                                    </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-4">
-                                        <label class="control-label">Địa chỉ nhà</label>
-                                        <input class="form-control" id="rzvy_profile_address" name="rzvy_profile_address" type="text" placeholder="Ingresar dirección">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="control-label">Thành phố</label>
-                                        <input class="form-control" id="rzvy_profile_city" name="rzvy_profile_city" type="text" value="New York" placeholder="Ingresar ciudad">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="control-label">Tiểu bang</label>
-                                        <input class="form-control" id="rzvy_profile_state" name="rzvy_profile_state" type="text" value="New York" placeholder="Ingresar estado">
-                                    </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Tên</label>
+                                    <input class="form-control" id="rzvy_profile_firstname"
+                                           name="rzvy_profile_firstname" type="text" value="John"
+                                           placeholder="Ingrese el nombre">
                                 </div>
-                                <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Họ</label>
+                                    <input class="form-control" id="rzvy_profile_lastname" name="rzvy_profile_lastname"
+                                           type="text" value="Doe" placeholder="Ingrese el apellido">
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label class="control-label">Mã bưu điện</label>
-                                        <input class="form-control" id="rzvy_profile_zip" name="rzvy_profile_zip" type="text" value="90001" placeholder="Ingrese el código postal">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="control-label">Quốc gia</label>
-                                        <input class="form-control" id="rzvy_profile_country" name="rzvy_profile_country" type="text" value="United State" placeholder="Ingresar país">
-                                    </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Điện thoại</label>
+                                    <input class="form-control" id="rzvy_phone_lastname" name="rzvy_phone_lastname"
+                                           type="text" value="Doe" placeholder="Ingrese el apellido">
                                 </div>
-                                <a class="btn btn-primary btn-block rzvy_update_profile_btn" href="javascript:void(0);">Cập nhật thông tin cá nhân</a>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <label class="control-label">Địa chỉ nhà</label>
+                                    <input class="form-control" id="rzvy_profile_address" name="rzvy_profile_address"
+                                           type="text" placeholder="Ingresar dirección">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Thành phố</label>
+                                    <input class="form-control" id="rzvy_profile_city" name="rzvy_profile_city"
+                                           type="text" value="New York" placeholder="Ingresar ciudad">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Tiểu bang</label>
+                                    <input class="form-control" id="rzvy_profile_state" name="rzvy_profile_state"
+                                           type="text" value="New York" placeholder="Ingresar estado">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label class="control-label">Mã bưu điện</label>
+                                    <input class="form-control" id="rzvy_profile_zip" name="rzvy_profile_zip"
+                                           type="text" value="90001" placeholder="Ingrese el código postal">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Quốc gia</label>
+                                    <input class="form-control" id="rzvy_profile_country" name="rzvy_profile_country"
+                                           type="text" value="United State" placeholder="Ingresar país">
+                                </div>
+                            </div>
+                            <a class="btn btn-primary btn-block rzvy_update_profile_btn" href="javascript:void(0);">Cập
+                                nhật thông tin cá nhân</a>
+                        </form>
                     </div>
-                    <div class="card-footer small text-muted"></div>
                 </div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
     </main>

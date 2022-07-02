@@ -12,6 +12,7 @@ import com.bosscut.service.ProductServiceService;
 import com.bosscut.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,21 @@ public class InvoiceController {
     }
 
     @GetMapping
+    @Transactional
     public String invoices(Model model) {
         List<User> users = userService.getUserByLevel(UserLevel.ASSISTANT.getName());
+
+        users.forEach(user -> {
+            user.getAuthorities().forEach(authority -> {
+                if (authority.getName().equals("ROLE_ASSISTANT")) {
+                    user.setAuthorityName(UserLevel.ASSISTANT.getName());
+                }
+                if (authority.getName().equals("ROLE_MANAGER")) {
+                    user.setAuthorityName(UserLevel.MANAGER.getName());
+                }
+            });
+        });
+
         List<ProductService> productServices = productServiceService.findAll();
 
         List<ProductService> products = productServices.stream()
