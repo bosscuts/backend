@@ -1,6 +1,9 @@
 let staffIds = [];
 let htmlResult = '';
 $(document).ready(function () {
+    // $('#from_date_sec').datetimepicker({
+    //     timepicker:false
+    // });
     $(document).on('change', '#request_type', function () {
         const requestType = $('#request_type').val();
         if (requestType === 'PAY_FINES') {

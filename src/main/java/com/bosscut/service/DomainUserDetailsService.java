@@ -3,6 +3,7 @@ package com.bosscut.service;
 import com.bosscut.entity.User;
 import com.bosscut.exception.UserNotActivatedException;
 import com.bosscut.repository.UserRepository;
+import liquibase.util.StringUtil;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,10 @@ public class DomainUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
+
+        if (StringUtil.isEmpty(login)) {
+            throw new UsernameNotFoundException("Login cannot empty!");
+        }
 
         if (new EmailValidator().isValid(login, null)) {
             return userRepository
