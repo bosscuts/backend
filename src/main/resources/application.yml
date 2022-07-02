@@ -32,7 +32,7 @@ spring:
     show-sql: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/db/backend;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:./db/backend;DB_CLOSE_DELAY=-1
     username: backend
     password:
     hikari:
@@ -41,7 +41,7 @@ spring:
   h2:
     console:
       enabled: true
-      path: /h2-console
+      path: /db-console
   messages:
     basename: i18n/messages
   main:
