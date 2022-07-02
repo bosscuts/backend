@@ -26,6 +26,8 @@ $(document).ready(function () {
         const invoiceAmount = $('#invoice_amount').val();
         const invoiceDescription = $('#invoice_description').val();
         const requestType = $('#request_type').val();
+        const fromDate = $('#from_date').val();
+        const toDate = $('#to_date').val();
         $.ajax({
             url: "/invoice/internal",
             type: 'post',
@@ -33,6 +35,8 @@ $(document).ready(function () {
                 'userId': userId,
                 'amount': invoiceAmount,
                 'requestType': requestType,
+                'fromDate': fromDate,
+                'toDate': toDate,
                 'description': invoiceDescription,
             }),
             contentType: 'application/json; charset=utf-8',

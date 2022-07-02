@@ -48,7 +48,7 @@
                                     <div class='form-group col-md-12 cash_amount hidden_input' id="cash_amount_sec">
                                         <label for='invoice_amount'>Số tiền</label>
                                         <select class="form-control input-lg" id="invoice_amount">
-                                            <option>---Chọn số tiền---</option>
+                                            <option value="0">---Chọn số tiền---</option>
                                             <option value="1000000">1 triệu</option>
                                             <option value="2000000">2 triệu</option>
                                             <option value="3000000">3 triệu</option>
@@ -58,11 +58,11 @@
                                     </div>
                                     <div class='form-group col-md-6 hidden_input' id="from_date_sec">
                                         <label for="from_date">Ngày bắt đầu</label>
-                                        <input type='date' class='form-control' id="from_date" name="from_date">
+                                        <input type='datetime-local' class='form-control' id="from_date" name="from_date">
                                     </div>
                                     <div class='form-group col-md-6 hidden_input' id="to_date_sec">
                                         <label for="to_date">Ngày kết thúc</label>
-                                        <input type="date" class='form-control' id="to_date" name="to_date">
+                                        <input type="datetime-local" class='form-control' id="to_date" name="to_date">
                                     </div>
                                     <div class='form-group col-md-12'>
                                         <label for='invoice_description'>Nội dung</label>

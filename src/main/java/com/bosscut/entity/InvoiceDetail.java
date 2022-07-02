@@ -2,6 +2,8 @@ package com.bosscut.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * A InvoiceDetail.
@@ -33,18 +35,16 @@ public class InvoiceDetail extends AbstractAuditingEntity implements Serializabl
     @Column(name = "amount")
     private Integer amount;
 
+    @Column(name = "from_date")
+    private LocalDateTime fromDate;
+
+    @Column(name = "to_date")
+    private LocalDateTime toDate;
+
     @Column(name = "description")
     private String description;
 
     public InvoiceDetail() {
-    }
-
-    public InvoiceDetail(Long invoiceDetailId, Long invoiceId, Long productServiceId, Integer quantity, Integer amount) {
-        this.invoiceDetailId = invoiceDetailId;
-        this.invoiceId = invoiceId;
-        this.productServiceId = productServiceId;
-        this.quantity = quantity;
-        this.amount = amount;
     }
 
     public Long getInvoiceDetailId() {
@@ -101,6 +101,22 @@ public class InvoiceDetail extends AbstractAuditingEntity implements Serializabl
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public LocalDateTime getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(LocalDateTime fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public LocalDateTime getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(LocalDateTime toDate) {
+        this.toDate = toDate;
     }
 
     public String getDescription() {

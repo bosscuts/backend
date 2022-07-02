@@ -42,41 +42,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-4">
-            <div class="container shadow min-vh-100 py-2">
-                <h5>Bootstrap 5 date picker</h5>
-                <div class="row justify-content-center">
-                    <div class="col-lg-3 col-sm-6">
-                        <label for="startDate">Start</label>
-                        <input id="startDate" class="form-control" type="date" />
-                        <span id="startDateSelected"></span>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <label for="endDate">End</label>
-                        <input id="endDate" class="form-control" type="date" />
-                        <span id="endDateSelected"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
-<section layout:fragment="js">
-    <script>
-        let startDate = document.getElementById('startDate')
-        let endDate = document.getElementById('endDate')
-
-        startDate.addEventListener('change',(e)=>{
-            let startDateVal = e.target.value
-            document.getElementById('startDateSelected').innerText = startDateVal
-        })
-
-        endDate.addEventListener('change',(e)=>{
-            let endDateVal = e.target.value
-            document.getElementById('endDateSelected').innerText = endDateVal
-        })
-    </script>
-</section>
-
 </body>
 </html>

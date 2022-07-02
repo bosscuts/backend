@@ -17,9 +17,12 @@ import com.bosscut.service.InvoiceService;
 import com.bosscut.service.ProductServiceService;
 import liquibase.repackaged.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -81,6 +84,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public void createInvoiceInternal(InvoiceInternalRequest requestDTO) {
         Invoice invoice = new Invoice();
         invoice.setInvoiceType(InvoiceType.EXTERNAL.getName());
@@ -90,9 +94,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoiceResult = invoiceRepository.save(invoice);
 
         InvoiceDetail invoiceDetail = new InvoiceDetail();
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime fromDate = LocalDateTime.parse(requestDTO.getFromDate().replace("T", " "), formatter);
+        LocalDateTime toDate = LocalDateTime.parse(requestDTO.getToDate().replace("T", " "), formatter);
+
         invoiceDetail.setInvoiceId(invoiceResult.getInvoiceId());
         invoiceDetail.setStaffId(requestDTO.getUserId());
         invoiceDetail.setAmount(requestDTO.getAmount());
+        invoiceDetail.setFromDate(fromDate);
+        invoiceDetail.setToDate(toDate);
         invoiceDetail.setRequestType(requestDTO.getRequestType());
         invoiceDetail.setDescription(requestDTO.getDescription());
 

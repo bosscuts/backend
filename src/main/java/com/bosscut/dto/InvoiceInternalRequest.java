@@ -4,6 +4,8 @@ public class InvoiceInternalRequest {
     private Long userId;
     private Integer amount;
     private String requestType;
+    private String fromDate;
+    private String toDate;
     private String description;
 
     public InvoiceInternalRequest() {
@@ -31,6 +33,22 @@ public class InvoiceInternalRequest {
 
     public void setRequestType(String requestType) {
         this.requestType = requestType;
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
     }
 
     public String getDescription() {
