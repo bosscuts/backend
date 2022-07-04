@@ -19,7 +19,7 @@ public class Salary extends AbstractAuditingEntity implements Serializable {
     private String staffId;
 
     @Column(name = "amount")
-    private String amount;
+    private Integer amount;
 
     public Salary() {
     }
@@ -40,11 +40,11 @@ public class Salary extends AbstractAuditingEntity implements Serializable {
         this.staffId = staffId;
     }
 
-    public String getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 }

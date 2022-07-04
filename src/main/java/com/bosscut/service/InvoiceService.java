@@ -14,7 +14,4 @@ public interface InvoiceService {
     InvoicePreview previewInvoice(InvoiceExternalRequest requestDTO);
     List<UserInvoiceDetail> getInvoiceByStaffId(String staffId);
     List<UserInvoiceDetail> getInvoiceByStaffIdInMonth(String staffId);
-
-
-
 }

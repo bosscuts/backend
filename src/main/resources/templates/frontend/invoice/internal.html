@@ -28,7 +28,7 @@
                                 <div class='form-group col-md-6 select2-container--bootstrap'>
                                     <label for='staff_input'>Nhân viên</label>
                                     <select class="form-control input-lg" id="staff_input">
-                                        <option>---Chọn nhân viên---</option>
+                                        <option value="0">---Chọn nhân viên---</option>
                                         <option th:each="assistant,assistantStat : ${assistants}" th:value="${assistant.id}"
                                                 th:utext="${assistant.fullName}"></option>
                                     </select>
@@ -36,7 +36,7 @@
                                 <div class='form-group col-md-6'>
                                     <label for='request_type'>Loại yêu cầu</label>
                                     <select class="form-control input-lg" id="request_type">
-                                        <option>---Chọn loại yêu cầu---</option>
+                                        <option value="">---Chọn loại yêu cầu---</option>
                                         <option value="CASH">Ứng tiền</option>
                                         <option value="HOLIDAY">Nghỉ phép</option>
                                         <option value="PAY_FINES">Nộp phạt</option>

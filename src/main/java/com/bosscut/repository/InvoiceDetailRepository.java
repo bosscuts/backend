@@ -3,6 +3,7 @@ package com.bosscut.repository;
 import com.bosscut.entity.InvoiceDetail;
 import com.bosscut.repository.custom.InvoiceDetailRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

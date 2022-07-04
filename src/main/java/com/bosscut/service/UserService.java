@@ -1,7 +1,7 @@
 package com.bosscut.service;
 
 import com.bosscut.entity.User;
-import org.springframework.stereotype.Service;
+import com.bosscut.model.UserIncome;
 
 import java.util.List;
 
@@ -9,4 +9,6 @@ public interface UserService {
     List<User> getUserByLevel(String level);
 
     List<User> getAll();
+
+    List<UserIncome> getIncomeByUserIds(String userIds);
 }

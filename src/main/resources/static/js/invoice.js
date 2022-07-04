@@ -1,5 +1,7 @@
 let staffIds = [];
+let incomeStaffIds = [];
 let htmlResult = '';
+let htmlIncomeResult = '';
 $(document).ready(function () {
     // $('#from_date_sec').datetimepicker({
     //     timepicker:false
@@ -50,6 +52,36 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+
+    $(document).on('click', '.staff-income', function () {
+        htmlIncomeResult = '';
+        $('#result-staff-income').html('');
+        let staff = $(this);
+        staff.children('.card').toggleClass('border-div');
+        const staffId = staff.attr('staffId');
+        const index = incomeStaffIds.indexOf(staffId);
+        if (index !== -1) {
+            incomeStaffIds.splice(index, 1);
+        } else {
+            incomeStaffIds.push(staffId);
+        }
+
+        const staffIdsStr = incomeStaffIds.toString();
+        console.log("staffIdsStr " + staffIdsStr)
+        if (staffIdsStr) {
+            $.ajax({
+                url: "/users/income/" + staffIdsStr,
+                type: "get",
+                success: function (result) {
+                    console.log(result)
+
+                    result.forEach(concatIncome);
+                    $('#result-staff-income').html(htmlIncomeResult);
+                    console.log(htmlIncomeResult)
+                }
+            });
+        }
     });
 
 
@@ -108,8 +140,6 @@ $(document).ready(function () {
         } else {
             staffIds.push(staffId);
         }
-        console.log(staffIds.toString());
-        console.log('staffIds.length ' + staffIds.toString());
         const staffIdsStr = staffIds.toString();
         if (staffIdsStr) {
             $.ajax({
@@ -123,6 +153,52 @@ $(document).ready(function () {
         }
     });
 });
+
+function concatIncome(data, index, array) {
+    const staffName = data.staffName
+    const salary = data.salary
+    const cash = data.cash
+    const totalCompensation = data.totalCompensation
+    const totalCommission = data.totalCommission
+    htmlIncomeResult += `<div class='col-lg-4'>
+                    <div class='whitebox'>
+                        <h4 class='widget-title'>Thống kê thu nhập</h4>
+                        <table class='table'>
+                            <tbody>
+                            <tr>
+                                <td><i class='fa fa-user' aria-hidden='true'></i>&nbsp;Nhân viên</td>
+                                <td>${staffName}</td>
+                            </tr>
+                            <tr>
+                                <td><i class='fa fa-tags' aria-hidden='true'></i>&nbsp;Tiền lương</td>
+                                <td>${salary}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Tạm ứng</td>
+                                <td>${cash}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Nộp phạt</td>
+                                <td>${totalCompensation}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Hoa hồng</td>
+                                <td>${totalCommission}</td>
+                            </tr>
+                            <tr class='rzvy_subtotal_exit'>
+                                <th>
+                                    <i class="fa fa-money" aria-hidden="true"></i>
+                                    &nbsp;Thực nhận:
+                                </th>
+                                <th class="total_amount">
+                                    ${salary}
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`;
+}
 
 function concatHtmlResult(data, index, array) {
     const productServiceName = data.productServiceName
@@ -147,8 +223,7 @@ function concatHtmlResult(data, index, array) {
                                 <td>${productServiceName}</td>
                             </tr>
                             <tr>
-                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Số lượng
-                                </td>
+                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Số lượng</td>
                                 <td>${quantity}</td>
                             </tr>
                             <tr>
