@@ -14,28 +14,27 @@
                 <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
                     <a class="nav-link active" id="ex-with-icons-tab-1" data-mdb-toggle="tab"
                        href="#ex-with-icons-tabs-1" role="tab"
-                       aria-controls="ex-with-icons-tabs-1" aria-selected="true"><i class="fa fa-file-text"
-                                                                                    aria-hidden="true"></i>&nbsp;Hóa đơn</a>
+                       aria-controls="ex-with-icons-tabs-1" aria-selected="true">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Hóa đơn</a>
                 </li>
                 <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
                     <a class="nav-link" id="ex-with-icons-tab-2" data-mdb-toggle="tab" href="#ex-with-icons-tabs-2"
                        role="tab"
-                       aria-controls="ex-with-icons-tabs-2" aria-selected="false"><i class="fa fa-money"
-                                                                                     aria-hidden="true"></i>&nbsp;Thu
-                        nhập</a>
+                       aria-controls="ex-with-icons-tabs-2" aria-selected="false">
+                        <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Thu nhập</a>
                 </li>
                 <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
                     <a class="nav-link" id="icons-tab-revenue" data-mdb-toggle="tab" href="#tab-revenue" role="tab"
-                       aria-controls="tab-revenue" aria-selected="false"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Doanh
-                        số</a>
+                       aria-controls="tab-revenue" aria-selected="false">
+                        <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Doanh số</a>
                 </li>
             </ul>
             <!-- Tabs navs -->
 
             <!-- Tabs content -->
             <div class="tab-content" id="ex-with-icons-content">
-                <div sec:authorize="hasRole('ROLE_MASTER')" class="tab-pane fade show active"
-                     id="ex-with-icons-tabs-1" role="tabpanel" aria-labelledby="ex-with-icons-tab-1">
+                <div class="tab-pane fade show active" id="ex-with-icons-tabs-1" role="tabpanel"
+                     aria-labelledby="ex-with-icons-tab-1">
                     <div class='col-lg-12' id="invoice">
                         <div class="content">
                             <div class="invoice">
@@ -56,7 +55,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class='row' id="search_filter" style="margin-top: 50px">
                             <div class='col-lg-12'>
                                 <div class="btn-group shadow-0" role="group">
@@ -68,12 +66,12 @@
                             </div>
                         </div>
                         <div class='row' id="result">
-
+                            <div class='col-lg-4'>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
-                     id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
+                <div class="tab-pane fade" id="ex-with-icons-tabs-2" role="tabpanel" aria-labelledby="income">
                     <div class='col-lg-12' id="income">
                         <div class="content">
                             <div class="income">
@@ -100,8 +98,7 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" sec:authorize="hasRole('ROLE_MASTER')"
-                     id="tab-revenue" role="tabpanel" aria-labelledby="ex-with-icons-tab-2">
+                <div class="tab-pane fade" id="tab-revenue" role="tabpanel" aria-labelledby="revenue">
                     <div class='col-lg-12' id="revenue">
                         <div class="content">
                             <div class="income">

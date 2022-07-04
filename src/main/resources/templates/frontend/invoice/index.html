@@ -20,7 +20,7 @@
             </a>
         </div>
 
-        <div class="row content card" sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_MANAGER')">
+        <div class="row content card invoice_service" sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_MANAGER')">
             <!-- Tabs navs -->
             <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -56,10 +56,12 @@
                                     <div class="card text-center">
                                         <div class="card-body">
                                             <h6 th:if="${assistant.authorityName == 'ASSISTANT'}">
-                                                <span th:utext="${assistant.fullName}"></span>&nbsp;<i class="fa fa-product-hunt"></i>
+                                                <span th:utext="${assistant.fullName}"></span>&nbsp;<i
+                                                    class="fa fa-product-hunt"></i>
                                             </h6>
                                             <h6 th:unless="${assistant.authorityName == 'ASSISTANT'}">
-                                                <span th:utext="${assistant.fullName}"></span>&nbsp;<i class="fa fa-copyright"></i>
+                                                <span th:utext="${assistant.fullName}"></span>&nbsp;<i
+                                                    class="fa fa-copyright"></i>
                                             </h6>
                                             <span>
                                                     <i class="fa fa-mobile"></i>
@@ -69,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="divider-horizontal" />
+                            <hr class="divider-horizontal"/>
                         </div>
                     </div>
                 </div>
@@ -79,17 +81,23 @@
                         <div class="product-row" th:each="product,itrStat : ${products}"
                              style="margin-bottom: 20px">
                             <h4 th:utext="${product.productServiceName}"></h4>
-                            <h6 th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') +' Đ'}"></h6>
+                            <h6 class="price"
+                                th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + ' Đ'}"></h6>
                             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
                                 <div class="col staff" th:each="assistant,assistantStat : ${assistants}"
                                      th:priceServiceProduct="${product.price}"
                                      th:staffId="${assistant.id}"
                                      th:serviceId="${product.productServiceId}">
                                     <div class="card text-center">
-                                        <span th:if="${assistant.authorityName == 'ASSISTANT'}"><i class="fa fa-product-hunt"></i></span>
-                                        <span th:unless="${assistant.authorityName == 'ASSISTANT'}"><i class="fa fa-copyright"></i></span>
                                         <div class="card-body">
-                                            <h6 th:utext="${assistant.fullName}"></h6>
+                                            <h6 th:if="${assistant.authorityName == 'ASSISTANT'}">
+                                                <span th:utext="${assistant.fullName}"></span>&nbsp;<i
+                                                    class="fa fa-product-hunt"></i>
+                                            </h6>
+                                            <h6 th:unless="${assistant.authorityName == 'ASSISTANT'}">
+                                                <span th:utext="${assistant.fullName}"></span>&nbsp;<i
+                                                    class="fa fa-copyright"></i>
+                                            </h6>
                                             <span>
                                             <i class="fa fa-mobile"></i>
                                             <span th:utext="${assistant.phone}"></span>
@@ -98,7 +106,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="divider-horizontal" />
+                            <hr class="divider-horizontal"/>
                         </div>
                     </div>
                 </div>
@@ -156,7 +164,7 @@
                     </div>
                 </div>
             </div>
-            <div class='col-lg-12 hidden_div' id="invoice_detail">
+            <div class='col-lg-4 hidden_div' id="invoice_detail">
                 <div class='whitebox'>
                     <h4 class='widget-title'>Tóm tắt hóa đơn</h4>
                     <table class='table' id="user-service">

@@ -143,7 +143,7 @@ function concatHtmlResult(data, index, array) {
                                 <td>${staffName}</td>
                             </tr>
                             <tr>
-                                <td><i class='fa fa-refresh' aria-hidden='true'></i>&nbsp;Tên dịch vụ</td>
+                                <td><i class='fa fa-tags' aria-hidden='true'></i>&nbsp;Tên dịch vụ</td>
                                 <td>${productServiceName}</td>
                             </tr>
                             <tr>
@@ -152,7 +152,7 @@ function concatHtmlResult(data, index, array) {
                                 <td>${quantity}</td>
                             </tr>
                             <tr>
-                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Giá tiền</td>
+                                <td><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Giá tiền</td>
                                 <td>${price}</td>
                             </tr>
                             <tr>
@@ -161,7 +161,7 @@ function concatHtmlResult(data, index, array) {
                             </tr>
                             <tr class='rzvy_subtotal_exit'>
                                 <th>
-                                    <i class='fa fa-tags' aria-hidden='true'></i>
+                                    <i class="fa fa-money" aria-hidden="true"></i>
                                     &nbsp;Tổng số:
                                 </th>
                                 <th class="total_amount">

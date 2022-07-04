@@ -1,5 +1,6 @@
 package com.bosscut.service.impl;
 
+import com.bosscut.constant.DateTimeConstant;
 import com.bosscut.dto.InvoiceInternalRequest;
 import com.bosscut.dto.InvoicePreview;
 import com.bosscut.dto.InvoiceExternalRequest;
@@ -9,6 +10,7 @@ import com.bosscut.entity.Invoice;
 import com.bosscut.entity.InvoiceDetail;
 import com.bosscut.entity.ProductService;
 import com.bosscut.enums.InvoiceType;
+import com.bosscut.enums.RequestType;
 import com.bosscut.model.UserInvoiceDetail;
 import com.bosscut.repository.InvoiceDetailRepository;
 import com.bosscut.repository.InvoiceRepository;
@@ -22,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -77,7 +78,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoiceDetail.setProductServiceId(Long.valueOf(serviceId));
             invoiceDetail.setStaffId(Long.valueOf(staffId));
             invoiceDetail.setQuantity(1);
-
+            invoiceDetail.setRequestType(RequestType.SERVICE.getName());
             invoiceDetails.add(invoiceDetail);
         });
         invoiceDetailRepository.saveAll(invoiceDetails);
@@ -94,16 +95,18 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoiceResult = invoiceRepository.save(invoice);
 
         InvoiceDetail invoiceDetail = new InvoiceDetail();
-        DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime fromDate = LocalDateTime.parse(requestDTO.getFromDate().replace("T", " "), formatter);
-        LocalDateTime toDate = LocalDateTime.parse(requestDTO.getToDate().replace("T", " "), formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimeConstant.YYYY_MM_DD_HH_MM);
+
+        if (RequestType.HOLIDAY.getName().equals(requestDTO.getRequestType())) {
+            LocalDateTime fromDate = LocalDateTime.parse(requestDTO.getFromDate().replace("T", " "), formatter);
+            LocalDateTime toDate = LocalDateTime.parse(requestDTO.getToDate().replace("T", " "), formatter);
+            invoiceDetail.setFromDate(fromDate);
+            invoiceDetail.setToDate(toDate);
+        }
 
         invoiceDetail.setInvoiceId(invoiceResult.getInvoiceId());
         invoiceDetail.setStaffId(requestDTO.getUserId());
         invoiceDetail.setAmount(requestDTO.getAmount());
-        invoiceDetail.setFromDate(fromDate);
-        invoiceDetail.setToDate(toDate);
         invoiceDetail.setRequestType(requestDTO.getRequestType());
         invoiceDetail.setDescription(requestDTO.getDescription());
 

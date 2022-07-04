@@ -1741,7 +1741,8 @@ figure, .form-check.custom {
 }
 
 .widget-title {
-    margin: 0 -25px 10px;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* Rezervy Success Page CSS */
@@ -2664,4 +2665,7 @@ figure, .form-check.custom {
 
 .content-top {
     padding-top: 100px;
+}
+.invoice_service {
+    padding-bottom: 20px;
 }

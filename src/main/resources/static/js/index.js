@@ -58,28 +58,27 @@ $(document).ready(function () {
                                 let serviceName = val.serviceProductName;
                                 let servicePrice = val.totalPrice;
                                 userServiceHtml += `<tr>
-                                        <td>
-                                            <i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;${serviceName}
-                                        </td>
-                                        <td>${servicePrice}</td>
-                                    </tr>`
+                                                        <td>
+                                                            <i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;${serviceName}
+                                                        </td>
+                                                        <td>${servicePrice}</td>
+                                                    </tr>`
                             });
                             let tBody = `<tbody>
-                                <tr>
-                                    <td><i class='fa fa-refresh' aria-hidden='true'></i>&nbsp;MỘT LẦN</td>
-                                    <td></td>
-                                </tr>
-                                ${userServiceHtml}
-                                <tr class='rzvy_subtotal_exit'>
-                                    <th>
-                                        <i class='fa fa-tags' aria-hidden='true'></i>
-                                        &nbsp;Tổng tiền thanh toán:
-                                    </th>
-                                    <th class="total_amount">${data.totalAmount}</th>
-                                </tr>
-                            </tbody>`
+                                            ${userServiceHtml}
+                                            <tr>
+                                                <td><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;Ngày thực hiện</td>
+                                                <td>${formatDate(new Date())}</td>
+                                            </tr>
+                                            <tr class='rzvy_subtotal_exit'>
+                                                <th>
+                                                    <i class='fa fa-tags' aria-hidden='true'></i>
+                                                    &nbsp;Tổng tiền thanh toán:
+                                                </th>
+                                                <th class="total_amount">${data.totalAmount}</th>
+                                            </tr>
+                                        </tbody>`
                             $("#user-service").html(tBody);
-                            console.log('staffServiceStr => ' + staffServiceStr);
                         } else {
                             console.log(data);
                             console.log(textStatus);
@@ -135,4 +134,25 @@ $(document).ready(function () {
             swal('Bạn chưa chọn dịch vụ hoặc sản phẩm nào!', "", "error");
         }
     });
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date) {
+        return (
+            [
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate()),
+                date.getFullYear(),
+            ].join('/') +
+            ' ' +
+            [
+                padTo2Digits(date.getHours()),
+                padTo2Digits(date.getMinutes()),
+                padTo2Digits(date.getSeconds()),
+            ].join(':')
+        );
+    }
 });
+
