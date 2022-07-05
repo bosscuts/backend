@@ -9,21 +9,21 @@
 <body>
 <section layout:fragment="content">
     <main class="container content-top">
-        <div class="row card" style="padding-bottom: 20px">
+        <div class="row card" style="padding-bottom: 20px" sec:authorize="hasRole('ROLE_MASTER')">
             <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
-                <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="ex-with-icons-tab-1" data-mdb-toggle="tab"
                        href="#ex-with-icons-tabs-1" role="tab"
                        aria-controls="ex-with-icons-tabs-1" aria-selected="true">
                         <i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Hóa đơn</a>
                 </li>
-                <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" id="ex-with-icons-tab-2" data-mdb-toggle="tab" href="#ex-with-icons-tabs-2"
                        role="tab"
                        aria-controls="ex-with-icons-tabs-2" aria-selected="false">
                         <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Thu nhập</a>
                 </li>
-                <li class="nav-item" role="presentation" sec:authorize="hasRole('ROLE_MASTER')">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" id="icons-tab-revenue" data-mdb-toggle="tab" href="#tab-revenue" role="tab"
                        aria-controls="tab-revenue" aria-selected="false">
                         <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Doanh số</a>
@@ -58,8 +58,10 @@
                         <div class='row' id="search_filter" style="margin-top: 50px">
                             <div class='col-lg-12'>
                                 <div class="btn-group shadow-0" role="group">
-                                    <button type="button" class="btn btn-outline-primary" id="in-day">Trong ngày</button>
-                                    <button type="button" class="btn btn-outline-primary" id="in-month">Trong tháng</button>
+                                    <button type="button" class="btn btn-outline-primary" id="in-day">Trong ngày
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary" id="in-month">Trong tháng
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -91,10 +93,14 @@
                         </div>
                         <div class='row' id="search_filter_income" style="margin-top: 50px">
                             <div class='col-lg-12'>
-                                <div class="btn-group shadow-0" role="group">
-                                    <button type="button" class="btn btn-outline-primary" id="in-day-income">Trong ngày</button>
-                                    <button type="button" class="btn btn-outline-primary" id="in-month-income">Trong tháng</button>
-                                </div>
+<!--                                <div class="btn-group shadow-0" role="group">-->
+<!--                                    <button type="button" class="btn btn-outline-primary" id="in-day-income">Trong-->
+<!--                                        ngày-->
+<!--                                    </button>-->
+<!--                                    <button type="button" class="btn btn-outline-primary" id="in-month-income">Trong-->
+<!--                                        tháng-->
+<!--                                    </button>-->
+<!--                                </div>-->
                             </div>
                         </div>
                         <div class='row' id="result-staff-income">
@@ -108,10 +114,33 @@
                         <div class="content">
                             <div class="income">
                                 <h2 class="text-center">Doanh số</h2>
-                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
-                                    <div class="col staff-income">
-                                        <div class="card text-center">
-
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="whitebox">
+                                            <table class="table" id="user-service">
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Tổng tiền lương
+                                                    </td>
+                                                    <td th:utext="${turnover.totalSalary}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <i class="fa fa-money" aria-hidden="true"></i>&nbsp;Tổng tiền tạm ứng
+                                                    </td>
+                                                    <td th:utext="${turnover.totalCash}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Tổng tiền phạt</td>
+                                                    <td th:utext="${turnover.totalCompensation}"></td>
+                                                </tr>
+                                                <tr class="rzvy_subtotal_exit">
+                                                    <th><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Tổng doanh thu:</th>
+                                                    <th class="total_amount" th:utext="${turnover.totalRevenue}"></th>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

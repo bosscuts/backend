@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOneByLevel(level).orElse(Collections.emptyList());
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findOneByLogin(username).orElse(null);
+    }
+
     public List<User> getAll() {
         return userRepository.findAllUser().orElse(Collections.emptyList());
     }

@@ -27,13 +27,6 @@ public class UserController {
         this.salaryCashService = salaryCashService;
     }
 
-    @GetMapping("/cash-advance")
-    public String cashAdvance(Model model) {
-        List<User> users = userService.getAll();
-        model.addAttribute("staffs", users);
-        return "frontend/user/cash";
-    }
-
     @GetMapping("/income/{staffIds}")
     public ResponseEntity<?> income(@PathVariable String staffIds) {
         List<User> users = userService.getAll();
@@ -45,18 +38,15 @@ public class UserController {
         return ResponseEntity.ok(salaryCashService.create(requestDTO));
     }
 
-    @GetMapping("/holiday")
-    public String holiday() {
-        return "frontend/user/holiday";
-    }
-
-
     @GetMapping("/account-info")
-    public String accountInfo() {
+    public String accountInfo(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
+        String username = ((org.springframework.security.core.userdetails.User) authentication.getPrincipal()).getUsername();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("user", user);
         return "frontend/user/profile";
     }
 }

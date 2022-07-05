@@ -79,7 +79,7 @@ public class InvoiceController {
 
     @PostMapping
     public ResponseEntity<?> createInvoice(@RequestBody @Valid InvoiceExternalRequest requestDTO) {
-        invoiceService.createInvoice(requestDTO);
+        invoiceService.createInvoiceService(requestDTO);
         return ResponseEntity.ok().build();
     }
 

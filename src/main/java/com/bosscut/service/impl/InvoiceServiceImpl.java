@@ -11,6 +11,7 @@ import com.bosscut.entity.InvoiceDetail;
 import com.bosscut.entity.ProductService;
 import com.bosscut.enums.InvoiceType;
 import com.bosscut.enums.RequestType;
+import com.bosscut.model.TurnOver;
 import com.bosscut.model.UserInvoiceDetail;
 import com.bosscut.repository.InvoiceDetailRepository;
 import com.bosscut.repository.InvoiceRepository;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,7 +46,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public void createInvoice(InvoiceExternalRequest invoiceRequestDTO) {
+    public void createInvoiceService(InvoiceExternalRequest invoiceRequestDTO) {
         Invoice invoice = new Invoice();
         if (StringUtils.isNotBlank(invoiceRequestDTO.getCustomerPhone())) {
             Optional<Customer> customerOptional = customerService.getCustomerByPhone(invoiceRequestDTO.getCustomerPhone());
@@ -68,6 +70,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         List<String> serviceStaffIds = Arrays.asList(serviceStaffIdArr);
 
+        List<Long> serviceIds = new ArrayList<>();
+        serviceStaffIds.forEach(serviceStaffId -> {
+            String[] serviceStaffArr = serviceStaffId.split("-");
+            String serviceId = serviceStaffArr[0];
+            serviceIds.add(Long.valueOf(serviceId));
+        });
+
+        List<ProductService> productServices = productServiceService.findAllByIds(serviceIds);
+
         List<InvoiceDetail> invoiceDetails = new ArrayList<>();
         serviceStaffIds.forEach(serviceStaffId -> {
             InvoiceDetail invoiceDetail = new InvoiceDetail();
@@ -76,8 +87,16 @@ public class InvoiceServiceImpl implements InvoiceService {
             String serviceId = serviceStaffArr[0];
             String staffId = serviceStaffArr[1];
 
+            Optional<ProductService> productServiceOpt = productServices.stream()
+                    .filter(serviceProduct -> serviceProduct.getProductServiceId().equals(Long.valueOf(serviceId))).findFirst();
+
+            if (productServiceOpt.isPresent()) {
+                ProductService productService = productServiceOpt.get();
+                invoiceDetail.setProductServiceId(productService.getProductServiceId());
+                invoiceDetail.setAmount(productService.getPrice());
+            }
+
             invoiceDetail.setInvoiceId(invoiceResult.getInvoiceId());
-            invoiceDetail.setProductServiceId(Long.valueOf(serviceId));
             invoiceDetail.setStaffId(Long.valueOf(staffId));
             invoiceDetail.setQuantity(1);
             invoiceDetail.setRequestType(RequestType.SERVICE.getName());
@@ -171,5 +190,32 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<Long> idStaffs = Stream.of(staffIdArr).map(Long::valueOf).collect(Collectors.toList());
 
         return invoiceDetailRepository.findByStaffIds(idStaffs, startOfMonth, endOfMonth);
+    }
+
+    @Override
+    public TurnOver getTurnOver(String startOfDay, String endOfDay) {
+        LocalDate initial = LocalDate.now();
+        LocalDateTime startOfMonth = initial.withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endOfMonth = initial.withDayOfMonth(initial.getMonth().length(initial.isLeapYear()))
+                .atStartOfDay().withHour(23).withMinute(59).withSecond(59).withNano(999);
+        Optional<List<InvoiceDetail>> invoiceDetailOpt = invoiceDetailRepository
+                .findAllByCreatedDateBetween(startOfMonth.toInstant(ZoneOffset.UTC), endOfMonth.toInstant(ZoneOffset.UTC));
+        TurnOver turnOver = new TurnOver();
+        if (invoiceDetailOpt.isPresent()) {
+            List<InvoiceDetail> invoiceDetails = invoiceDetailOpt.get();
+            invoiceDetails.forEach(invoice -> {
+                String requestType = invoice.getRequestType();
+                if (RequestType.SERVICE.getName().equals(requestType)) {
+                    turnOver.setTotalRevenue(turnOver.getTotalRevenue() + invoice.getAmount());
+                }
+                if (RequestType.CASH.getName().equals(requestType)) {
+                    turnOver.setTotalCash(turnOver.getTotalCash() + invoice.getAmount());
+                }
+                if (RequestType.PAY_FINES.getName().equals(requestType)) {
+                    turnOver.setTotalCompensation(turnOver.getTotalCompensation() + invoice.getAmount());
+                }
+            });
+        }
+        return turnOver;
     }
 }

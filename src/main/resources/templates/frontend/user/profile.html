@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{template/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template/layout}">
 <head>
     <title>Barber Shop</title>
 </head>
 <body>
 <section layout:fragment="content">
     <main class="container content-top">
-        <div class="card mb-3">
+        <div class="card mb-3" sec:authorize="isAuthenticated()">
             <div class="card-header">
                 <i class="fa fa-lock"></i>&nbsp;Thông tin cá nhân
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form name="rzvy_profile_form" id="rzvy_profile_form" method="post">
-                            <input type="hidden" id="rzvy-profile-admin-id-hidden" name="rzvy-profile-admin-id-hidden"
-                                   value="1">
+                        <form name="profile_form" id="profile_form" method="post">
+                            <input type="hidden" id="admin-id-hidden" name="admin-id-hidden">
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <div class="rzvy-image-upload">
@@ -31,54 +31,33 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="control-label">Tên</label>
-                                    <input class="form-control" id="rzvy_profile_firstname"
-                                           name="rzvy_profile_firstname" type="text" value="John"
-                                           placeholder="Ingrese el nombre">
+                                    <input class="form-control" id="profile_firstname" name="profile_firstname"
+                                           type="text" th:value="${user.firstName}">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="control-label">Họ</label>
-                                    <input class="form-control" id="rzvy_profile_lastname" name="rzvy_profile_lastname"
-                                           type="text" value="Doe" placeholder="Ingrese el apellido">
+                                    <input class="form-control" id="profile_lastname" name="profile_lastname"
+                                           type="text" th:value="${user.lastName}">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="control-label">Điện thoại</label>
-                                    <input class="form-control" id="rzvy_phone_lastname" name="rzvy_phone_lastname"
-                                           type="text" value="Doe" placeholder="Ingrese el apellido">
+                                    <input class="form-control" id="phone_lastname" name="phone_lastname" type="text"
+                                           th:value="${user.phone}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-4">
-                                    <label class="control-label">Địa chỉ nhà</label>
-                                    <input class="form-control" id="rzvy_profile_address" name="rzvy_profile_address"
-                                           type="text" placeholder="Ingresar dirección">
+                                <div class="col-md-6">
+                                    <label class="control-label">Email</label>
+                                    <input class="form-control" id="profile_address" name="rofile_address" type="text"
+                                           th:value="${user.email}">
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="control-label">Thành phố</label>
-                                    <input class="form-control" id="rzvy_profile_city" name="rzvy_profile_city"
-                                           type="text" value="New York" placeholder="Ingresar ciudad">
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="control-label">Tiểu bang</label>
-                                    <input class="form-control" id="rzvy_profile_state" name="rzvy_profile_state"
-                                           type="text" value="New York" placeholder="Ingresar estado">
+                                    <input class="form-control" id="profile_city" name="profile_city" type="text"
+                                           value="Hà Nội">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <label class="control-label">Mã bưu điện</label>
-                                    <input class="form-control" id="rzvy_profile_zip" name="rzvy_profile_zip"
-                                           type="text" value="90001" placeholder="Ingrese el código postal">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label">Quốc gia</label>
-                                    <input class="form-control" id="rzvy_profile_country" name="rzvy_profile_country"
-                                           type="text" value="United State" placeholder="Ingresar país">
-                                </div>
-                            </div>
-                            <a class="btn btn-primary btn-block rzvy_update_profile_btn" href="javascript:void(0);">Cập
-                                nhật thông tin cá nhân</a>
+                            <a class="btn btn-outline-primary btn-block update_profile_btn">Cập nhật thông tin</a>
                         </form>
                     </div>
                 </div>

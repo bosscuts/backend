@@ -271,10 +271,26 @@
             <column name="notification_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"  primaryKeyName="notification_pk"/>
             </column>
+            <column name="title" type="varchar(500)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="created_by" type="timestamp"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+        <loadData
+                file="liquibase/data/notification.csv"
+                separator=";"
+                tableName="notification"
+                usePreparedStatements="true">
+            <column name="notification_id" type="numeric"/>
+        </loadData>
+        <createTable tableName="notification_view">
+            <column name="notification_view_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="notification_view_pk"/>
+            </column>
             <column name="staff_id" type="int"/>
-            <column name="check_in" type="timestamp"/>
-            <column name="check_out" type="timestamp"/>
-            <column name="created_by" type="varchar(50)"/>
+            <column name="created_by" type="timestamp"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
