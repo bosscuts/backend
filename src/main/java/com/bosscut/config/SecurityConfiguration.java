@@ -63,13 +63,13 @@ public class SecurityConfiguration implements WebMvcConfigurer {
             this.persistentTokenRepository = persistentTokenRepository;
         }
 
-        @Override
-        public void configure(WebSecurity web) throws Exception {
-            web.ignoring()
-                    .antMatchers("/admin/assets/**")
-                    .antMatchers("/admin/images/**")
-                    .antMatchers("/admin/sweetalert/**");
-        }
+//        @Override
+//        public void configure(WebSecurity web) throws Exception {
+//            web.ignoring()
+//                    .antMatchers("/admin/assets/**")
+//                    .antMatchers("/admin/images/**")
+//                    .antMatchers("/admin/sweetalert/**");
+//        }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -125,12 +125,12 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
         @Override
         public void configure(WebSecurity web) throws Exception {
-            web.ignoring()
-                    .antMatchers("/blog/css/**")
-                    .antMatchers("/blog/js/**")
-                    .antMatchers("/blog/fonts/**")
-                    .antMatchers("/blog/img/**")
-                    .antMatchers("/blog/scss/**");
+//            web.ignoring()
+//                    .antMatchers("/blog/css/**")
+//                    .antMatchers("/blog/js/**")
+//                    .antMatchers("/blog/fonts/**")
+//                    .antMatchers("/blog/img/**")
+//                    .antMatchers("/blog/scss/**");
         }
 
         @Override

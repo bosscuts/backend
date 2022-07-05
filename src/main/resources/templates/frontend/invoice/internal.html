@@ -28,7 +28,7 @@
                                 <div class='form-group col-md-6 select2-container--bootstrap'>
                                     <label for='staff_input'>Nhân viên</label>
                                     <select class="form-control input-lg" id="staff_input">
-                                        <option value="0">---Chọn nhân viên---</option>
+                                        <option>---Chọn nhân viên---</option>
                                         <option th:each="assistant,assistantStat : ${assistants}" th:value="${assistant.id}"
                                                 th:utext="${assistant.fullName}"></option>
                                     </select>

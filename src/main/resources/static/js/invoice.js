@@ -30,28 +30,53 @@ $(document).ready(function () {
         const requestType = $('#request_type').val();
         const fromDate = $('#from_date').val();
         const toDate = $('#to_date').val();
-        $.ajax({
-            url: "/invoice/internal",
-            type: 'post',
-            data: JSON.stringify({
-                'userId': userId,
-                'amount': invoiceAmount,
-                'requestType': requestType,
-                'fromDate': fromDate,
-                'toDate': toDate,
-                'description': invoiceDescription,
-            }),
-            contentType: 'application/json; charset=utf-8',
-            success: function (result) {
-                if (requestType === 'PAY_FINES') {
-                    swal('Tạo hóa đơn nộp phạt thành công.', "", "success");
-                } else if (requestType === 'CASH') {
-                    swal('Ứng tiền thành công.', "", "success");
-                } else if (requestType === 'HOLIDAY') {
-                    swal('Tạo đơn xin nghỉ phép thành công.', "", "success");
+        console.log(`userId ${userId} - invoiceAmount ${invoiceAmount} - invoiceDescription ${invoiceDescription} - requestType ${requestType}`);
+        let valid = true;
+        if (!userId || !requestType) {
+            swal('Bạn chưa chọn nhân viên hoặc loại yêu cầu!', "", "error");
+            valid = false;
+        } else if (requestType && userId) {
+            if (requestType === 'HOLIDAY' && (!fromDate || !toDate)) {
+                swal('Bạn chưa chọn ngày nghỉ!', "", "error");
+                valid = false;
+            } else if ((requestType === 'CASH' || requestType === 'PAY_FINES')) {
+                if (invoiceAmount === '0') {
+                    swal('Bạn chưa nhập số tiền!', "", "error");
+                    valid = false;
                 }
             }
-        });
+        }
+        if (valid) {
+            $.ajax({
+                url: "/invoice/internal",
+                type: 'post',
+                data: JSON.stringify({
+                    'userId': userId,
+                    'amount': invoiceAmount,
+                    'requestType': requestType,
+                    'fromDate': fromDate,
+                    'toDate': toDate,
+                    'description': invoiceDescription,
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data, textStatus, xhr) {
+                    console.log(data);
+                    console.log(textStatus);
+                    console.log(xhr.status);
+                    if (textStatus === 'success') {
+                        if (requestType === 'PAY_FINES') {
+                            swal('Tạo hóa đơn nộp phạt thành công.', "", "success");
+                        } else if (requestType === 'CASH') {
+                            swal('Ứng tiền thành công.', "", "success");
+                        } else if (requestType === 'HOLIDAY') {
+                            swal('Tạo đơn xin nghỉ phép thành công.', "", "success");
+                        }
+                    } else {
+                        swal('Tạo yêu cầu thất bại!', "", "error");
+                    }
+                }
+            });
+        }
     });
 
     $(document).on('click', '.staff-income', function () {
