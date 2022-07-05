@@ -3,9 +3,6 @@ let incomeStaffIds = [];
 let htmlResult = '';
 let htmlIncomeResult = '';
 $(document).ready(function () {
-    // $('#from_date_sec').datetimepicker({
-    //     timepicker:false
-    // });
     $(document).on('change', '#request_type', function () {
         const requestType = $('#request_type').val();
         if (requestType === 'PAY_FINES') {

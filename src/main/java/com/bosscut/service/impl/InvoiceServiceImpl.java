@@ -45,19 +45,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void createInvoice(InvoiceExternalRequest invoiceRequestDTO) {
-        Optional<Customer> customerOptional = customerService.getCustomerByPhone(invoiceRequestDTO.getCustomerPhone());
-        Customer customer = null;
-        if (customerOptional.isPresent()) {
-            customer = customerOptional.get();
-        } else if (!StringUtils.isBlank(invoiceRequestDTO.getCustomerPhone())) {
-            customer = new Customer();
-            customer.setPhone(invoiceRequestDTO.getCustomerPhone());
-            customerService.create(customer);
-        }
         Invoice invoice = new Invoice();
+        if (StringUtils.isNotBlank(invoiceRequestDTO.getCustomerPhone())) {
+            Optional<Customer> customerOptional = customerService.getCustomerByPhone(invoiceRequestDTO.getCustomerPhone());
+            Customer customer = null;
+            if (customerOptional.isPresent()) {
+                customer = customerOptional.get();
+            } else if (!StringUtils.isBlank(invoiceRequestDTO.getCustomerPhone())) {
+                customer = new Customer();
+                customer.setPhone(invoiceRequestDTO.getCustomerPhone());
+                customerService.create(customer);
+            }
+            invoice.setCustomerId(Objects.nonNull(customer) ? customer.getCustomerId() : null);
+        }
         invoice.setInvoiceType(InvoiceType.EXTERNAL.getName());
         invoice.setInvoiceNumber(String.valueOf(UUID.randomUUID()));
-        invoice.setCustomerId(Objects.nonNull(customer) ? customer.getCustomerId() : null);
         invoice.setTotalAmountPayment(invoiceRequestDTO.getTotalAmountPayment());
         Invoice invoiceResult = invoiceRepository.save(invoice);
 
@@ -88,7 +90,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Transactional
     public void createInvoiceInternal(InvoiceInternalRequest requestDTO) {
         Invoice invoice = new Invoice();
-        invoice.setInvoiceType(InvoiceType.EXTERNAL.getName());
+        invoice.setInvoiceType(InvoiceType.INTERNAL.getName());
         invoice.setInvoiceNumber(String.valueOf(UUID.randomUUID()));
         invoice.setUserId(requestDTO.getUserId());
 
