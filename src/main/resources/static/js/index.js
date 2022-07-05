@@ -24,6 +24,10 @@ $(document).ready(function () {
         $('#info_customer').removeClass('hidden_div');
     });
 
+    $(document).on('click', '#closePreviewModal', function () {
+        $("#previewModal").modal('hide');
+    });
+
     $(document).on('click', '#preview_invoice', function () {
         const totalAmount = $('.total_amount').attr('data-amount');
         const customerPhone = $('#customer_phone').val();
@@ -87,6 +91,7 @@ $(document).ready(function () {
                                             </tr>
                                         </tbody>`
                         $("#user-service").html(tBody);
+                        $("#previewModal").modal('show');
                     } else {
                         console.log(data);
                         console.log(textStatus);
