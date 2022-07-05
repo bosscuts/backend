@@ -14,12 +14,6 @@
 <body>
 <section layout:fragment="content">
     <main class="container content-top">
-        <div class="row" sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">
-                <img th:src="@{/img/please-login.png}"/>
-            </a>
-        </div>
-
         <div class="row content card invoice_service" sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_MANAGER')">
             <!-- Tabs navs -->
             <ul class="nav nav-tabs mb-3" id="ex-with-icons" role="tablist">
