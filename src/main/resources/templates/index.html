@@ -20,8 +20,21 @@
             </a>
         </div>
 
-        <div class="row content card">
-            <img th:src='@{/img/home.jpg}'/>
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="crawlUrl,crawlUrlStat : ${crawlUrls}">
+                        <th scope="col" th:utext="${crawlUrl.crawlUrlId}"></th>
+                        <td scope="col" th:utext="${crawlUrl.url}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 </section>

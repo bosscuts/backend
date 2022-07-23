@@ -32,34 +32,12 @@
             <a href="javascript:void(0);" class="hamburger"
                onclick="$(&#39;.header &gt; .container &gt; ul&#39;).slideToggle();"><span></span></a>
             <ul>
-                <li sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_MANAGER')">
-                    <a th:href="@{/invoice}">
-                        <i class="fa fa-file-text" aria-hidden="true"></i>
-                        &nbsp;Hoá đơn dịch vụ</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/invoice/internal}">
-                        <i class="fa fa-file-text" aria-hidden="true"></i>
-                        &nbsp;Hoá đơn nội bộ</a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/statistic}">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>
-                        &nbsp;Thống kê</a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_MASTER') || hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/settings}">
-                        <i class="fa fa-setting" aria-hidden="true"></i>&nbsp;Cài đặt</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/notification}"><i class="fa fa-bell-o" aria-hidden="true"></i>&nbsp;Thông báo</a>
-                </li>
                 <li sec:authorize="isAuthenticated()">
                     <a class="user-avatar" th:href='@{/users/account-info}' sec:authentication="principal.username"></a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href='@{/customer/register}'>
-                        <i class='fa fa-user-plus' aria-hidden='true'></i>&nbsp;&nbsp;Đăng kí khách hàng</a>
+                    <a th:href='@{/crawl-url/register}'>
+                        <i class='fa fa-user-plus' aria-hidden='true'></i>&nbsp;&nbsp;Thêm link</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="logout">
                     <a th:href="@{/logout}">

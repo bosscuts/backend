@@ -48,7 +48,4 @@ spring:
     allow-bean-definition-overriding: true
 
 server:
-  servlet:
-    session:
-      cookie:
-        http-only: true
+  port: 8081

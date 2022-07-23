@@ -295,5 +295,19 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+
+        <createTable tableName="crawl_url">
+            <column name="crawl_url_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="crawl_url_pk"/>
+            </column>
+            <column name="url" type="varchar(500)"/>
+        </createTable>
+        <loadData
+                file="liquibase/data/crawl_url.csv"
+                separator=";"
+                tableName="crawl_url"
+                usePreparedStatements="true">
+            <column name="crawl_url_id" type="numeric"/>
+        </loadData>
     </changeSet>
 </databaseChangeLog>

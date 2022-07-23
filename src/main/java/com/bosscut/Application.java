@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, TaskExecutionProperties.class })
+@EnableScheduling
 public class Application {
 
     public static void main(String[] args) {
