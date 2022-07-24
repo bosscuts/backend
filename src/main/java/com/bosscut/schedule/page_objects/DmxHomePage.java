@@ -46,6 +46,14 @@ public class DmxHomePage {
         return Integer.parseInt(totalElement);
     }
 
+    public void setWait() {
+        try {
+            wait.wait(3000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public String getPageTitle() {
         return driver.getTitle();
     }

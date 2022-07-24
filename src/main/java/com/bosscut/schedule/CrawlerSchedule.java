@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -24,33 +23,50 @@ public class CrawlerSchedule extends DriverBase {
     public CrawlerSchedule(CrawlRepository crawlRepository) {
         this.crawlRepository = crawlRepository;
     }
-    @Scheduled(fixedDelay = 500000)
+    @Scheduled(fixedDelay = 600000)
     public void crawl() throws Exception {
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
         List<CrawlUrl> crawlUrls = crawlRepository.findAll();
         instantiateDriverObject();
         WebDriver driver = getDriver();
-
-
 
         crawlUrls.forEach(crawl -> {
             try {
                 String url = crawl.getUrl();
                 driver.get(url);
                 DmxHomePage dmx = new DmxHomePage();
-                int totalElement = dmx.getTotalElement();
-                String pageTitle = dmx.getPageTitle();
-                log.info("Page title {}!", pageTitle);
-                log.info("Total element {}!", totalElement);
-//                dmx.viewMore();
+                try {
+                    int perPage = dmx.getListProduct().size();
+                    int totalElement = dmx.getTotalElement();
+                    int totalPage;
+                    if ((totalElement % perPage) == 0) {
+                        totalPage = (totalElement/perPage);
+                    } else {
+                        totalPage = (totalElement/perPage) + 1;
+                    }
+                    for (int i = 0; i <= totalPage; i++) {
+                        TimeUnit.SECONDS.sleep(1);
+                        dmx.viewMore();
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                } catch (Exception e) {
+                    log.error("Error calculate totalPage!");
+                }
 
                 List<WebElement> listProduct = dmx.getListProduct();
                 listProduct.forEach(productElement -> {
                     try {
                         WebElement percentElement = productElement.findElement(By.className("percent"));
+                        WebElement productNameElement = productElement.findElement(By.className("main-contain"))
+                                .findElement(By.tagName("h3"));
                         if (Objects.nonNull(percentElement)) {
-                            String percent = percentElement.getText();
-                            System.out.println("percent ===>>>: " + percent);
+                            String percentStr = percentElement.getText()
+                                    .replace("-", "")
+                                    .replace("%", "");
+                            int percent = Integer.parseInt(percentStr);
+
+                            if (percent > 40) {
+                                log.info("productName ===>>>: {}", productNameElement.getText());
+                            }
                         }
                     } catch (Exception e) {
                         log.error("Error when get percent!");
@@ -60,11 +76,6 @@ public class CrawlerSchedule extends DriverBase {
                 log.error("Error when get list product!");
             }
         });
-//        executorService.execute(() -> {
-//
-//        });
-//        executorService.shutdown();
-
         clearCookies();
         closeDriverObjects();
     }

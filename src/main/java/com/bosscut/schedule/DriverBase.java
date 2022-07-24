@@ -22,7 +22,7 @@ public class DriverBase {
     }
 
     public static RemoteWebDriver getDriver() throws Exception {
-        System.setProperty("webdriver.chrome.driver","/Users/hoadoan/Desktop/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users/hoadoan/Desktop/chrome_driver/chromedriver");
         return driverFactoryThread.get().getDriver();
     }
 

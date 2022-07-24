@@ -310,4 +310,14 @@
             <column name="crawl_url_id" type="numeric"/>
         </loadData>
     </changeSet>
+
+    <changeSet author="Quang Hoa" id="00000000000006" context="notification">
+        <loadData
+                file="liquibase/data/config.csv"
+                separator=";"
+                tableName="config"
+                usePreparedStatements="true">
+            <column name="config_id" type="numeric"/>
+        </loadData>
+    </changeSet>
 </databaseChangeLog>
