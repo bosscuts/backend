@@ -3,6 +3,7 @@ package com.bosscut.schedule;
 import com.bosscut.entity.CrawlUrl;
 import com.bosscut.repository.CrawlRepository;
 import com.bosscut.schedule.page_objects.DmxHomePage;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+@Slf4j
 @Component
 public class CrawlerSchedule extends DriverBase {
 
@@ -20,29 +24,44 @@ public class CrawlerSchedule extends DriverBase {
     public CrawlerSchedule(CrawlRepository crawlRepository) {
         this.crawlRepository = crawlRepository;
     }
-    @Scheduled(fixedDelay = 100000)
+    @Scheduled(fixedDelay = 500000)
     public void crawl() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        List<CrawlUrl> crawlUrls = crawlRepository.findAll();
         instantiateDriverObject();
         WebDriver driver = getDriver();
-        List<CrawlUrl> crawlUrls = crawlRepository.findAll();
 
-        driver.get("https://www.dienmayxanh.com/dien-thoai");
 
-        DmxHomePage dmx = new DmxHomePage();
-        dmx.viewMore();
 
-        List<WebElement> listProduct = dmx.getListProduct();
-        listProduct.forEach(productElement -> {
+        crawlUrls.forEach(crawl -> {
             try {
-                WebElement percentElement = productElement.findElement(By.className("percent"));
-                if (Objects.nonNull(percentElement)) {
-                    String percent = percentElement.getText();
-                    System.out.println("percent ===>>>: " + percent);
-                }
+                driver.get(crawl.getUrl());
+                DmxHomePage dmx = new DmxHomePage();
+
+                int totalElement = dmx.getTotalElement();
+                log.error("totalElement ===>>>: " + totalElement);
+//                dmx.viewMore();
+
+                List<WebElement> listProduct = dmx.getListProduct();
+                listProduct.forEach(productElement -> {
+                    try {
+                        WebElement percentElement = productElement.findElement(By.className("percent"));
+                        if (Objects.nonNull(percentElement)) {
+                            String percent = percentElement.getText();
+                            System.out.println("percent ===>>>: " + percent);
+                        }
+                    } catch (Exception e) {
+                        log.error(e.getMessage());
+                    }
+                });
             } catch (Exception e) {
-                System.out.println(e.getMessage());;
+                log.error(e.getMessage());
             }
         });
+//        executorService.execute(() -> {
+//
+//        });
+//        executorService.shutdown();
 
         clearCookies();
         closeDriverObjects();

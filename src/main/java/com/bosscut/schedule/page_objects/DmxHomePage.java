@@ -41,6 +41,11 @@ public class DmxHomePage {
         viewMore.findWebElement().click();
     }
 
+    public int getTotalElement() {
+        String totalElement = viewMore.findWebElement().findElement(By.className("remain")).getText();
+        return Integer.parseInt(totalElement);
+    }
+
     public String getPageTitle() {
         return driver.getTitle();
     }
