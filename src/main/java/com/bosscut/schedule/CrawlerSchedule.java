@@ -35,11 +35,13 @@ public class CrawlerSchedule extends DriverBase {
 
         crawlUrls.forEach(crawl -> {
             try {
-                driver.get(crawl.getUrl());
+                String url = crawl.getUrl();
+                driver.get(url);
                 DmxHomePage dmx = new DmxHomePage();
-
                 int totalElement = dmx.getTotalElement();
-                log.error("totalElement ===>>>: " + totalElement);
+                String pageTitle = dmx.getPageTitle();
+                log.info("Page title {}!", pageTitle);
+                log.info("Total element {}!", totalElement);
 //                dmx.viewMore();
 
                 List<WebElement> listProduct = dmx.getListProduct();
@@ -51,11 +53,11 @@ public class CrawlerSchedule extends DriverBase {
                             System.out.println("percent ===>>>: " + percent);
                         }
                     } catch (Exception e) {
-                        log.error(e.getMessage());
+                        log.error("Error when get percent!");
                     }
                 });
             } catch (Exception e) {
-                log.error(e.getMessage());
+                log.error("Error when get list product!");
             }
         });
 //        executorService.execute(() -> {

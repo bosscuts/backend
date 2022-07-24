@@ -28,15 +28,6 @@ public class DriverFactory {
     private final DriverType selectedDriverType;
 
     public DriverFactory() {
-//        DriverType driverType = CHROME;
-//        String browser = System.getProperty("browser", driverType.toString()).toUpperCase();
-//        try {
-//            driverType = valueOf(browser);
-//        } catch (IllegalArgumentException ignored) {
-//            LOG.warn("Unknown driver specified, defaulting to '" + driverType + "'...");
-//        } catch (NullPointerException ignored) {
-//            LOG.warn("No driver specified, defaulting to '" + driverType + "'...");
-//        }
         selectedDriverType = CHROME;
     }
 
