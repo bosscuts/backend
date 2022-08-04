@@ -49,3 +49,7 @@ spring:
 
 server:
   port: 8081
+
+application:
+  path:
+    chrome-driver: C:\Users\VSS\Desktop\chromedriver.exe

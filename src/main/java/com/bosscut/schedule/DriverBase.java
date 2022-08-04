@@ -21,8 +21,8 @@ public class DriverBase {
         });
     }
 
-    public static RemoteWebDriver getDriver() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "/Users/hoadoan/Desktop/chrome_driver/chromedriver");
+    public static RemoteWebDriver getDriver(String pathDriver) throws Exception {
+        System.setProperty("webdriver.chrome.driver", pathDriver);
         return driverFactoryThread.get().getDriver();
     }
 

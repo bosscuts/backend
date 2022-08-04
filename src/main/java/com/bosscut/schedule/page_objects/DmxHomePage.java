@@ -22,8 +22,8 @@ public class DmxHomePage {
     private final Query viewMore = new Query().defaultLocator(By.className("view-more"));
     private final WebDriverWait wait;
     private final RemoteWebDriver driver;
-    public DmxHomePage() throws Exception {
-        driver = DriverBase.getDriver();
+    public DmxHomePage(String pathDriver) throws Exception {
+        driver = DriverBase.getDriver(pathDriver);
         initQueryObjects(this, driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
     }

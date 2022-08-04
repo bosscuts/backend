@@ -320,4 +320,22 @@
             <column name="config_id" type="numeric"/>
         </loadData>
     </changeSet>
+
+    <changeSet author="Quang Hoa" id="00000000000007" context="product">
+        <createTable tableName="product">
+            <column name="product_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="product_pk"/>
+            </column>
+            <column name="product_name" type="varchar(100)"/>
+            <column name="product_code" type="varchar(50)"/>
+            <column name="price" type="bigint"/>
+            <column name="price_old" type="bigint"/>
+            <column name="percent_sale" type="int"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
