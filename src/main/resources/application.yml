@@ -52,4 +52,4 @@ server:
 
 application:
   path:
-    chrome-driver: C:\Users\VSS\Desktop\chromedriver.exe
+    chrome-driver: /Users/hoadoan/Desktop/chrome_driver/chromedriver

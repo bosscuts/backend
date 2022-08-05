@@ -45,6 +45,7 @@ public class CrawlerSchedule extends DriverBase {
         WebDriver driver = getDriver(linkDriver);
         List<Product> productList = productRepository.findAll();
         List<Product> productCrawl = new ArrayList<>();
+        List<Product> productSendmail = new ArrayList<>();
         crawlUrls.forEach(crawl -> {
             try {
                 String url = crawl.getUrl();
@@ -75,7 +76,7 @@ public class CrawlerSchedule extends DriverBase {
 
                     Optional<Product> productServiceOpt = productList.stream()
                             .filter(p -> p.getProductCode().equals(productCode)).findFirst();
-
+                    String price = "";
                     try {
                         product.setProductCode(productCode);
                         WebElement productNameElement = productElement.findElement(By.className("main-contain"))
@@ -90,7 +91,7 @@ public class CrawlerSchedule extends DriverBase {
                     try {
                         WebElement priceElement = productElement.findElement(By.className("price"));
                         if (Objects.nonNull(priceElement)) {
-                            String price = priceElement.getText()
+                             price = priceElement.getText()
                                     .replace("₫", "")
                                     .replace(".", "")
                                     .replace(".", "");
@@ -102,7 +103,10 @@ public class CrawlerSchedule extends DriverBase {
                     try {
                         WebElement priceOldElement = productElement.findElement(By.className("price-old"));
                         if (Objects.nonNull(priceOldElement)) {
-                            String priceOld = priceOldElement.getText();
+                            String priceOld = priceOldElement.getText()
+                                    .replace("₫", "")
+                                    .replace(".", "")
+                                    .replace(".", "");
                             product.setPriceOld(Integer.parseInt(priceOld));
                         }
                     } catch (Exception e) {
@@ -122,6 +126,14 @@ public class CrawlerSchedule extends DriverBase {
                     }
                     if (productServiceOpt.isEmpty()) {
                         productCrawl.add(product);
+                    } else {
+                       Product p = productServiceOpt.get();
+                       int newPrice = Integer.parseInt(price);
+                       if (newPrice < p.getPrice()) {
+                           p.setPrice(newPrice);
+                       }
+                       productCrawl.add(product);
+                       productSendmail.add(p);
                     }
                 });
             } catch (Exception e) {
