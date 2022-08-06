@@ -52,4 +52,7 @@ server:
 
 application:
   path:
-    chrome-driver: /Users/hoadoan/Desktop/chrome_driver/chromedriver
+    file-download: /home/hoaronal/project/products.xlsx
+    # file-download: /Users/hoadoan/Desktop/products.xlsx
+    chrome-driver: /home/hoaronal/project/chromedriver
+    # chrome-driver: /Users/hoadoan/Desktop/chrome_driver/chromedriver

@@ -18,6 +18,9 @@ public class CrawlUrl implements Serializable {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "type")
+    private String type;
+
     public CrawlUrl() {
     }
 
@@ -35,5 +38,13 @@ public class CrawlUrl implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

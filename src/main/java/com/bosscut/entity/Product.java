@@ -31,16 +31,23 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     @Column(name = "percent_sale")
     private Integer percentSale;
 
+    @Column(name = "link")
+    private String link;
+
     @Column(name = "description")
     private String description;
 
-    public Product(Long productId, String productName, String productCode, Integer price, Integer priceOld, Integer percentSale, String description) {
+    @Column(name = "type")
+    private String type;
+
+    public Product(Long productId, String productName, String productCode, Integer price, Integer priceOld, Integer percentSale, String link, String description) {
         this.productId = productId;
         this.price = price;
         this.priceOld = priceOld;
         this.percentSale = percentSale;
         this.productName = productName;
         this.productCode = productCode;
+        this.link = link;
         this.description = description;
     }
 
@@ -96,11 +103,27 @@ public class Product extends AbstractAuditingEntity implements Serializable {
         this.priceOld = priceOld;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

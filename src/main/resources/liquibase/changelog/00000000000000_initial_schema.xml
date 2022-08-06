@@ -301,6 +301,7 @@
                 <constraints primaryKey="true" nullable="false"  primaryKeyName="crawl_url_pk"/>
             </column>
             <column name="url" type="varchar(500)"/>
+            <column name="type" type="varchar(20)"/>
         </createTable>
         <loadData
                 file="liquibase/data/crawl_url.csv"
@@ -331,7 +332,9 @@
             <column name="price" type="bigint"/>
             <column name="price_old" type="bigint"/>
             <column name="percent_sale" type="int"/>
+            <column name="link" type="varchar(500)"/>
             <column name="description" type="varchar(500)"/>
+            <column name="type" type="varchar(20)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>

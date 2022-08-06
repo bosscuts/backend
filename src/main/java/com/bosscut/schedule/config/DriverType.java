@@ -36,8 +36,12 @@ public enum DriverType implements DriverSetup {
 
             ChromeOptions options = new ChromeOptions();
             options.merge(capabilities);
-            options.setHeadless(HEADLESS);
+            options.setHeadless(true);
             options.addArguments("--no-default-browser-check");
+            options.addArguments("--headless");
+            options.addArguments("--start-maximized");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
             options.setExperimentalOption("prefs", chromePreferences);
 
             return new ChromeDriver(options);
@@ -79,7 +83,11 @@ public enum DriverType implements DriverSetup {
         public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             OperaOptions options = new OperaOptions();
             options.merge(capabilities);
-
+            options.addArguments("--no-default-browser-check");
+            options.addArguments("--headless");
+            options.addArguments("--start-maximized");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
             return new OperaDriver(options);
         }
     },
@@ -93,6 +101,10 @@ public enum DriverType implements DriverSetup {
             options.merge(capabilities);
             options.setHeadless(HEADLESS);
             options.addArguments("--no-default-browser-check");
+            options.addArguments("--headless");
+            options.addArguments("--start-maximized");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
 
             return new ChromeDriver(options);
         }

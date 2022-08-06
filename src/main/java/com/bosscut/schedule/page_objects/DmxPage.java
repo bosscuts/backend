@@ -12,17 +12,20 @@ import java.util.List;
 
 import static com.lazerycode.selenium.util.AssignDriver.initQueryObjects;
 
-public class DmxHomePage {
+public class DmxPage {
 
     private final Query acceptCookiesPopup = new Query().defaultLocator(By.xpath("//*[.='I agree']"));
     private final Query searchBar = new Query().defaultLocator(By.name("q"));
     private final Query googleSearch = new Query().defaultLocator(By.name("btnK"));
     private final Query imFeelingLucky = new Query().defaultLocator(By.name("btnI"));
     private final Query listProduct = new Query().defaultLocator(By.className("listproduct"));
+    private final Query listProductExchange = new Query().defaultLocator(By.className("lstcate"));
+    private final Query closePopup = new Query().defaultLocator(By.className("dong"));
     private final Query viewMore = new Query().defaultLocator(By.className("view-more"));
+    private final Query viewMoreExchange = new Query().defaultLocator(By.className("viewmore"));
     private final WebDriverWait wait;
     private final RemoteWebDriver driver;
-    public DmxHomePage(String pathDriver) throws Exception {
+    public DmxPage(String pathDriver) throws Exception {
         driver = DriverBase.getDriver(pathDriver);
         initQueryObjects(this, driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
@@ -37,12 +40,33 @@ public class DmxHomePage {
         return listProduct.findWebElement().findElements(By.tagName("li"));
     }
 
+    public List<WebElement> getListProductExchange() {
+        return listProductExchange.findWebElement().findElements(By.tagName("li"));
+    }
+
+    public List<WebElement> getListMayDoiTra() {
+        return listProduct.findWebElement().findElements(By.tagName("li"));
+    }
+
     public void viewMore() {
         viewMore.findWebElement().click();
     }
 
+    public void closePopup() {
+        closePopup.findWebElement().click();
+    }
+
+    public void viewMoreExchange() {
+        viewMoreExchange.findWebElement().click();
+    }
+
     public int getTotalElement() {
         String totalElement = driver.findElement(By.className("remain")).getText();
+        return Integer.parseInt(totalElement);
+    }
+
+    public int getTotalElementExchange() {
+        String totalElement = driver.findElement(By.className("viewmore")).getText();
         return Integer.parseInt(totalElement);
     }
 
