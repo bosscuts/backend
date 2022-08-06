@@ -5,7 +5,10 @@ import com.bosscut.entity.Product;
 import com.bosscut.repository.CrawlRepository;
 import com.bosscut.repository.ProductRepository;
 import com.bosscut.schedule.page_objects.DmxHomePage;
+import com.bosscut.service.MailService;
+import com.bosscut.util.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +18,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,12 +34,15 @@ public class CrawlerSchedule extends DriverBase {
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
 
+    private final MailService mailService;
+
     @Value(value = "${application.path.chrome-driver}")
     private String linkDriver;
 
-    public CrawlerSchedule(CrawlRepository crawlRepository, ProductRepository productRepository) {
+    public CrawlerSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
+        this.mailService = mailService;
     }
 
     @Transactional
@@ -141,6 +150,14 @@ public class CrawlerSchedule extends DriverBase {
             }
         });
         productRepository.saveAll(productCrawl);
+        ByteArrayInputStream in = ExcelUtils.productsToExcel(productCrawl);
+
+        IOUtils.copy(in, new FileOutputStream("/Users/hoadoan/Desktop/products.xlsx"));
+        File file = new File("/Users/hoadoan/Desktop/products.xlsx");
+
+//        mailService.sendEmail("project.devskill@gmail.com", "Báo cáo sản phẩm giảm giá", "Danh sách sản phẩm giảm giá", Boolean.FALSE, Boolean.FALSE, file);
+        mailService.sendEmail("303thanhnguyen@gmail.com", "Báo cáo sản phẩm giảm giá", "Danh sách sản phẩm giảm giá", Boolean.FALSE, Boolean.FALSE, file);
+
         System.out.println("End time ===>>>: " + System.currentTimeMillis());
         clearCookies();
         closeDriverObjects();
