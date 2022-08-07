@@ -32,7 +32,7 @@
                                     <th scope="col" th:utext="${crawlUrl.crawlUrlId}"></th>
                                     <td scope="col" th:utext="${crawlUrl.url}"></td>
                                     <td scope="col">
-                                        <a th:href="|@{/crawl-url/delete/${crawlUrl.crawlUrlId}}|">Xóa</a>
+                                        <a th:href="@{/crawl-url/delete/{id}(id=${crawlUrl.crawlUrlId})}">Xóa</a>
                                     </td>
                                 </tr>
                             </tbody>
