@@ -40,6 +40,9 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Transient
+    private String status;
+
     public Product(Long productId, String productName, String productCode, Integer price, Integer priceOld, Integer percentSale, String link, String description) {
         this.productId = productId;
         this.price = price;
@@ -125,5 +128,13 @@ public class Product extends AbstractAuditingEntity implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

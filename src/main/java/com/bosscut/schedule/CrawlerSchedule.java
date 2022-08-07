@@ -30,10 +30,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class CrawlerSchedule extends DriverBase {
-
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
-
     private final MailService mailService;
 
     @Value(value = "${application.path.chrome-driver}")
@@ -51,7 +49,7 @@ public class CrawlerSchedule extends DriverBase {
     @Transactional
     @Scheduled(fixedDelay = 600000)
     public void crawl() throws Exception {
-        System.out.println("Start time ===>>>: " + System.currentTimeMillis());
+        System.out.println("Start time ===>>>: " + new Date());
         List<CrawlUrl> crawlUrls = crawlRepository.findAll();
         instantiateDriverObject();
         WebDriver driver = getDriver(linkDriver);
@@ -72,21 +70,21 @@ public class CrawlerSchedule extends DriverBase {
                         log.error("Error close popup!");
                     }
                     try {
-                        for (int i = 0; i < 30; i++) {
+                        for (int i = 0; i < 1000; i++) {
                             TimeUnit.SECONDS.sleep(1);
                             dmx.viewMoreExchange();
                             TimeUnit.SECONDS.sleep(1);
                         }
                     } catch (Exception e) {
                         log.error("Error calculate totalPage exchange!");
+                        TimeUnit.SECONDS.sleep(1);
                     }
-
-
                     try {
                         List<WebElement> listProductExchange = dmx.getListProductExchange();
                         listProductExchange.forEach(productElement -> {
                             Product product = new Product();
                             product.setType("exchange");
+                            product.setStatus("Hàng trưng bày");
                             String price = "";
                             try {
                                 WebElement productNameElement = productElement.findElement(By.className("prdName"));
@@ -142,29 +140,28 @@ public class CrawlerSchedule extends DriverBase {
 
                             if (productExchangeOpt.isEmpty()) {
                                 productCrawl.add(product);
+                            } else {
+                                Product p = productExchangeOpt.get();
+                                int newPrice = Integer.parseInt(price);
+                                if (newPrice < p.getPrice()) {
+                                    p.setPrice(newPrice);
+                                    productSendmail.add(p);
+                                }
                             }
-                            productSendmail.add(product);
                         });
                     } catch (Exception e) {
                         log.error("Error calculate totalPage Exchange !", e);
                     }
                 } else {
                     try {
-                        int perPage = dmx.getListProduct().size();
-                        int totalElement = dmx.getTotalElement();
-                        int totalPage;
-                        if ((totalElement % perPage) == 0) {
-                            totalPage = (totalElement / perPage);
-                        } else {
-                            totalPage = (totalElement / perPage) + 1;
-                        }
-                        for (int i = 0; i <= totalPage; i++) {
+                        for (int i = 0; i <= 1000; i++) {
                             TimeUnit.SECONDS.sleep(1);
                             dmx.viewMore();
                             TimeUnit.SECONDS.sleep(1);
                         }
                     } catch (Exception e) {
                         log.error("Error calculate totalPage!");
+                        TimeUnit.SECONDS.sleep(1);
                     }
 
                     List<WebElement> listProduct = dmx.getListProduct();
@@ -232,6 +229,7 @@ public class CrawlerSchedule extends DriverBase {
                             log.error("Error when get productName!");
                         }
                         product.setType("normal");
+                        product.setStatus("Hàng mới");
 
                         if (productOpt.isEmpty()) {
                             productCrawl.add(product);
@@ -255,11 +253,10 @@ public class CrawlerSchedule extends DriverBase {
             ByteArrayInputStream in = ExcelUtils.productsToExcel(productSendmail);
             IOUtils.copy(in, new FileOutputStream(linkFile));
             File file = new File(linkFile);
-//            mailService.sendEmail("project.devskill@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
-            mailService.sendEmail("303thanhnguyen@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+            mailService.sendEmail("hanoilacnhaucoinhumat@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
         }
 
-        System.out.println("End time ===>>>: " + System.currentTimeMillis());
+        System.out.println("End time ===>>>: " + new Date());
         clearCookies();
         closeDriverObjects();
     }

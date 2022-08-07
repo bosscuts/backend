@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/crawl-url")
@@ -41,6 +42,16 @@ public class CrawlUrlController {
         CrawlUrl entity = new CrawlUrl();
         entity.setUrl(url);
         crawlRepository.save(entity);
+        return "redirect:/";
+    }
+
+    @GetMapping({"/delete/{crawlUrlId}"})
+    @Transactional
+    public String deleteUrl(@PathVariable Long crawlUrlId) {
+        CrawlUrl entity = crawlRepository.findById(crawlUrlId).orElse(null);
+        if (Objects.nonNull(entity)) {
+            crawlRepository.delete(entity);
+        }
         return "redirect:/";
     }
 }
