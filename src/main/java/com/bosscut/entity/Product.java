@@ -43,6 +43,9 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     @Transient
     private String status;
 
+    @Transient
+    private String percentSaleString;
+
     public Product(Long productId, String productName, String productCode, Float price, Float priceOld, Integer percentSale, String link, String description) {
         this.productId = productId;
         this.price = price;
@@ -136,5 +139,13 @@ public class Product extends AbstractAuditingEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPercentSaleString() {
+        return percentSaleString;
+    }
+
+    public void setPercentSaleString(String percentSaleString) {
+        this.percentSaleString = percentSaleString;
     }
 }

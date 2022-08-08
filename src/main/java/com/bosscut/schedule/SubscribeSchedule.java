@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class CrawlerSchedule extends DriverBase {
+public class SubscribeSchedule extends DriverBase {
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
     private final MailService mailService;
@@ -40,7 +40,7 @@ public class CrawlerSchedule extends DriverBase {
     @Value(value = "${application.path.file-download}")
     private String linkFile;
 
-    public CrawlerSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
+    public SubscribeSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
         this.mailService = mailService;
@@ -257,9 +257,9 @@ public class CrawlerSchedule extends DriverBase {
             }
         });
         productRepository.saveAll(productCrawl);
-        if (!CollectionUtils.isEmpty(productCrawl)) {
+        if (!CollectionUtils.isEmpty(productSendmail)) {
             try (FileOutputStream out = new FileOutputStream(linkFile)) {
-                ByteArrayInputStream in = ExcelUtils.productsToExcel(productCrawl);
+                ByteArrayInputStream in = ExcelUtils.productsToExcel(productSendmail);
                 IOUtils.copy(in, out);
                 File file = new File(linkFile);
                 mailService.sendEmail("project.devskill@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
