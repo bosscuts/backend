@@ -39,6 +39,14 @@
                     <a th:href='@{/crawl-url/register}'>
                         <i class='fa fa-user-plus' aria-hidden='true'></i>&nbsp;&nbsp;Thêm link</a>
                 </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href='@{/category/register}'>
+                        <i class='fa fa-user-plus' aria-hidden='true'></i>&nbsp;&nbsp;Thêm danh mục</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href='@{/category/}'>
+                        <i class='fa fa-user-plus' aria-hidden='true'></i>&nbsp;&nbsp;Danh sách danh mục</a>
+                </li>
                 <li sec:authorize="isAuthenticated()" class="logout">
                     <a th:href="@{/logout}">
                         <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Đăng xuất

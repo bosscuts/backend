@@ -341,4 +341,20 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
     </changeSet>
+    <changeSet author="Quang Hoa" id="00000000000008" context="category">
+        <createTable tableName="category">
+            <column name="category_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"  primaryKeyName="category_pk"/>
+            </column>
+            <column name="name" type="varchar(500)"/>
+            <column name="url" type="varchar(500)"/>
+        </createTable>
+        <loadData
+                file="liquibase/data/category.csv"
+                separator=";"
+                tableName="category"
+                usePreparedStatements="true">
+            <column name="category_id" type="numeric"/>
+        </loadData>
+    </changeSet>
 </databaseChangeLog>

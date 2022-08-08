@@ -38,7 +38,7 @@ public class CrawlUrlController {
 
     @PostMapping
     @Transactional
-    public String createUrl(@RequestParam String url) {
+    public String createUrl(@RequestParam String url, @RequestParam String type) {
         CrawlUrl entity = new CrawlUrl();
         entity.setUrl(url);
         crawlRepository.save(entity);

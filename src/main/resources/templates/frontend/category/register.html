@@ -4,30 +4,26 @@
       layout:decorate="~{template/layout}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" th:href="@{/img/favicon.ico}">
-    <title>Đăng kí URL</title>
+    <title>Đăng kí Danh mục</title>
 </head>
 <body class="rzvy">
 <section layout:fragment="content" class="rzvy-register-main my-3">
     <div class="container content-top">
         <div class="row whitebox">
-            <form method="post" th:action="@{/crawl-url}">
+            <form method="post" th:action="@{/category}">
                 <div class="col-md-12 pt-3">
-                    <h2 class="text-center">Đăng kí URL</h2>
+                    <h2 class="text-center">Đăng kí Danh mục</h2>
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="name">Tên</label>
+                            <input class="form-control" id="name" name="name" placeholder="Nhập tên danh mục">
+                        </div>
                         <div class="form-group col-md-12">
                             <label for="url">Địa chỉ</label>
                             <textarea class="form-control" id="url" name="url" placeholder="Nhập địa chỉ" rows="1"></textarea>
-                        </div>
-                        <div class="form-group col-md-12 select2-container--bootstrap">
-                            <select class="form-control input-lg" id="type" name="type">
-                                <option value="">---Chọn loại danh mục---</option>
-                                <option value="LINK">LINK</option>
-                                <option value="CATEGORY">CATEGORY</option>
-                            </select>
                         </div>
                     </div>
                     <div class="row mt-2 mb-3">

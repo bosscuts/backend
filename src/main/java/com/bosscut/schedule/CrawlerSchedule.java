@@ -33,12 +33,12 @@ public class CrawlerSchedule extends DriverBase {
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
     private final MailService mailService;
-
     @Value(value = "${application.path.chrome-driver}")
     private String linkDriver;
-
     @Value(value = "${application.path.file-download}")
     private String linkFile;
+    @Value(value = "${application.email}")
+    private String email;
 
     public CrawlerSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
         this.crawlRepository = crawlRepository;
@@ -49,7 +49,7 @@ public class CrawlerSchedule extends DriverBase {
     @Transactional
     @Scheduled(fixedDelay = 600000)
     public void crawl() throws Exception {
-        log.info("Start time ===>>>: " + new Date());
+        log.info("Start time crawl ===>>>: " + new Date());
         List<CrawlUrl> crawlUrls = crawlRepository.findAll();
         instantiateDriverObject();
         WebDriver driver = getDriver(linkDriver);
@@ -257,16 +257,16 @@ public class CrawlerSchedule extends DriverBase {
             }
         });
         productRepository.saveAll(productCrawl);
-        if (!CollectionUtils.isEmpty(productCrawl)) {
+        if (!CollectionUtils.isEmpty(productSendmail)) {
             try (FileOutputStream out = new FileOutputStream(linkFile)) {
-                ByteArrayInputStream in = ExcelUtils.productsToExcel(productCrawl);
+                ByteArrayInputStream in = ExcelUtils.productsToExcel(productSendmail);
                 IOUtils.copy(in, out);
                 File file = new File(linkFile);
-                mailService.sendEmail("project.devskill@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+                mailService.sendEmail(email, "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
             }
         }
 
-        log.info("End time ===>>>: " + new Date());
+        log.info("End time crawl ===>>>: " + new Date());
         clearCookies();
         closeDriverObjects();
     }
