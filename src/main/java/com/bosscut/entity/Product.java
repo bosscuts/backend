@@ -23,10 +23,10 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     private String productCode;
 
     @Column(name = "price")
-    private Integer price;
+    private Float price;
 
     @Column(name = "price_old")
-    private Integer priceOld;
+    private Float priceOld;
 
     @Column(name = "percent_sale")
     private Integer percentSale;
@@ -43,7 +43,7 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     @Transient
     private String status;
 
-    public Product(Long productId, String productName, String productCode, Integer price, Integer priceOld, Integer percentSale, String link, String description) {
+    public Product(Long productId, String productName, String productCode, Float price, Float priceOld, Integer percentSale, String link, String description) {
         this.productId = productId;
         this.price = price;
         this.priceOld = priceOld;
@@ -82,16 +82,20 @@ public class Product extends AbstractAuditingEntity implements Serializable {
         this.productCode = productCode;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public Integer getPriceOld() {
+    public Float getPriceOld() {
         return priceOld;
+    }
+
+    public void setPriceOld(Float priceOld) {
+        this.priceOld = priceOld;
     }
 
     public Integer getPercentSale() {
@@ -100,10 +104,6 @@ public class Product extends AbstractAuditingEntity implements Serializable {
 
     public void setPercentSale(Integer percentSale) {
         this.percentSale = percentSale;
-    }
-
-    public void setPriceOld(Integer priceOld) {
-        this.priceOld = priceOld;
     }
 
     public String getLink() {

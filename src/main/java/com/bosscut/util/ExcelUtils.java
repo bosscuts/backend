@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,8 +34,8 @@ public class ExcelUtils {
             for (Product product : products) {
                 Row row = sheet.createRow(rowIdx++);
                 row.createCell(0).setCellValue(Objects.nonNull(product.getProductName()) ? product.getProductName() : "");
-                row.createCell(1).setCellValue(Objects.nonNull(product.getPrice()) ? product.getPrice() : 0);
-                row.createCell(2).setCellValue(Objects.nonNull(product.getPriceOld()) ? product.getPriceOld() : 0);
+                row.createCell(1).setCellValue(Objects.nonNull(product.getPrice()) ? priceWithDecimal(product.getPrice()) : "");
+                row.createCell(2).setCellValue(Objects.nonNull(product.getPriceOld()) ? priceWithDecimal(product.getPriceOld()) : "");
                 row.createCell(3).setCellValue(Objects.nonNull(product.getStatus()) ? product.getStatus() : "");
                 row.createCell(4).setCellValue(Objects.nonNull(product.getLink()) ? product.getLink() : "");
             }
@@ -43,5 +44,10 @@ public class ExcelUtils {
         } catch (IOException e) {
             throw new RuntimeException("fail to import data to Excel file: " + e.getMessage());
         }
+    }
+
+    public static String priceWithDecimal(Float price) {
+        DecimalFormat formatter = new DecimalFormat("###,###,###.00");
+        return formatter.format(price);
     }
 }

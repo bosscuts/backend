@@ -49,7 +49,7 @@ public class CrawlerSchedule extends DriverBase {
     @Transactional
     @Scheduled(fixedDelay = 600000)
     public void crawl() throws Exception {
-        System.out.println("Start time ===>>>: " + new Date());
+        log.info("Start time ===>>>: " + new Date());
         List<CrawlUrl> crawlUrls = crawlRepository.findAll();
         instantiateDriverObject();
         WebDriver driver = getDriver(linkDriver);
@@ -117,7 +117,7 @@ public class CrawlerSchedule extends DriverBase {
                                             .replace("₫", "")
                                             .replace(".", "")
                                             .replace(".", "");
-                                    product.setPrice(Integer.parseInt(StringUtils.trim(price)));
+                                    product.setPrice(Float.parseFloat(StringUtils.trim(price)));
                                 }
                             } catch (Exception e) {
                                 log.error("Error when get price!");
@@ -129,7 +129,7 @@ public class CrawlerSchedule extends DriverBase {
                                             .replace("₫", "")
                                             .replace(".", "")
                                             .replace(".", "");
-                                    product.setPriceOld(Integer.parseInt(priceOld));
+                                    product.setPriceOld(Float.parseFloat(priceOld));
                                 }
                             } catch (Exception e) {
                                 log.error("Error when get priceOld!");
@@ -142,7 +142,7 @@ public class CrawlerSchedule extends DriverBase {
                                 productCrawl.add(product);
                             } else {
                                 Product p = productExchangeOpt.get();
-                                int newPrice = Integer.parseInt(price);
+                                float newPrice = Float.parseFloat(price);
                                 if (newPrice < p.getPrice()) {
                                     p.setPrice(newPrice);
                                     productSendmail.add(p);
@@ -190,7 +190,7 @@ public class CrawlerSchedule extends DriverBase {
                                         .replace("₫", "")
                                         .replace(".", "")
                                         .replace(".", "");
-                                product.setPrice(Integer.parseInt(StringUtils.trim(price)));
+                                product.setPrice(Float.parseFloat(StringUtils.trim(price)));
                             }
                         } catch (Exception e) {
                             log.error("Error when get price!");
@@ -202,7 +202,7 @@ public class CrawlerSchedule extends DriverBase {
                                         .replace("₫", "")
                                         .replace(".", "")
                                         .replace(".", "");
-                                product.setPriceOld(Integer.parseInt(priceOld));
+                                product.setPriceOld(Float.parseFloat(priceOld));
                             }
                         } catch (Exception e) {
                             log.error("Error when get priceOld!");
@@ -235,7 +235,8 @@ public class CrawlerSchedule extends DriverBase {
                             productCrawl.add(product);
                         } else {
                             Product p = productOpt.get();
-                            int newPrice = Integer.parseInt(price);
+                            p.setStatus("Hàng mới");
+                            float newPrice = Float.parseFloat(price);
                             if (newPrice < p.getPrice()) {
                                 p.setPrice(newPrice);
                                 productSendmail.add(p);
@@ -248,15 +249,16 @@ public class CrawlerSchedule extends DriverBase {
             }
         });
         productRepository.saveAll(productCrawl);
-
-        if (!CollectionUtils.isEmpty(productSendmail)) {
-            ByteArrayInputStream in = ExcelUtils.productsToExcel(productSendmail);
-            IOUtils.copy(in, new FileOutputStream(linkFile));
-            File file = new File(linkFile);
-            mailService.sendEmail("hanoilacnhaucoinhumat@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+        if (!CollectionUtils.isEmpty(productCrawl)) {
+            try (FileOutputStream out = new FileOutputStream(linkFile)) {
+                ByteArrayInputStream in = ExcelUtils.productsToExcel(productCrawl);
+                IOUtils.copy(in, out);
+                File file = new File(linkFile);
+                mailService.sendEmail("hoa9x3@gmail.com", "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+            }
         }
 
-        System.out.println("End time ===>>>: " + new Date());
+        log.info("End time ===>>>: " + new Date());
         clearCookies();
         closeDriverObjects();
     }
