@@ -1,2 +1,9 @@
 crawl_url_id;url;type
+1;https://www.dienmayxanh.com/tivi;normal
+2;https://www.dienmayxanh.com/tu-lanh;normal
+3;https://www.dienmayxanh.com/may-lanh;normal
+4;https://www.dienmayxanh.com/may-giat;normal
 5;https://www.dienmayxanh.com/may-doi-tra/tivi?type=7;exchange
+6;https://www.dienmayxanh.com/may-doi-tra/tu-lanh?type=7;exchange
+7;https://www.dienmayxanh.com/may-doi-tra/may-lanh?type=7;exchange
+8;https://www.dienmayxanh.com/may-doi-tra/may-giat?type=7;exchange
