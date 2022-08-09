@@ -56,6 +56,7 @@ application:
   email: hanoilacnhaucoinhumat@gmail.com
 #  email: project.devskill@gmail.com
   path:
+    new-product-file: /home/hoaronal/project/products_new.xlsx
     file-download: /home/hoaronal/project/products.xlsx
     # file-download: /Users/hoadoan/Desktop/products.xlsx
     chrome-driver: /home/hoaronal/project/chromedriver

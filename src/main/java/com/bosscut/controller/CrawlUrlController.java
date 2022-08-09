@@ -13,10 +13,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/crawl-url")
 public class CrawlUrlController {
-
-
     private final CrawlRepository crawlRepository;
-
     public CrawlUrlController(CrawlRepository crawlRepository) {
         this.crawlRepository = crawlRepository;
     }
@@ -41,6 +38,7 @@ public class CrawlUrlController {
     public String createUrl(@RequestParam String url, @RequestParam String type) {
         CrawlUrl entity = new CrawlUrl();
         entity.setUrl(url);
+        entity.setType(type);
         crawlRepository.save(entity);
         return "redirect:/";
     }

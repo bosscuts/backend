@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -37,9 +39,12 @@ public class CrawlerSchedule extends DriverBase {
     private String linkDriver;
     @Value(value = "${application.path.file-download}")
     private String linkFile;
+
+    @Value(value = "${application.path.new-product-file}")
+    private String linkFileProductNew;
     @Value(value = "${application.email}")
     private String email;
-
+    public static Boolean FIRST_RUN = true;
     public CrawlerSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
@@ -58,6 +63,7 @@ public class CrawlerSchedule extends DriverBase {
                 .filter(p -> p.getType().equals("exchange")).collect(Collectors.toList());
         List<Product> productCrawl = new ArrayList<>();
         List<Product> productSendmail = new ArrayList<>();
+        List<Product> productUpdate = new ArrayList<>();
         crawlUrls.forEach(crawl -> {
             try {
                 String url = crawl.getUrl();
@@ -155,6 +161,7 @@ public class CrawlerSchedule extends DriverBase {
                                 float newPrice = Float.parseFloat(price);
                                 if (newPrice < p.getPrice()) {
                                     p.setPrice(newPrice);
+                                    productUpdate.add(p);
                                     productSendmail.add(p);
                                 }
                             }
@@ -248,6 +255,7 @@ public class CrawlerSchedule extends DriverBase {
                             if (newPrice < p.getPrice()) {
                                 p.setPrice(newPrice);
                                 productSendmail.add(p);
+                                productUpdate.add(p);
                             }
                         }
                     });
@@ -256,16 +264,33 @@ public class CrawlerSchedule extends DriverBase {
                 log.error("Error when get list product!");
             }
         });
+        productRepository.saveAll(productUpdate);
         productRepository.saveAll(productCrawl);
+        LocalDateTime now = LocalDateTime.now();
         if (!CollectionUtils.isEmpty(productSendmail)) {
-            try (FileOutputStream out = new FileOutputStream(linkFile)) {
-                ByteArrayInputStream in = ExcelUtils.productsToExcel(productSendmail);
-                IOUtils.copy(in, out);
-                File file = new File(linkFile);
-                mailService.sendEmail(email, "Báo cáo sản phẩm giảm giá " + new Date(), "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+            if (!FIRST_RUN) {
+                try (FileOutputStream out = new FileOutputStream(linkFile)) {
+                    ByteArrayInputStream in = ExcelUtils.productsToExcel(productSendmail);
+                    IOUtils.copy(in, out);
+                    File file = new File(linkFile);
+                    mailService.sendEmail(email, "Báo cáo sản phẩm giảm giá " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                            "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+                }
             }
         }
 
+        if (!CollectionUtils.isEmpty(productCrawl)) {
+            if (!FIRST_RUN) {
+                try (FileOutputStream out = new FileOutputStream(linkFileProductNew)) {
+                    ByteArrayInputStream in = ExcelUtils.newProductsToExcel(productCrawl);
+                    IOUtils.copy(in, out);
+                    File file = new File(linkFileProductNew);
+                    mailService.sendEmail(email, "Báo cáo sản phẩm mới " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                            "Danh sách sản phẩm mới", Boolean.TRUE, Boolean.FALSE, file);
+                }
+            }
+        }
+        FIRST_RUN = false;
         log.info("End time crawl ===>>>: " + new Date());
         clearCookies();
         closeDriverObjects();

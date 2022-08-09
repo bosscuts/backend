@@ -28,7 +28,7 @@ public class ExcelUtils {
             sheet.setColumnWidth(2, 12 * 256);
             sheet.setColumnWidth(3, 15 * 256);
             sheet.setColumnWidth(4, 15 * 256);
-            sheet.setColumnWidth(4, 100 * 256);
+            sheet.setColumnWidth(5, 100 * 256);
             // Header
             Row headerRow = sheet.createRow(0);
             for (int col = 0; col < HEADER.length; col++) {
@@ -43,7 +43,7 @@ public class ExcelUtils {
                 row.createCell(2).setCellValue(Objects.nonNull(product.getPriceOld()) ? priceWithDecimal(product.getPriceOld()) : "");
                 row.createCell(3).setCellValue(Objects.nonNull(product.getPercentSaleString()) ? product.getPercentSaleString() : "");
                 row.createCell(4).setCellValue(Objects.nonNull(product.getStatus()) ? product.getStatus() : "");
-                row.createCell(4).setCellValue(Objects.nonNull(product.getLink()) ? product.getLink() : "");
+                row.createCell(5).setCellValue(Objects.nonNull(product.getLink()) ? product.getLink() : "");
             }
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
