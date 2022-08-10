@@ -40,6 +40,9 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "product_type")
+    private String productType;
+
     @Transient
     private String status;
 
@@ -147,5 +150,13 @@ public class Product extends AbstractAuditingEntity implements Serializable {
 
     public void setPercentSaleString(String percentSaleString) {
         this.percentSaleString = percentSaleString;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

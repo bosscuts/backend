@@ -62,6 +62,7 @@ public class CrawlerSchedule extends DriverBase {
         List<Product> productListExchange = productList.stream()
                 .filter(p -> p.getType().equals("exchange")).collect(Collectors.toList());
         List<Product> productCrawl = new ArrayList<>();
+        List<Product> productSampleCrawl = new ArrayList<>();
         List<Product> productSendmail = new ArrayList<>();
         List<Product> productUpdate = new ArrayList<>();
         crawlUrls.forEach(crawl -> {
@@ -70,6 +71,9 @@ public class CrawlerSchedule extends DriverBase {
                 driver.get(url);
                 DmxPage dmx = new DmxPage(linkDriver);
                 if (crawl.getType().equals("exchange")) {
+                    String queryCrawl = crawl.getUrl().split("\\?")[1];
+                    final Map<String, String> mapCrawl = Splitter.on('&').trimResults().withKeyValueSeparator('=').split(queryCrawl);
+                    String productType = mapCrawl.get("type");
                     try {
                         dmx.closePopup();
                     } catch (Exception e) {
@@ -90,7 +94,12 @@ public class CrawlerSchedule extends DriverBase {
                         listProductExchange.forEach(productElement -> {
                             Product product = new Product();
                             product.setType("exchange");
-                            product.setStatus("Hàng trưng bày");
+                            product.setProductType(productType);
+                            if (productType.equals("7")) {
+                                product.setStatus("Hàng trưng bày");
+                            } else if (productType.equals("2")) {
+                                product.setStatus("Hàng đã sử dụng");
+                            }
                             String price = "";
                             try {
                                 WebElement productNameElement = productElement.findElement(By.className("prdName"));
@@ -152,15 +161,22 @@ public class CrawlerSchedule extends DriverBase {
                             }
 
                             Optional<Product> productExchangeOpt = productListExchange.stream()
-                                    .filter(p -> p.getProductCode().equals(product.getProductCode())).findFirst();
+                                    .filter(p -> p.getProductCode().equals(product.getProductCode())
+                                            && p.getProductType().equals(product.getProductType())).findFirst();
 
                             if (productExchangeOpt.isEmpty()) {
-                                productCrawl.add(product);
+                                productSampleCrawl.add(product);
                             } else {
                                 Product p = productExchangeOpt.get();
                                 float newPrice = Float.parseFloat(price);
                                 if (newPrice < p.getPrice()) {
+                                    p.setPriceOld(p.getPrice());
                                     p.setPrice(newPrice);
+                                    if (productType.equals("7")) {
+                                        p.setStatus("Hàng trưng bày");
+                                    } else if (productType.equals("2")) {
+                                        p.setStatus("Hàng đã sử dụng");
+                                    }
                                     productUpdate.add(p);
                                     productSendmail.add(p);
                                 }
@@ -264,8 +280,15 @@ public class CrawlerSchedule extends DriverBase {
                 log.error("Error when get list product!");
             }
         });
-        productRepository.saveAll(productUpdate);
-        productRepository.saveAll(productCrawl);
+        if (CollectionUtils.isNotEmpty(productUpdate)) {
+            productRepository.saveAll(productUpdate);
+        }
+        if (CollectionUtils.isNotEmpty(productSampleCrawl)) {
+            productRepository.saveAll(productSampleCrawl);
+        }
+        if (CollectionUtils.isNotEmpty(productCrawl)) {
+            productRepository.saveAll(productCrawl);
+        }
         LocalDateTime now = LocalDateTime.now();
         if (!CollectionUtils.isEmpty(productSendmail)) {
             if (!FIRST_RUN) {
