@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.lazerycode.selenium.util.AssignDriver.initQueryObjects;
@@ -20,18 +21,20 @@ public class DmxPage {
     private final Query imFeelingLucky = new Query().defaultLocator(By.name("btnI"));
     private final Query listProduct = new Query().defaultLocator(By.className("listproduct"));
     private final Query listProductExchange = new Query().defaultLocator(By.className("lstcate"));
+    private final Query listProductExchange1 = new Query().defaultLocator(By.id("o-pro"));
     private final Query closePopup = new Query().defaultLocator(By.className("dong"));
     private final Query viewMore = new Query().defaultLocator(By.className("view-more"));
     private final Query viewMoreExchange = new Query().defaultLocator(By.className("viewmore"));
     private final WebDriverWait wait;
     private final RemoteWebDriver driver;
+
     public DmxPage(String pathDriver) throws Exception {
         driver = DriverBase.getDriver(pathDriver);
         initQueryObjects(this, driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
     }
 
-    public void clickTivi(){
+    public void clickTivi() {
         listProduct.findWebElement().click();
     }
 
@@ -42,6 +45,16 @@ public class DmxPage {
 
     public List<WebElement> getListProductExchange() {
         return listProductExchange.findWebElement().findElements(By.tagName("li"));
+    }
+
+    public List<WebElement> getListProductExchange1() {
+        List<WebElement> cates = listProductExchange1.findWebElement().findElements(By.className("cate"));
+        List<WebElement> products = new ArrayList<>();
+        cates.forEach(cate -> {
+            List<WebElement> productElement = listProductExchange1.findWebElement().findElements(By.tagName("li"));
+            products.addAll(productElement);
+        });
+        return products;
     }
 
     public List<WebElement> getListMayDoiTra() {

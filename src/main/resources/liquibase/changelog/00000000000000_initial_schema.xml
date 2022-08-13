@@ -336,6 +336,7 @@
             <column name="description" type="varchar(500)"/>
             <column name="type" type="varchar(20)"/>
             <column name="product_type" type="varchar(10)"/>
+            <column name="code" type="varchar(50)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>

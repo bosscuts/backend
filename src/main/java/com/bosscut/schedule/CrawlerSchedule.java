@@ -45,6 +45,7 @@ public class CrawlerSchedule extends DriverBase {
     @Value(value = "${application.email}")
     private String email;
     public static Boolean FIRST_RUN = true;
+
     public CrawlerSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
@@ -91,97 +92,113 @@ public class CrawlerSchedule extends DriverBase {
                     }
                     try {
                         List<WebElement> listProductExchange = dmx.getListProductExchange();
+                        List<String> productLinks = new ArrayList<>();
+
                         listProductExchange.forEach(productElement -> {
-                            Product product = new Product();
-                            product.setType("exchange");
-                            product.setProductType(productType);
-                            if (productType.equals("7")) {
-                                product.setStatus("Hàng trưng bày");
-                            } else if (productType.equals("2")) {
-                                product.setStatus("Hàng đã sử dụng");
-                            }
-                            String price = "";
-                            try {
-                                WebElement productNameElement = productElement.findElement(By.className("prdName"));
-                                if (Objects.nonNull(productNameElement)) {
-                                    String productName = productNameElement.getText();
-                                    product.setProductName(productName);
-                                }
-                            } catch (Exception e) {
-                                log.error("Error when get productName!");
-                            }
-
-                            try {
-                                WebElement productLinkElement = productElement.findElement(By.tagName("a"));
-                                if (Objects.nonNull(productLinkElement)) {
-                                    String productLink = productLinkElement.getDomAttribute("href");
-                                    product.setLink("https://www.dienmayxanh.com" + productLink);
-                                }
-                                String query = product.getLink().split("\\?")[1];
-                                final Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator('=').split(query);
-                                String productCode = map.get("pid");
-                                product.setProductCode(productCode);
-
-                            } catch (Exception e) {
-                                log.error("Error when get productName!");
-                            }
-                            try {
-                                WebElement priceElement = productElement.findElement(By.tagName("a")).findElement(By.tagName("strong"));
-                                if (Objects.nonNull(priceElement)) {
-                                    price = priceElement.getText()
-                                            .replace("₫", "")
-                                            .replace(".", "")
-                                            .replace(".", "");
-                                    product.setPrice(Float.parseFloat(StringUtils.trim(price)));
-                                }
-                            } catch (Exception e) {
-                                log.error("Error when get price!");
-                            }
-                            try {
-                                WebElement priceOldElement = productElement.findElement(By.tagName("a")).findElement(By.tagName("cite"));
-                                if (Objects.nonNull(priceOldElement)) {
-                                    String priceOld = priceOldElement.getText()
-                                            .replace("₫", "")
-                                            .replace(".", "")
-                                            .replace(".", "");
-                                    product.setPriceOld(Float.parseFloat(priceOld));
-                                }
-                            } catch (Exception e) {
-                                log.error("Error when get priceOld!");
-                            }
-
-                            try {
-                                WebElement percentElement = productElement.findElement(By.tagName("a")).findElement(By.cssSelector("p:nth-child(7) > span"));
-                                if (Objects.nonNull(percentElement)) {
-                                    String percentStr = percentElement.getText();
-                                    product.setPercentSaleString(percentStr);
-                                }
-                            } catch (Exception e) {
-                                log.error("Error when get percent!");
-                            }
-
-                            Optional<Product> productExchangeOpt = productListExchange.stream()
-                                    .filter(p -> p.getProductCode().equals(product.getProductCode())
-                                            && p.getProductType().equals(product.getProductType())).findFirst();
-
-                            if (productExchangeOpt.isEmpty()) {
-                                productSampleCrawl.add(product);
-                            } else {
-                                Product p = productExchangeOpt.get();
-                                float newPrice = Float.parseFloat(price);
-                                if (newPrice < p.getPrice()) {
-                                    p.setPriceOld(p.getPrice());
-                                    p.setPrice(newPrice);
-                                    if (productType.equals("7")) {
-                                        p.setStatus("Hàng trưng bày");
-                                    } else if (productType.equals("2")) {
-                                        p.setStatus("Hàng đã sử dụng");
-                                    }
-                                    productUpdate.add(p);
-                                    productSendmail.add(p);
-                                }
-                            }
+                            WebElement linkProd = productElement.findElement(By.tagName("a"));
+                            String productLink = linkProd.getDomAttribute("href");
+                            productLinks.add("https://www.dienmayxanh.com" + productLink);
                         });
+                        productLinks.forEach(prodLink -> {
+                            driver.get(prodLink);
+                            try {
+                                for (int i = 0; i < 1000; i++) {
+                                    TimeUnit.SECONDS.sleep(1);
+                                    dmx.viewMoreExchange();
+                                    TimeUnit.SECONDS.sleep(1);
+                                }
+                            } catch (Exception e) {
+                                log.error("Error productLinks!");
+                            }
+
+                            List<WebElement> listProductLinks = dmx.getListProductExchange1();
+                            listProductLinks.forEach(productExchangeElement -> {
+                                Product product = new Product();
+                                product.setType("exchange");
+                                product.setProductType(productType);
+                                if (productType.equals("7")) {
+                                    product.setStatus("Hàng trưng bày");
+                                } else if (productType.equals("2")) {
+                                    product.setStatus("Hàng đã sử dụng");
+                                }
+                                String price = "";
+                                try {
+                                    WebElement productNameElement = productExchangeElement.findElement(By.className("prdName"));
+                                    if (Objects.nonNull(productNameElement)) {
+                                        String productName = productNameElement.getText();
+                                        product.setProductName(productName);
+                                    }
+                                } catch (Exception e) {
+                                    log.error("Error when get productName!");
+                                }
+
+                                try {
+                                    WebElement productLinkElement = productExchangeElement.findElement(By.tagName("a"));
+                                    if (Objects.nonNull(productLinkElement)) {
+                                        String productLinkElementStr = productLinkElement.getDomAttribute("onclick");
+                                        String[] arrProductLink = productLinkElementStr.split(",");
+                                        String prodUrl = arrProductLink[2]
+                                                .replace("'", "")
+                                                .replace("(", "")
+                                                .replace(")", "");
+                                        String code = prodUrl.split("#")[1];
+                                        product.setLink("https://www.dienmayxanh.com/" + prodUrl);
+                                        product.setCode(code);
+                                    }
+                                    String query = product.getLink().split("\\?")[1];
+                                    final Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator('=').split(query);
+                                    String productCode = map.get("pid");
+                                    product.setProductCode(productCode);
+
+                                } catch (Exception e) {
+                                    log.error("Error when get productName!");
+                                }
+                                try {
+                                    WebElement priceElement = productExchangeElement.findElement(By.tagName("a")).findElement(By.tagName("strong"));
+                                    if (Objects.nonNull(priceElement)) {
+                                        price = priceElement.getText()
+                                                .replace("₫", "")
+                                                .replace(".", "")
+                                                .replace(".", "");
+                                        product.setPrice(Float.parseFloat(StringUtils.trim(price)));
+                                    }
+                                } catch (Exception e) {
+                                    log.error("Error when get price!");
+                                }
+                                try {
+                                    WebElement percentElement = productExchangeElement.findElement(By.tagName("a")).findElement(By.cssSelector("label"));
+                                    if (Objects.nonNull(percentElement)) {
+                                        String percentStr = percentElement.getText();
+                                        product.setPercentSaleString(percentStr);
+                                    }
+                                } catch (Exception e) {
+                                    log.error("Error when get percent!");
+                                }
+
+                                Optional<Product> productExchangeOpt = productListExchange.stream()
+                                        .filter(p -> p.getProductCode().equals(product.getProductCode())
+                                                && p.getProductType().equals(product.getProductType())
+                                                && p.getCode().equals(product.getCode())).findFirst();
+                                if (productExchangeOpt.isEmpty()) {
+                                    productSampleCrawl.add(product);
+                                } else {
+                                    Product p = productExchangeOpt.get();
+                                    float newPrice = Float.parseFloat(price);
+                                    if (newPrice < p.getPrice()) {
+                                        p.setPriceOld(p.getPrice());
+                                        p.setPrice(newPrice);
+                                        if (productType.equals("7")) {
+                                            p.setStatus("Hàng trưng bày");
+                                        } else if (productType.equals("2")) {
+                                            p.setStatus("Hàng đã sử dụng");
+                                        }
+                                        productUpdate.add(p);
+                                        productSendmail.add(p);
+                                    }
+                                }
+                            });
+                        });
+
                     } catch (Exception e) {
                         log.error("Error calculate totalPage Exchange !", e);
                     }
