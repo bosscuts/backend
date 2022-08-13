@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class ExchangeSchedule extends DriverBase {
+public class ProductExchangeSchedule extends DriverBase {
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
     private final MailService mailService;
@@ -45,7 +45,7 @@ public class ExchangeSchedule extends DriverBase {
     private String email;
     public static Boolean FIRST_RUN = true;
 
-    public ExchangeSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
+    public ProductExchangeSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
         this.mailService = mailService;
