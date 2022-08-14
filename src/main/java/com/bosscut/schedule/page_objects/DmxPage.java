@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.lazerycode.selenium.util.AssignDriver.initQueryObjects;
 
@@ -23,8 +24,27 @@ public class DmxPage {
     private final Query listProductExchange = new Query().defaultLocator(By.className("lstcate"));
     private final Query listProductExchange1 = new Query().defaultLocator(By.id("o-pro"));
     private final Query closePopup = new Query().defaultLocator(By.className("dong"));
+    private final Query openPlace = new Query().defaultLocator(By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1)"));
     private final Query viewMore = new Query().defaultLocator(By.className("view-more"));
     private final Query viewMoreExchange = new Query().defaultLocator(By.className("viewmore"));
+
+    private final Query provinceClick1 = new Query().defaultLocator(
+        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(3)")
+    );
+    private final Query provinceClick2 = new Query().defaultLocator(
+        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(6)")
+    );
+    private final Query provinceClick3 = new Query().defaultLocator(
+        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(9)")
+    );
+    private final Query provinceClick4 = new Query().defaultLocator(
+        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(62)")
+    );
+
+    private final Query provinceClickAll = new Query().defaultLocator(
+        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(1)")
+    );
+
     private final WebDriverWait wait;
     private final RemoteWebDriver driver;
 
@@ -43,8 +63,22 @@ public class DmxPage {
         return listProduct.findWebElement().findElements(By.tagName("li"));
     }
 
-    public List<WebElement> getListProductExchange() {
-        return listProductExchange.findWebElement().findElements(By.tagName("li"));
+    public List<String> getListProductExchange() {
+        List<String> productLinks = new ArrayList<>();
+
+        List<Query> provinceClicks = List.of(provinceClick1, provinceClick2, provinceClick3, provinceClick4);
+
+        provinceClicks.forEach(provinceClick -> {
+            clickSearchProvince(provinceClick);
+            List<WebElement> productElement = listProductExchange.findWebElement().findElements(By.tagName("li"));
+            productElement.forEach(product -> {
+                WebElement linkProd = product.findElement(By.tagName("a"));
+                String productLink = linkProd.getDomAttribute("href");
+                productLinks.add("https://www.dienmayxanh.com" + productLink);
+            });
+        });
+        provinceClickAll.findWebElement().click();
+        return productLinks;
     }
 
     public List<WebElement> getListProductExchange1() {
@@ -67,6 +101,25 @@ public class DmxPage {
 
     public void closePopup() {
         closePopup.findWebElement().click();
+    }
+
+    public void clickSearchProvince(Query provinceClick) {
+        openPlace.findWebElement().click();
+        try {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                System.out.println("getListProductExchange error!");
+            }
+            provinceClick.findWebElement().click();
+            for (int i = 0; i < 1000; i++) {
+                TimeUnit.SECONDS.sleep(1);
+                viewMoreExchange();
+                TimeUnit.SECONDS.sleep(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error clickSearchProvince!");
+        }
     }
 
     public void viewMoreExchange() {

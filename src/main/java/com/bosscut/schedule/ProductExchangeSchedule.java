@@ -52,7 +52,7 @@ public class ProductExchangeSchedule extends DriverBase {
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(fixedDelay = 1200000)
     public void crawl() throws Exception {
         log.info("Start time crawl ===>>>: " + new Date());
         List<CrawlUrl> crawlUrls = crawlRepository.findAll();
@@ -80,24 +80,7 @@ public class ProductExchangeSchedule extends DriverBase {
                         log.error("Error close popup!");
                     }
                     try {
-                        for (int i = 0; i < 1000; i++) {
-                            TimeUnit.SECONDS.sleep(1);
-                            dmx.viewMoreExchange();
-                            TimeUnit.SECONDS.sleep(1);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error calculate totalPage exchange!");
-                        TimeUnit.SECONDS.sleep(1);
-                    }
-                    try {
-                        List<WebElement> listProductExchange = dmx.getListProductExchange();
-                        List<String> productLinks = new ArrayList<>();
-
-                        listProductExchange.forEach(productElement -> {
-                            WebElement linkProd = productElement.findElement(By.tagName("a"));
-                            String productLink = linkProd.getDomAttribute("href");
-                            productLinks.add("https://www.dienmayxanh.com" + productLink);
-                        });
+                        List<String> productLinks = dmx.getListProductExchange();
                         productLinks.forEach(prodLink -> {
                             driver.get(prodLink);
                             try {
@@ -197,7 +180,6 @@ public class ProductExchangeSchedule extends DriverBase {
                                 }
                             });
                         });
-
                     } catch (Exception e) {
                         log.error("Error calculate totalPage Exchange !", e);
                     }

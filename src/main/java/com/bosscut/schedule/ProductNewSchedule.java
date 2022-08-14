@@ -51,7 +51,7 @@ public class ProductNewSchedule extends DriverBase {
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 600000)
+//    @Scheduled(fixedDelay = 600000)
     public void crawl() throws Exception {
         log.info("Start time crawl ===>>>: " + new Date());
         List<CrawlUrl> crawlUrls = crawlRepository.findAll();
