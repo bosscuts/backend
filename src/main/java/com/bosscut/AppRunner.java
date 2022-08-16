@@ -23,20 +23,20 @@ public class AppRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         String uri = "/may-doi-tra/smart-tivi-qled-4k-55-inch-samsung-qa55q80a?pid=235634&type=7";
-
+//
 //        List<Product> productList = productRepository.findAll();
 //        productList.forEach(product -> {
-//            product.setPrice(1000);
+//            product.setPrice(1000F);
 //        });
 //        Product p = new Product();
 //        p.setProductName("test");
-//        p.setPrice(1111);
-//        p.setPriceOld(111111);
+//        p.setPrice(1111F);
+//        p.setPriceOld(111111F);
 //
 //        productList.add(p);
 //
 //        productRepository.saveAll(productList);
-
-//        mailService.sendEmail("project.devskill@gmail.com", "sdsdsds", "sdsdsdsdsd", Boolean.FALSE, Boolean.FALSE);
+//
+//        mailService.sendEmail("project.devskill@gmail.com", "sdsdsds", "sdsdsdsdsd", Boolean.FALSE, Boolean.FALSE, null);
     }
 }

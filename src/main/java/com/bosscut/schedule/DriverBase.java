@@ -21,9 +21,13 @@ public class DriverBase {
         });
     }
 
-    public static RemoteWebDriver getDriver(String pathDriver) throws Exception {
+    public static RemoteWebDriver getDriver(String pathDriver) {
         System.setProperty("webdriver.chrome.driver", pathDriver);
-        return driverFactoryThread.get().getDriver();
+        try {
+            return driverFactoryThread.get().getDriver();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void clearCookies() {

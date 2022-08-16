@@ -16,10 +16,6 @@ import static com.lazerycode.selenium.util.AssignDriver.initQueryObjects;
 
 public class DmxPage {
 
-    private final Query acceptCookiesPopup = new Query().defaultLocator(By.xpath("//*[.='I agree']"));
-    private final Query searchBar = new Query().defaultLocator(By.name("q"));
-    private final Query googleSearch = new Query().defaultLocator(By.name("btnK"));
-    private final Query imFeelingLucky = new Query().defaultLocator(By.name("btnI"));
     private final Query listProduct = new Query().defaultLocator(By.className("listproduct"));
     private final Query listProductExchange = new Query().defaultLocator(By.className("lstcate"));
     private final Query listProductExchange1 = new Query().defaultLocator(By.id("o-pro"));
@@ -29,20 +25,20 @@ public class DmxPage {
     private final Query viewMoreExchange = new Query().defaultLocator(By.className("viewmore"));
 
     private final Query provinceClick1 = new Query().defaultLocator(
-        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(3)")
+            By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(3)")
     );
     private final Query provinceClick2 = new Query().defaultLocator(
-        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(6)")
+            By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(6)")
     );
     private final Query provinceClick3 = new Query().defaultLocator(
-        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(9)")
+            By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(9)")
     );
     private final Query provinceClick4 = new Query().defaultLocator(
-        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(62)")
+            By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(62)")
     );
 
     private final Query provinceClickAll = new Query().defaultLocator(
-        By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(1)")
+            By.cssSelector("body > div.wrapmain.notover > div.boxcate > div > aside > ul > li:nth-child(1) > div > div > aside > a:nth-child(1)")
     );
 
     private final WebDriverWait wait;
@@ -77,7 +73,6 @@ public class DmxPage {
                 productLinks.add("https://www.dienmayxanh.com" + productLink);
             });
         });
-        provinceClickAll.findWebElement().click();
         return productLinks;
     }
 

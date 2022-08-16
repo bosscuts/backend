@@ -14,6 +14,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * Service for sending emails.
@@ -65,7 +66,9 @@ public class MailService {
             message.setSubject(subject);
             message.setText(content, isHtml);
 
-            message.addAttachment(file.getName(), file);
+            if (Objects.nonNull(file)) {
+                message.addAttachment(file.getName(), file);
+            }
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
         } catch (MailException | MessagingException e) {
