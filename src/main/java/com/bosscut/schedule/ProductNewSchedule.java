@@ -321,9 +321,8 @@ public class ProductNewSchedule extends DriverBase {
             }
             FIRST_RUN = false;
             log.info("End time crawl ===>>>: " + new Date());
-            clearCookies();
-            closeDriverObjects();
         });
-
+        clearCookies();
+        closeDriverObjects();
     }
 }
