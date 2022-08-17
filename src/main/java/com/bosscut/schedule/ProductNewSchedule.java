@@ -279,7 +279,7 @@ public class ProductNewSchedule extends DriverBase {
 //                        }
 //                    }
                 } catch (Exception e) {
-                    log.error("Error when get list product!");
+                    log.error("Error when get list product!", e);
                 }
             });
             if (CollectionUtils.isNotEmpty(productUpdate)) {
