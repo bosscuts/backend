@@ -53,8 +53,8 @@ server:
   port: 8081
 
 application:
-  email: hanoilacnhaucoinhumat@gmail.com
-#  email: project.devskill@gmail.com
+#  email: hanoilacnhaucoinhumat@gmail.com
+  email: project.devskill@gmail.com
   path:
     new-product-file: /home/hoaronal/project/products_new.xlsx
     file-download: /home/hoaronal/project/products.xlsx
