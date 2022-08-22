@@ -48,7 +48,7 @@ public class DmxPage {
     private final WebDriverWait wait;
     private final RemoteWebDriver driver;
 
-    public DmxPage(String pathDriver) throws Exception {
+    public DmxPage(String pathDriver) {
         driver = DriverBase.getDriver(pathDriver);
         initQueryObjects(this, driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
@@ -98,24 +98,28 @@ public class DmxPage {
         List<Product> products = new ArrayList<>();
         try {
             place.findWebElement().click();
-            TimeUnit.MILLISECONDS.sleep(200);
+            TimeUnit.MILLISECONDS.sleep(100);
             provinceClickAll.findWebElement().click();
         } catch (Exception e) {
             System.out.println("Error provinceClickAll! " + e.getMessage());
         }
         provinceClicks.forEach(provinceClick -> {
             try {
+                TimeUnit.MILLISECONDS.sleep(200);
                 place.findWebElement().click();
                 TimeUnit.MILLISECONDS.sleep(200);
                 provinceClick.findWebElement().click();
+            } catch (Exception e) {
+                System.out.println("Error provinceClick getListProductExchange1! " + e.getMessage());
+            }
+            try {
                 for (int i = 0; i < 1000; i++) {
                     TimeUnit.MILLISECONDS.sleep(200);
                     viewMoreExchange();
                     TimeUnit.MILLISECONDS.sleep(200);
                 }
             } catch (Exception e) {
-
-                System.out.println("Error clickSearchProvince getListProductExchange1! " + e.getMessage());
+                System.out.println("Error viewMoreExchange getListProductExchange1! " + e.getMessage());
             }
             List<WebElement> cates = listProductExchange1.findWebElements();
             cates.forEach(cate -> {
@@ -142,7 +146,7 @@ public class DmxPage {
                                     .replace("(", "")
                                     .replace(")", "");
                             String code = prodUrl.split("#")[1];
-                            product.setLink("https://www.dienmayxanh.com/" + prodUrl);
+                            product.setLink("https://www.dienmayxanh.com/may-doi-tra/" + prodUrl);
                             product.setCode(code);
                         }
                         String query = product.getLink().split("\\?")[1];
@@ -184,10 +188,6 @@ public class DmxPage {
         return products;
     }
 
-    public List<WebElement> getListMayDoiTra() {
-        return listProduct.findWebElement().findElements(By.tagName("li"));
-    }
-
     public void viewMore() {
         viewMore.findWebElement().click();
     }
@@ -196,22 +196,8 @@ public class DmxPage {
         closePopup.findWebElement().click();
     }
 
-    public void clickSearchProvince(Query provinceClick) {
-
-    }
-
     public void viewMoreExchange() {
         viewMoreExchange.findWebElement().click();
-    }
-
-    public int getTotalElement() {
-        String totalElement = driver.findElement(By.className("remain")).getText();
-        return Integer.parseInt(totalElement);
-    }
-
-    public int getTotalElementExchange() {
-        String totalElement = driver.findElement(By.className("viewmore")).getText();
-        return Integer.parseInt(totalElement);
     }
 
     public void setWait() {

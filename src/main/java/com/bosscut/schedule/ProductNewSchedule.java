@@ -77,7 +77,7 @@ public class ProductNewSchedule extends DriverBase {
                             TimeUnit.MILLISECONDS.sleep(300);
                         }
                     } catch (Exception e) {
-                        log.error("Error calculate totalPage!");
+                        log.error("Error viewMore!");
                     }
 
                     List<WebElement> listProduct = dmx.getListProduct();
@@ -174,6 +174,7 @@ public class ProductNewSchedule extends DriverBase {
                             try {
                                 driver.get(prodLink);
                                 List<Product> listProductLinks = dmx.getListProductExchange1();
+                                List<Product> productSendmailInternal = new ArrayList<>();
                                 listProductLinks.forEach(product -> {
                                     product.setType("exchange");
                                     product.setProductType(productType);
@@ -183,37 +184,52 @@ public class ProductNewSchedule extends DriverBase {
                                         product.setStatus("Hàng đã sử dụng");
                                     }
                                     Optional<Product> productExchangeOpt = productListExchange.stream()
-                                            .filter(p -> product.getProductCode().equals(p.getProductCode())
-                                                    && product.getProductType().equals(p.getProductType())
+                                            .filter(p -> product.getProductType().equals(p.getProductType())
                                                     && product.getCode().equals(p.getCode())).findFirst();
                                     if (productExchangeOpt.isEmpty()) {
+                                        if (productType.equals("7")) {
+                                            product.setStatus("Hàng trưng bày");
+                                        } else if (productType.equals("2")) {
+                                            product.setStatus("Hàng đã sử dụng");
+                                        }
                                         productSampleCrawl.add(product);
-                                        productSendmail.add(product);
+                                        productSendmailInternal.add(product);
                                     } else {
                                         Product p = productExchangeOpt.get();
                                         float newPrice = product.getPrice();
+                                        p.setPriceOld(p.getPrice());
+                                        p.setPrice(newPrice);
+                                        productUpdate.add(p);
                                         if (newPrice < p.getPrice()) {
-                                            p.setPriceOld(p.getPrice());
-                                            p.setPrice(newPrice);
-                                            if (productType.equals("7")) {
-                                                p.setStatus("Hàng trưng bày");
-                                            } else if (productType.equals("2")) {
-                                                p.setStatus("Hàng đã sử dụng");
-                                            }
-                                            productUpdate.add(p);
-                                            productSendmail.add(p);
+                                            productSendmailInternal.add(p);
                                         }
                                     }
                                 });
+                                if (!CollectionUtils.isEmpty(productSendmailInternal)) {
+                                    if (!FIRST_RUN) {
+                                        try (FileOutputStream out = new FileOutputStream(linkFile)) {
+                                            List<Product> productMail = productSendmailInternal.stream()
+                                                    .filter(CollectionUtil.distinctByKey(Product::getCode))
+                                                    .collect(Collectors.toList());
+                                            ByteArrayInputStream in = ExcelUtils.productsToExcel(productMail);
+                                            IOUtils.copy(in, out);
+                                            File file = new File(linkFile);
+                                            mailService.sendEmail(email, "Báo cáo sản phẩm giảm giá " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                                                    "Danh sách sản phẩm giảm giá", Boolean.TRUE, Boolean.FALSE, file);
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }
+                                }
                             } catch (Exception e) {
                                 log.error("Error productExchangeOpt !", e);
                             }
                         });
+
                     } catch (Exception e) {
-                        log.error("Error calculate totalPage Exchange !", e);
+                        log.error("Error exchange !", e);
                     }
                 }
-
             } catch (Exception e) {
                 log.error("Error when get list product!", e);
             }
