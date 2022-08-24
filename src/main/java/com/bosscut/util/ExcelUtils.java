@@ -10,13 +10,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
 public class ExcelUtils {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    static String[] HEADER = { "Product Name", "Price", "Price Old", "Percent sale", "status", "Link" };
+    static String[] HEADER = { "Product Name", "Price", "Price Old", "Percent sale", "Status", "New/Old", "Link" };
     static String[] NEW_PRODUCT_HEADER = { "Product Name", "Price", "Link" };
     static String SHEET = "Products";
     static String NEW_PRODUCT_SHEET = "New Products";
@@ -28,7 +29,8 @@ public class ExcelUtils {
             sheet.setColumnWidth(2, 12 * 256);
             sheet.setColumnWidth(3, 15 * 256);
             sheet.setColumnWidth(4, 15 * 256);
-            sheet.setColumnWidth(5, 100 * 256);
+            sheet.setColumnWidth(5, 15 * 256);
+            sheet.setColumnWidth(6, 100 * 256);
             // Header
             Row headerRow = sheet.createRow(0);
             for (int col = 0; col < HEADER.length; col++) {
@@ -43,7 +45,8 @@ public class ExcelUtils {
                 row.createCell(2).setCellValue(Objects.nonNull(product.getPriceOld()) ? priceWithDecimal(product.getPriceOld()) : "");
                 row.createCell(3).setCellValue(Objects.nonNull(product.getPercentSaleString()) ? product.getPercentSaleString() : "");
                 row.createCell(4).setCellValue(Objects.nonNull(product.getStatus()) ? product.getStatus() : "");
-                row.createCell(5).setCellValue(Objects.nonNull(product.getLink()) ? product.getLink() : "");
+                row.createCell(5).setCellValue(Objects.nonNull(product.getStatusType()) ? product.getStatusType() : "");
+                row.createCell(6).setCellValue(Objects.nonNull(product.getLink()) ? product.getLink() : "");
             }
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
@@ -78,7 +81,7 @@ public class ExcelUtils {
         }
     }
 
-    public static String priceWithDecimal(Float price) {
+    public static String priceWithDecimal(BigDecimal price) {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(price);
     }

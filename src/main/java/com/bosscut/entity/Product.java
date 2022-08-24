@@ -2,6 +2,7 @@ package com.bosscut.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A Product
@@ -23,10 +24,10 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     private String productCode;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @Column(name = "price_old")
-    private Float priceOld;
+    private BigDecimal priceOld;
 
     @Column(name = "percent_sale")
     private Integer percentSale;
@@ -52,16 +53,9 @@ public class Product extends AbstractAuditingEntity implements Serializable {
     @Transient
     private String percentSaleString;
 
-    public Product(Long productId, String productName, String productCode, Float price, Float priceOld, Integer percentSale, String link, String description) {
-        this.productId = productId;
-        this.price = price;
-        this.priceOld = priceOld;
-        this.percentSale = percentSale;
-        this.productName = productName;
-        this.productCode = productCode;
-        this.link = link;
-        this.description = description;
-    }
+    @Transient
+    private String statusType;
+
 
     public Product() {
 
@@ -91,19 +85,19 @@ public class Product extends AbstractAuditingEntity implements Serializable {
         this.productCode = productCode;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Float getPriceOld() {
+    public BigDecimal getPriceOld() {
         return priceOld;
     }
 
-    public void setPriceOld(Float priceOld) {
+    public void setPriceOld(BigDecimal priceOld) {
         this.priceOld = priceOld;
     }
 
@@ -169,5 +163,13 @@ public class Product extends AbstractAuditingEntity implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getStatusType() {
+        return statusType;
+    }
+
+    public void setStatusType(String statusType) {
+        this.statusType = statusType;
     }
 }

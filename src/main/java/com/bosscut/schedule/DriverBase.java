@@ -1,7 +1,7 @@
 package com.bosscut.schedule;
 
 import com.bosscut.schedule.config.DriverFactory;
-import org.apache.logging.log4j.LogManager;
+import com.bosscut.util.OsUtils;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.ArrayList;
@@ -22,7 +22,19 @@ public class DriverBase {
     }
 
     public static RemoteWebDriver getDriver(String pathDriver) {
-        System.setProperty("webdriver.chrome.driver", pathDriver);
+        String osName = OsUtils.getOsName();
+        String linkDriver;
+        switch(osName) {
+            case "Windows":
+                linkDriver = pathDriver + "/windows/chromedriver.exe";
+                break;
+            case "Linux":
+                linkDriver = pathDriver + "/linux/chromedriver";
+                break;
+            default:
+                linkDriver = pathDriver + "/mac/chromedriver";
+        }
+        System.setProperty("webdriver.chrome.driver", linkDriver);
         try {
             return driverFactoryThread.get().getDriver();
         } catch (Exception e) {

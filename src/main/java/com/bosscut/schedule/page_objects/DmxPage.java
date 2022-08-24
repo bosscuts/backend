@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +53,6 @@ public class DmxPage {
         driver = DriverBase.getDriver(pathDriver);
         initQueryObjects(this, driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
-    }
-
-    public void clickTivi() {
-        listProduct.findWebElement().click();
     }
 
     public List<WebElement> getListProduct() {
@@ -146,7 +143,7 @@ public class DmxPage {
                                     .replace("(", "")
                                     .replace(")", "");
                             String code = prodUrl.split("#")[1];
-                            product.setLink("https://www.dienmayxanh.com/may-doi-tra/" + prodUrl);
+                            product.setLink("https://www.dienmayxanh.com/may-doi-tra/" + StringUtils.trim(prodUrl));
                             product.setCode(code);
                         }
                         String query = product.getLink().split("\\?")[1];
@@ -166,7 +163,7 @@ public class DmxPage {
                                     .replace("₫", "")
                                     .replace(".", "")
                                     .replace(".", "");
-                            product.setPrice(Float.parseFloat(StringUtils.trim(price)));
+                            product.setPrice(new BigDecimal(StringUtils.trim(price)));
                         }
                     } catch (Exception e) {
                         System.out.println("Error when get price!");
