@@ -24,15 +24,12 @@ public class DriverBase {
     public static RemoteWebDriver getDriver(String pathDriver) {
         String osName = OsUtils.getOsName();
         String linkDriver;
-        switch(osName) {
-            case "Windows":
-                linkDriver = pathDriver + "/windows/chromedriver.exe";
-                break;
-            case "Linux":
-                linkDriver = pathDriver + "/linux/chromedriver";
-                break;
-            default:
-                linkDriver = pathDriver + "/mac/chromedriver";
+        if (osName.startsWith("Windows")) {
+            linkDriver = pathDriver + "/windows/chromedriver.exe";
+        } else if (osName.startsWith("Linux")) {
+            linkDriver = pathDriver + "/linux/chromedriver";
+        } else {
+            linkDriver = pathDriver + "/mac/chromedriver";
         }
         System.setProperty("webdriver.chrome.driver", linkDriver);
         try {

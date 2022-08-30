@@ -32,7 +32,8 @@ public enum DriverType implements DriverSetup {
     CHROME {
         public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             HashMap<String, Object> chromePreferences = new HashMap<>();
-            chromePreferences.put("profile.password_manager_enabled", false);
+            chromePreferences.put("network.proxy.http", "localhost");
+            chromePreferences.put("network.proxy.http_port", "8080");
 
             ChromeOptions options = new ChromeOptions();
             options.merge(capabilities);
