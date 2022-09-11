@@ -2,6 +2,7 @@ package com.bosscut.schedule;
 
 import com.bosscut.schedule.config.DriverFactory;
 import com.bosscut.util.OsUtils;
+import net.lightbody.bmp.BrowserMobProxy;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class DriverBase {
         });
     }
 
-    public static RemoteWebDriver getDriver(String pathDriver) {
+    public static RemoteWebDriver getDriver(BrowserMobProxy mobProxy, String pathDriver) {
         String osName = OsUtils.getOsName();
         String linkDriver;
         if (osName.startsWith("Windows")) {
@@ -33,7 +34,7 @@ public class DriverBase {
         }
         System.setProperty("webdriver.chrome.driver", linkDriver);
         try {
-            return driverFactoryThread.get().getDriver();
+            return driverFactoryThread.get().getDriver(mobProxy);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -8,6 +8,7 @@ import com.bosscut.schedule.page_objects.DmxPage;
 import com.bosscut.service.MailService;
 import com.bosscut.util.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
+import net.lightbody.bmp.BrowserMobProxy;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -32,6 +34,7 @@ public class ProductNewSchedule extends DriverBase {
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
     private final MailService mailService;
+    private final BrowserMobProxy browserMobProxy;
     @Value(value = "${application.path.chrome-driver}")
     private String linkDriver;
     @Value(value = "${application.path.file-download}")
@@ -40,19 +43,20 @@ public class ProductNewSchedule extends DriverBase {
     private String email;
     public static Boolean FIRST_RUN = true;
 
-    public ProductNewSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
+    public ProductNewSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService, BrowserMobProxy browserMobProxy) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
         this.mailService = mailService;
+        this.browserMobProxy = browserMobProxy;
     }
 
     @Transactional
     @Scheduled(fixedDelay = 150000)
     public void crawl() {
         instantiateDriverObject();
-        List<CrawlUrl> crawlUrls = crawlRepository.findAll();
+        List<CrawlUrl> crawlUrls = crawlRepository.findAll().stream()
+                .filter(c -> c.getType().equals("normal")).collect(Collectors.toList());
         List<Product> productList = productRepository.findAll();
-
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         List<Future<List<Product>>> futures = new ArrayList<>();
         crawlUrls.forEach(crawl -> {
@@ -61,10 +65,10 @@ public class ProductNewSchedule extends DriverBase {
                 List<Product> productUpdate = new ArrayList<>();
                 List<Product> productSendmail = new ArrayList<>();
                 try {
-                    WebDriver driver = getDriver(linkDriver);
+                    WebDriver driver = getDriver(browserMobProxy, linkDriver);
                     String url = crawl.getUrl();
                     driver.get(url);
-                    DmxPage dmx = new DmxPage(linkDriver);
+                    DmxPage dmx = new DmxPage(browserMobProxy, linkDriver);
                     if (crawl.getType().equals("normal")) {
                         try {
                             for (int i = 0; i <= 1000; i++) {

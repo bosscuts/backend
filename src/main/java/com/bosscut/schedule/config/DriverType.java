@@ -1,5 +1,8 @@
 package com.bosscut.schedule.config;
 
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.client.ClientUtil;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -21,7 +24,7 @@ import java.util.HashMap;
 public enum DriverType implements DriverSetup {
 
     FIREFOX {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             FirefoxOptions options = new FirefoxOptions();
             options.merge(capabilities);
             options.setHeadless(HEADLESS);
@@ -30,26 +33,30 @@ public enum DriverType implements DriverSetup {
         }
     },
     CHROME {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             HashMap<String, Object> chromePreferences = new HashMap<>();
-            chromePreferences.put("network.proxy.http", "localhost");
-            chromePreferences.put("network.proxy.http_port", "8080");
 
             ChromeOptions options = new ChromeOptions();
+            Proxy seleniumProxy = ClientUtil.createSeleniumProxy(mobProxy);
+
+            options.setProxy(seleniumProxy);
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             options.merge(capabilities);
-            options.setHeadless(true);
-            options.addArguments("--no-default-browser-check");
-            options.addArguments("--headless");
-            options.addArguments("--start-maximized");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
+//            options.setHeadless(true);
+            options.addArguments("--ignore-certificate-errors");
+//            options.addArguments("--no-default-browser-check");
+//            options.addArguments("--headless");
+//            options.addArguments("--start-maximized");
+//            options.addArguments("--no-sandbox");
+//            options.addArguments("--disable-dev-shm-usage");
+//            options.addArguments("--ignore-certificate-errors");
             options.setExperimentalOption("prefs", chromePreferences);
 
             return new ChromeDriver(options);
         }
     },
     IE {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             InternetExplorerOptions options = new InternetExplorerOptions();
             options.merge(capabilities);
             options.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
@@ -65,7 +72,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     EDGE {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             EdgeOptions options = new EdgeOptions();
             options.merge(capabilities);
 
@@ -73,7 +80,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     SAFARI {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             SafariOptions options = new SafariOptions();
             options.merge(capabilities);
 
@@ -81,7 +88,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     OPERA {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             OperaOptions options = new OperaOptions();
             options.merge(capabilities);
             options.addArguments("--no-default-browser-check");
@@ -93,7 +100,7 @@ public enum DriverType implements DriverSetup {
         }
     },
     BRAVE {
-        public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
+        public RemoteWebDriver getWebDriverObject(BrowserMobProxy mobProxy, DesiredCapabilities capabilities) {
             HashMap<String, Object> chromePreferences = new HashMap<>();
             chromePreferences.put("profile.password_manager_enabled", false);
 

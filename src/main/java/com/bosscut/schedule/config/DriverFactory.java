@@ -1,5 +1,6 @@
 package com.bosscut.schedule.config;
 
+import net.lightbody.bmp.BrowserMobProxy;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -31,9 +32,9 @@ public class DriverFactory {
         selectedDriverType = CHROME;
     }
 
-    public RemoteWebDriver getDriver() throws Exception {
+    public RemoteWebDriver getDriver(BrowserMobProxy mobProxy) throws Exception {
         if (null == driver) {
-            instantiateWebDriver(selectedDriverType);
+            instantiateWebDriver(mobProxy, selectedDriverType);
         }
 
         return driver;
@@ -50,7 +51,7 @@ public class DriverFactory {
         }
     }
 
-    private void instantiateWebDriver(DriverType driverType) throws MalformedURLException {
+    private void instantiateWebDriver(BrowserMobProxy mobProxy, DriverType driverType) throws MalformedURLException {
         System.out.println("Local Operating System: " + operatingSystem);
         System.out.println("Local Architecture: " + systemArchitecture);
         System.out.println("Selected Browser: " + selectedDriverType);
@@ -88,7 +89,7 @@ public class DriverFactory {
             desiredCapabilities.setBrowserName(selectedDriverType.toString());
             driver = new RemoteWebDriver(seleniumGridURL, desiredCapabilities);
         } else {
-            driver = driverType.getWebDriverObject(desiredCapabilities);
+            driver = driverType.getWebDriverObject(mobProxy, desiredCapabilities);
         }
     }
 }

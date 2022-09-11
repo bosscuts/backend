@@ -4,8 +4,10 @@ import com.bosscut.entity.Product;
 import com.bosscut.schedule.DriverBase;
 import com.google.common.base.Splitter;
 import com.lazerycode.selenium.util.Query;
+import net.lightbody.bmp.BrowserMobProxy;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -49,8 +51,8 @@ public class DmxPage {
     private final WebDriverWait wait;
     private final RemoteWebDriver driver;
 
-    public DmxPage(String pathDriver) {
-        driver = DriverBase.getDriver(pathDriver);
+    public DmxPage(BrowserMobProxy mobProxy, String pathDriver) {
+        driver = DriverBase.getDriver(mobProxy, pathDriver);
         initQueryObjects(this, driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
     }
@@ -66,13 +68,13 @@ public class DmxPage {
         provinceClicks.forEach(provinceClick -> {
             try {
                 place.findWebElement().click();
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(500);
                 provinceClick.findWebElement().click();
                 try {
                     for (int i = 0; i < 1000; i++) {
-                        TimeUnit.MILLISECONDS.sleep(200);
+                        TimeUnit.MILLISECONDS.sleep(500);
                         viewMoreExchange();
-                        TimeUnit.MILLISECONDS.sleep(200);
+                        TimeUnit.MILLISECONDS.sleep(500);
                     }
                 } catch (Exception e) {
                     System.out.println("Error viewMoreExchange! " + e.getMessage());
@@ -95,25 +97,25 @@ public class DmxPage {
         List<Product> products = new ArrayList<>();
         try {
             place.findWebElement().click();
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(500);
             provinceClickAll.findWebElement().click();
         } catch (Exception e) {
             System.out.println("Error provinceClickAll! " + e.getMessage());
         }
         provinceClicks.forEach(provinceClick -> {
             try {
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(500);
                 place.findWebElement().click();
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(500);
                 provinceClick.findWebElement().click();
             } catch (Exception e) {
                 System.out.println("Error provinceClick getListProductExchange1! " + e.getMessage());
             }
             try {
                 for (int i = 0; i < 1000; i++) {
-                    TimeUnit.MILLISECONDS.sleep(200);
+                    TimeUnit.MILLISECONDS.sleep(500);
                     viewMoreExchange();
-                    TimeUnit.MILLISECONDS.sleep(200);
+                    TimeUnit.MILLISECONDS.sleep(500);
                 }
             } catch (Exception e) {
                 System.out.println("Error viewMoreExchange getListProductExchange1! " + e.getMessage());

@@ -10,6 +10,7 @@ import com.bosscut.util.CollectionUtil;
 import com.bosscut.util.ExcelUtils;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
+import net.lightbody.bmp.BrowserMobProxy;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +36,7 @@ public class ProductSchedule extends DriverBase {
     private final CrawlRepository crawlRepository;
     private final ProductRepository productRepository;
     private final MailService mailService;
+    private final BrowserMobProxy browserMobProxy;
     @Value(value = "${application.path.chrome-driver}")
     private String linkDriver;
     @Value(value = "${application.path.file-download}")
@@ -43,17 +45,19 @@ public class ProductSchedule extends DriverBase {
     private String email;
     public static Boolean FIRST_RUN = true;
 
-    public ProductSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService) {
+    public ProductSchedule(CrawlRepository crawlRepository, ProductRepository productRepository, MailService mailService, BrowserMobProxy browserMobProxy) {
         this.crawlRepository = crawlRepository;
         this.productRepository = productRepository;
         this.mailService = mailService;
+        this.browserMobProxy = browserMobProxy;
     }
 
     @Transactional
     @Scheduled(fixedDelay = 1200000)
     public void crawl() {
         instantiateDriverObject();
-        List<CrawlUrl> crawlUrls = crawlRepository.findAll();
+        List<CrawlUrl> crawlUrls = crawlRepository.findAll().stream()
+                .filter(c -> c.getType().equals("exchange")).collect(Collectors.toList());
         List<Product> productList = productRepository.findAll();
         List<Product> productListExchange = productList.stream()
                 .filter(p -> p.getType().equals("exchange")).collect(Collectors.toList());
@@ -61,13 +65,14 @@ public class ProductSchedule extends DriverBase {
         List<Future<List<Product>>> futures = new ArrayList<>();
         crawlUrls.forEach(crawl -> {
             Future<List<Product>> listFutures = executorService.submit(() -> {
-                WebDriver driver = getDriver(linkDriver);
+                WebDriver driver = getDriver(browserMobProxy, linkDriver);
+
                 List<Product> productSampleCrawl = new ArrayList<>();
                 List<Product> productUpdate = new ArrayList<>();
                 try {
                     String url = crawl.getUrl();
                     driver.get(url);
-                    DmxPage dmx = new DmxPage(linkDriver);
+                    DmxPage dmx = new DmxPage(browserMobProxy, linkDriver);
                     if (crawl.getType().equals("exchange")) {
                         String queryCrawl = crawl.getUrl().split("\\?")[1];
                         final Map<String, String> mapCrawl = Splitter.on('&').trimResults().withKeyValueSeparator('=').split(queryCrawl);
